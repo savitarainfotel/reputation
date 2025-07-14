@@ -13,7 +13,7 @@
                                 <!-- Session Status -->
                                 <x-auth-session-status :status="session('status')" />
 
-                                <form method="POST" action="{{ route('password.email') }}">
+                                <form method="POST" action="{{ route('register') }}">
                                     @csrf
 
                                     <div class="row">
@@ -76,7 +76,7 @@
 
                                     <div class="d-flex align-items-center justify-content-center mt-2">
                                         <p class="fs-4 mb-0 fw-medium">@lang('If you already have an account,')</p>
-                                        <a class="text-blue-dark fw-medium ms-2" href="{{ route('register') }}">@lang('log in instead')</a>.
+                                        <a class="text-blue-dark fw-medium ms-2" href="{{ route('login') }}">@lang('log in instead')</a>.
                                     </div>
                                 </form>
                                 <div class="text-justify mt-4">
