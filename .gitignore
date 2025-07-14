@@ -15,7 +15,6 @@ storage
 test.js
 test.css
 /vendor/
-/assets/images/*
 # IDE Files
 #-------------------------
 /nbproject/
@@ -32,7 +31,4 @@ test.css
 *.zip
 *.sql
 *.env
-/assets/admin/tax-exemption-certificate/*
-/assets/admin/govt-documents/*
-/assets/admin/ooo-rooms/*
 composer.lock
