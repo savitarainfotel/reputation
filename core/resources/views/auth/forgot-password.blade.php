@@ -4,9 +4,7 @@
             <div class="position-relative z-index-5">
                 <div class="row">
                     <div class="col-xl-6 col-xxl-6 left-panel">
-                        <x-auth-side :title="__('Welcome Back!')" :sub-title="__(
-                            'Thousand of professionals Using the #1 AI CRM to monitor, manage and grow online trust.',
-                        )" />
+                        <x-auth-side :title="__('Welcome Back!')" :sub-title="__('Thousand of professionals Using the #1 AI CRM to monitor, manage and grow online trust.')" />
                     </div>
                     <div class="col-xl-6 col-xxl-6">
                         <div
