@@ -14495,7 +14495,7 @@
 }
 [data-bs-theme="dark"][data-color-theme="Blue_Theme"]:root,
 [data-bs-theme="light"][data-color-theme="Blue_Theme"]:root {
-  --bs-primary: #5d87ff;
+  --bs-primary: #152C56;
   --bs-primary-rgb: 93, 135, 255;
   --bs-light-primary: rgba(93, 135, 255, 0.1);
   --bs-primary-bg-subtle: rgba(93, 135, 255, 0.1);
@@ -14506,10 +14506,10 @@
 }
 [data-bs-theme="dark"][data-color-theme="Blue_Theme"]:root .btn-primary,
 [data-bs-theme="light"][data-color-theme="Blue_Theme"]:root .btn-primary {
-  --bs-btn-bg: #5d87ff;
-  --bs-btn-border-color: #5d87ff;
-  --bs-btn-hover-bg: #4f73d9;
-  --bs-btn-hover-border-color: #4f73d9;
+  --bs-btn-bg: #152C56;
+  --bs-btn-border-color: #152C56;
+  --bs-btn-hover-bg: #152C56;
+  --bs-btn-hover-border-color: #152C56;
 }
 [data-bs-theme="dark"][data-color-theme="Blue_Theme"]:root .btn-secondary,
 [data-bs-theme="light"][data-color-theme="Blue_Theme"]:root .btn-secondary {
@@ -29502,12 +29502,10 @@ ul {
     body[data-sidebartype="mini-sidebar"]
     .left-sidebar
     .scroll-sidebar {
-    height: calc(100vh - 50px);
+    height: calc(100vh - 300px);
   }
   [data-layout="vertical"]
-    body[data-sidebartype="mini-sidebar"]
-    .left-sidebar
-    .fixed-profile,
+    
   [data-layout="vertical"]
     body[data-sidebartype="mini-sidebar"]
     .left-sidebar
@@ -29606,7 +29604,8 @@ html[data-boxed-layout="boxed"] .container-xxl {
   width: 270px;
   border-right: 1px solid var(--bs-border-color);
   flex-shrink: 0;
-  background: var(--bs-body-bg);
+  background:linear-gradient(to bottom, #062B63, #3499FD);
+  color: var(--bs-white);
   z-index: 99;
   transition: 0.2s ease-in;
   position: fixed;
@@ -29620,7 +29619,7 @@ html[data-boxed-layout="boxed"] .container-xxl {
 .left-sidebar .scroll-sidebar {
   overflow-y: auto;
   padding: 0 24px;
-  height: calc(100vh - 175px);
+  height: calc(100vh - 300px);
   border-radius: 7px;
 }
 .left-sidebar .scroll-sidebar .simplebar-track.simplebar-horizontal {
@@ -29646,6 +29645,7 @@ html[data-boxed-layout="boxed"] .container-xxl {
   gap: 15px;
   text-decoration: none;
   font-weight: 400;
+  color:var(--bs--white);
 }
 .sidebar-nav ul .sidebar-item .sidebar-link span:first-child {
   display: flex;

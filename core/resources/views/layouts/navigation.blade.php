@@ -1,10 +1,10 @@
 <!-- Sidebar Start -->
 <aside class="left-sidebar with-vertical">
     <div>
-        <div class="brand-logo d-flex align-items-center justify-content-between">
+        <div class="brand-logo d-flex align-items-center justify-content-center">
             <a href="{{ route('dashboard') }}" class="text-nowrap logo-img">
-                <img src="{{ asset('assets/images/logo.svg') }}" class="dark-logo" alt="Logo-Dark" />
-                <img src="{{ asset('assets/images/logo.svg') }}" class="light-logo" alt="Logo-light" />
+                <img src="{{ asset('assets/images/logo.svg') }}" class="dark-logo" alt="Logo-Dark" height="50" />
+                <img src="{{ asset('assets/images/logo.svg') }}" class="light-logo" alt="Logo-light" height="50" />
             </a>
             <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
                 <i class="ti ti-x"></i>
@@ -21,21 +21,134 @@
                         <span class="hide-menu">@lang('Dashboard')</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                        <span class="d-flex">
+                            <i class="ti ti-layout-grid"></i>
+                        </span>
+                        <span class="hide-menu">@lang('Answer Feedback')</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="javascript:void(0)" class="sidebar-link">
+                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-circle"></i>
+                                </div>
+                                <span class="hide-menu">@lang('Review inbox')</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="javascript:void(0)" class="sidebar-link">
+                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-circle"></i>
+                                </div>
+                                <span class="hide-menu">@lang('Automation')</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="javascript:void(0)" class="sidebar-link">
+                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-circle"></i>
+                                </div>
+                                <span class="hide-menu">@lang('Review Reply Generator')</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="javascript:void(0)" class="sidebar-link">
+                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-circle"></i>
+                                </div>
+                                <span class="hide-menu">@lang('Rating Reply Generator')</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow " href="javascript:void(0)" aria-expanded="false">
+                        <span class="d-flex">
+                            <i class="ti ti-layout-grid"></i>
+                        </span>
+                        <span class="hide-menu">@lang('Property Overview')</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="javascript:void(0)" class="sidebar-link">
+                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-circle"></i>
+                                </div>
+                                <span class="hide-menu">@lang('Group Overview')</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="javascript:void(0)" class="sidebar-link">
+                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-circle"></i>
+                                </div>
+                                <span class="hide-menu">@lang('Review Insight')</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="javascript:void(0)" class="sidebar-link">
+                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-circle"></i>
+                                </div>
+                                <span class="hide-menu">@lang('Report')</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="javascript:;" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-cpu"></i>
+                        </span>
+                        <span class="hide-menu">@lang('Survey')</span>
+                    </a>
+                </li>
             </ul>
         </nav>
 
-        <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3">
-            <div class="hstack gap-3">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button class="border-0 bg-transparent text-primary ms-auto" onclick="event.preventDefault(); this.closest('form').submit();" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
-                        <i class="ti ti-power fs-7"></i>
-                    </button>
-                </form>
-                <a class="border-0 bg-transparent text-primary ms-auto" href="{{ route('profile.edit') }}" tabindex="0" type="button" aria-label="profile" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="profile">
-                    <i class="icon ti ti-settings fs-7"></i>
-                </a>
-            </div>
+        <div class="fixed-profile   mb-2 mt-3">
+           <nav class="sidebar-nav scroll-sidebar"> 
+            <ul id="sidebarnav">
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('profile.edit') }}"aria-expanded="false">
+                        <span>
+                            <i class="ti ti-settings"></i>
+                        </span>
+                        <span class="hide-menu">@lang('Settings')</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="javascript:;" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-bug"></i>
+                        </span>
+                        <span class="hide-menu">@lang('Report Bug')</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="javascript:;" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-help"></i>
+                        </span>
+                        <span class="hide-menu">@lang('Help')</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a class="sidebar-link" href="javascript:;" onclick="event.preventDefault(); this.closest('form').submit();">
+                            <span>
+                                <i class="ti ti-power"></i>
+                            </span>
+                            <span class="hide-menu">Logout</span>
+                        </a>
+                    </form>
+                </li>
+            </ul>
+           </nav>
         </div>
     </div>
 </aside>
