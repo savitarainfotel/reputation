@@ -1,35 +1,4 @@
 <x-guest-layout>
-    {{-- <div class="row justify-content-center">
-        <div class="col-12 col-md-4">
-            <div class="card text-white bg-secondary mb-3 mt-4">
-                <div class="card-header">@lang('Confirm Password') </div>
-                <div class="card-body">
-                    
-                    <!-- Session Status -->
-                    <x-auth-session-status :status="session('status')" />
-
-                    <form method="POST" action="{{ route('password.confirm') }}">
-                        @csrf
-
-                        <!-- Password -->
-                        <div>
-                            
-
-                            
-
-                            
-                        </div>
-
-                        <div class="flex items-center justify-end mt-2">
-                            <x-secondary-button>
-                                {{ __('Confirm') }}
-                            </x-secondary-button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     <div id="main-wrapper" class="auth-customizer-none">
         <div class="position-relative overflow-hidden radial-gradient min-vh-100 w-100">
             <div class="position-relative z-index-5">
