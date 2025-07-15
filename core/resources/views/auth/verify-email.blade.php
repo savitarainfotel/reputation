@@ -14,6 +14,7 @@
                                     <!-- Session Status -->
                                     @if (session('status') == 'verification-link-sent')
                                         <x-auth-session-status :status="__('A new verification link has been sent to the email address you provided during registration.')" />
+                                        <hr>
                                     @endif
 
                                     <p class="text-justify text-dark">
