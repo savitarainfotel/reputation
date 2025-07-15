@@ -17,20 +17,6 @@
 
                                     <form method="POST" action="{{ route('register') }}">
                                         @csrf
-                                        <!-- Email Address -->
-                                        <div class="mb-3">
-                                            <x-input-label for="email" :value="__('Email Address')" />
-                                            <div class="input-group">
-                                                <span class="input-group-text  border-end-0">
-                                                    <img src="{{ asset('assets/images/svg/email.svg') }}"
-                                                        class="icon">
-                                                </span>
-                                                <x-text-input id="email" class="border-start-0 text-dark"
-                                                    type="email" name="email" :value="old('email')" placeholder="abc@gmail.com" required autofocus
-                                                    autocomplete="username" />
-                                            </div>
-                                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                                        </div>
                                         <div class="row">
                                             <!-- First Name -->
                                             <div class="col-md-6 ">
@@ -41,7 +27,6 @@
                                                         autocomplete="first_name" />
                                                     <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                                                 </div>
-
                                             </div>
 
                                             <!-- Last Name -->
@@ -57,10 +42,22 @@
                                             </div>
                                         </div>
 
-
+                                        <!-- Email Address -->
+                                        <div class="mb-3">
+                                            <x-input-label for="email" :value="__('Email Address')" />
+                                            <div class="input-group">
+                                                <span class="input-group-text  border-end-0">
+                                                    <img src="{{ asset('assets/images/svg/email.svg') }}"
+                                                        class="icon">
+                                                </span>
+                                                <x-text-input id="email" class="border-start-0 text-dark"
+                                                    type="email" name="email" :value="old('email')" placeholder="abc@gmail.com" required autofocus
+                                                    autocomplete="username" />
+                                            </div>
+                                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                        </div>
 
                                         <div class="row mb-3">
-                                           
                                             <div class="col-md-6">
                                                 <x-input-label for="password" :value="__('Password')" />
                                                 <div class="input-group">
@@ -74,13 +71,11 @@
                                                 </div>
                                                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                             </div>
-
                                             <div class="col-md-6">
                                                 <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
                                                 <div class="input-group">
                                                     <span class="input-group-text border-end-0">
-                                                        <img src="{{ asset('assets/images/svg/lock.svg') }}"
-                                                            class="icon">
+                                                        <img src="{{ asset('assets/images/svg/lock.svg') }}" class="icon" />
                                                     </span>
                                                     <x-text-input id="password_confirmation"
                                                         class="border-start-0 text-dark" type="password"
@@ -109,8 +104,7 @@
                                     <p class="text-justify">
                                         @lang('By creating an account, the user confirms that they have read and agree to')
                                         <a href="javascript:;" class="text-blue-dark">@lang('Hotelxplore’s General Terms')</a>
-                                        @lang('and the') <a href="javascript:;" class="text-blue-dark">
-                                            @lang('Data Processing Agreement')</a>.
+                                        @lang('and the') <a href="javascript:;" class="text-blue-dark"> @lang('Data Processing Agreement')</a>.
                                     </p>
                                 </div>
                             </div>
