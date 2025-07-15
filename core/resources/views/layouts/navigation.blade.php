@@ -108,12 +108,11 @@
                 </li>
             </ul>
         </nav>
-
-        <div class="fixed-profile   mb-2 mt-3">
+        <div class="fixed-profile mb-2 mt-3">
            <nav class="sidebar-nav scroll-sidebar"> 
             <ul id="sidebarnav">
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('profile.edit') }}"aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('properties.index') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-settings"></i>
                         </span>
@@ -143,7 +142,7 @@
                             <span>
                                 <i class="ti ti-power"></i>
                             </span>
-                            <span class="hide-menu">Logout</span>
+                            <span class="hide-menu">@lang('Logout')</span>
                         </a>
                     </form>
                 </li>
