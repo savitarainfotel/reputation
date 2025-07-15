@@ -9,8 +9,7 @@
                         )" />
                     </div>
                     <div class="col-lg-6 col-xxl-6">
-                        <div
-                            class="authentication-login min-vh-100 bg-body row justify-content-center align-items-center p-4">
+                        <div class="authentication-login min-vh-100 bg-body row justify-content-center align-items-center p-4">
                             <div class="auth-max-width col-sm-8 col-md-6 col-xl-7 px-4">
                                 <div class="card p-3 border shadow-none">
                                     <h2 class="mb-4 fs-7 fw-bolder">@lang('Sign In')</h2>

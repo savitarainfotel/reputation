@@ -16846,7 +16846,7 @@ progress {
 .form-control {
   display: block;
   width: 100%;
-  padding: 8px 16px;
+  padding: 8px;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
@@ -17425,7 +17425,7 @@ textarea.form-control-lg {
 .input-group-text {
   display: flex;
   align-items: center;
-  padding: 8px 16px;
+  padding: 8px 0 8px 8px;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
