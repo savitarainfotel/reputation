@@ -19,18 +19,18 @@
                             @csrf
 
                             <div>
-                                <x-primary-button>
+                                <x-secondary-button>
                                     {{ __('Resend Verification Email') }}
-                                </x-primary-button>
+                                </x-secondary-button>
                             </div>
                         </form>
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-primary-button type="submit">
+                            <x-secondary-button type="submit">
                                 {{ __('Log Out') }}
-                            </x-primary-button>
+                            </x-secondary-button>
                         </form>
                     </div>
                 </div>
