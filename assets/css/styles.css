@@ -14672,7 +14672,7 @@
   --bs-gray-700: #495057;
   --bs-gray-800: #343a40;
   --bs-gray-900: #212529;
-  --bs-primary: #5d87ff;
+  --bs-primary: #152C56;
   --bs-secondary: #49beff;
   --bs-success: #13deb9;
   --bs-info: #539bff;
@@ -29479,7 +29479,7 @@ ul {
   }
   [data-layout="vertical"] body[data-sidebartype="mini-sidebar"] .logo-img {
     width: 40px;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
   [data-layout="vertical"]
     body[data-sidebartype="mini-sidebar"]
@@ -29495,7 +29495,7 @@ ul {
     text-align: center;
   }
   [data-layout="vertical"] body[data-sidebartype="mini-sidebar"] .left-sidebar {
-    width: 87px;
+    width: 70px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
   }
   [data-layout="vertical"]
@@ -29524,14 +29524,14 @@ ul {
   [data-layout="vertical"]
     body[data-sidebartype="mini-sidebar"]
     .left-sidebar:hover {
-    width: 270px;
+    /* width: 270px; */
     z-index: 50;
   }
   [data-layout="vertical"]
     body[data-sidebartype="mini-sidebar"]
     .left-sidebar:hover
     .logo-img {
-    width: 100%;
+    /* width: 100%; */
   }
   [data-layout="vertical"]
     body[data-sidebartype="mini-sidebar"]
@@ -29553,13 +29553,15 @@ ul {
   [data-layout="vertical"]
     body[data-sidebartype="mini-sidebar"]
     .left-sidebar:hover
-    .hide-menu,
+    .hide-menu{
+    display: inline-block;
+    }
   [data-layout="vertical"]
     body[data-sidebartype="mini-sidebar"]
     .left-sidebar:hover
     .sidebar-nav
     .has-arrow::after {
-    display: inline-block;
+    display: none;
   }
   [data-layout="vertical"]
     body[data-sidebartype="mini-sidebar"]
@@ -29568,7 +29570,7 @@ ul {
     ul
     .sidebar-item
     .sidebar-link {
-    padding: 11px 15px;
+    /* padding: 11px 15px; */
   }
   [data-layout="vertical"]
     body[data-sidebartype="mini-sidebar"]
@@ -29582,7 +29584,7 @@ ul {
     body[data-sidebartype="mini-sidebar"]
     .left-sidebar:hover
     .logo-img {
-    width: 100%;
+    /* width: 100%; */
   }
 }
 html[data-boxed-layout="boxed"] .container-fluid,
@@ -29634,12 +29636,12 @@ html[data-boxed-layout="boxed"] .container-xxl {
 }
 .sidebar-nav ul .sidebar-item .sidebar-link {
   display: flex;
-  font-size: 14px;
+  font-size: 18px;
   white-space: nowrap;
   align-items: center;
   line-height: 25px;
   position: relative;
-  margin: 0 0 2px;
+  /* margin: 0 0 2px; */
   padding: 10px;
   border-radius: 7px;
   gap: 15px;
@@ -29655,8 +29657,8 @@ html[data-boxed-layout="boxed"] .container-xxl {
   font-size: 21px;
 }
 .sidebar-nav ul .sidebar-item .sidebar-link:hover {
-  background: var(--bs-primary-bg-subtle);
-  color: var(--bs-primary);
+  background: var(--bs-primary);
+  color: var(--bs-white);
 }
 .sidebar-nav ul .sidebar-item .sidebar-link:hover.has-arrow::after {
   border-color: var(--bs-primary);
@@ -29747,12 +29749,12 @@ html[data-boxed-layout="boxed"] .container-xxl {
 }
 @media (min-width: 1300px) {
   [data-layout="vertical"] [data-sidebartype="mini-sidebar"] .left-sidebar {
-    width: 87px;
+    width: 70px;
   }
   [data-layout="vertical"]
     [data-sidebartype="mini-sidebar"]
     .left-sidebar:hover {
-    width: 270px;
+    /* width: 270px; */
     position: fixed;
     height: 100vh;
   }
@@ -29797,16 +29799,16 @@ html[data-boxed-layout="boxed"] .container-xxl {
 .sidebar-nav .has-arrow::after {
   position: absolute;
   content: "";
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-width: 1px 0 0 1px;
   border-style: solid;
-  border-color: var(--bs-dark-text-emphasis);
+  border-color: var(--bs-light-text-emphasis);
   margin-left: 10px;
   transform: rotate(135deg) translate(0, -50%);
   transform-origin: top;
-  top: 22px;
-  right: 15px;
+  top: 24px;
+  right: -1px;
   transition: all 0.3s ease-out;
 }
 .sidebar-nav .has-arrow[aria-expanded="true"]::after,
@@ -31048,7 +31050,7 @@ body table.dataTable > tbody > tr.selected > * {
   margin: 0 5px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center;  
 }
 .nav-icon-hover-bg:hover {
   background-color: var(--bs-primary-bg-subtle);
@@ -38684,4 +38686,18 @@ body .connect-sorting-content {
   .shop-color-list
   .shop-colors-item.shop-colors-7 {
   background-color: pink;
+}
+ul.first-level{
+  margin-top: 15px;
+}
+ul.first-level .sidebar-item{  
+  height: auto;
+  width: 2px; 
+  background-color: var(--bs-white);
+  margin:0 1rem;
+  
+}
+ul.first-level .sidebar-item:hover{
+  width: 3px;
+ 
 }
