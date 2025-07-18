@@ -24,3 +24,81 @@ function validatePassword() {
 }
 
 $('#password, #password_confirmation').on('input', validatePassword);
+
+const notify = (text) => {
+    toastr.info(
+      text,
+      ``,
+      {
+        positionClass: "toastr toast-top-center",
+        containerId: "toast-top-center",
+      }
+    );
+}
+
+const ajax_error_message_rsp = (jqXHR, exception) => {
+	let _ajx_error_msg = "";
+    
+	if (jqXHR.status === 0) {
+		_ajx_error_msg = "Not connect.\n Verify Network.";
+	} else if (jqXHR.status == 404) {
+		_ajx_error_msg = "Requested page not found. [404]";
+	} else if (jqXHR.status == 500) {
+		_ajx_error_msg = "Internal Server Error [500].";
+	} else if (exception === "parsererror") {
+		_ajx_error_msg = "Requested JSON parse failed.";
+	} else if (exception === "timeout") {
+		_ajx_error_msg = "Time out error.";
+	} else if (exception === "abort") {
+		_ajx_error_msg = "Ajax request aborted.";
+	} else {
+		try {
+			const responseJson = JSON.parse(jqXHR.responseText);
+			_ajx_error_msg = responseJson.message || "Unknown error occurred";
+		} catch (e) {
+			_ajx_error_msg = "Uncaught Error.";
+		}
+	}
+
+	return _ajx_error_msg;
+}
+
+$(document).on('click', '.general-modal-button', function(event) {
+	const modal = $('#general-modal');
+
+	if (event.originalEvent && event.originalEvent.isTrusted) {
+        const action = $(this).data('action');
+		const form = createForm(action, "GET", {});
+
+		submitForm(form, true).done(function(response){
+			if (response.html) {
+				modal.find('form').attr('action', action);
+				modal.find('.modal-body').html(response.html);
+				modal.find('.modal-dialog').removeClass('modal-xl');
+				validateForm(".general-modal-form");
+				if(response.footer) {
+					modal.find('.modal-footer').html(response.footer);
+				}
+				if(response.title) {
+					modal.find('.modal-title').text(response.title);
+				}
+				if(response.classXl) {
+					modal.find('.modal-dialog').addClass('modal-xl');
+				}
+				modal.modal('show');
+			}
+		});
+    } else {
+		let data = $(this).data();
+		modal.find('form').attr('action', `${data.action}`);
+		modal.find('.modal-body').html(data.question);
+		validateForm(".general-modal-form");
+		if(data.footer) {
+			modal.find('.modal-footer').html(data.footer);
+		}
+		if(data.title) {
+			modal.find('.modal-title').text(data.title);
+		}
+		modal.modal('show');
+    }
+});
