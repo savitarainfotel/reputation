@@ -18,7 +18,8 @@ class PropertiesController extends Controller
      */
     public function index(Request $request): View
     {
-        return view('properties.list');
+        $data['properties'] = Property::all();
+        return view('properties.list', $data);
     }
 
     /**
@@ -46,10 +47,10 @@ class PropertiesController extends Controller
     /**
      * Show the form for creating or updating a new resource.
      */
-    public function infos(Request $request): View|JsonResponse
+    public function infos(Request $request, Property $property): View|JsonResponse
     {
         if ($request->isMethod('get')) {
-            $data['property'] = new Property();
+            $data['property'] = $property;
             $data['title']    = __('Add More Platforms');
 
             return view('properties.infos', $data);
