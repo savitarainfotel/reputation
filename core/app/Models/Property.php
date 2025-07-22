@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Property extends Model
 {
-    //
+    protected $casts = [
+        'googleapis_log' => 'object',
+    ];
 }

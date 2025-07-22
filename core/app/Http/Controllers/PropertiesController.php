@@ -7,6 +7,9 @@ use Illuminate\View\View;
 use App\Models\Property;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PropertiesController extends Controller
 {
@@ -21,34 +24,45 @@ class PropertiesController extends Controller
     /**
      * Show the form for creating or updating a new resource.
      */
-    public function addOrUpdate(Request $request): JsonResponse
+    public function addOrUpdate(Request $request): View|JsonResponse
     {
-        if (!$request->ajax()) {
-            return abort(404);
-        }
-
         if ($request->isMethod('get')) {
-            $property = new Property();
-            return $this->returnForm($request, $property);
+            $data['property'] = new Property();
+            $data['title']    = __('Find Your Business');
+
+            return view('properties.form', $data);
         }
 
         if ($request->isMethod('post')) {
+            if (!$request->ajax()) {
+                return abort(404);
+            }
+
             $property = new Property();
             return $this->processForm($request, $property);
         }
     }
 
     /**
-     * Process the resource in storage.
+     * Show the form for creating or updating a new resource.
      */
-    private function returnForm(Request $request, Property $property): JsonResponse
+    public function infos(Request $request): View|JsonResponse
     {
-        $data['property'] = $property;
+        if ($request->isMethod('get')) {
+            $data['property'] = new Property();
+            $data['title']    = __('Add More Platforms');
 
-        $view = view('properties.form', $data)->render();
-        $title = __($property->exists ? __('Update property') : __('Create property'));
+            return view('properties.infos', $data);
+        }
 
-        return response()->json(['html' => $view, 'title' => $title, 'classXl' => true, 'triggerMethod' => $property->exists ? '' : 'initAutocomplete']);
+        /* if ($request->isMethod('post')) {
+            if (!$request->ajax()) {
+                return abort(404);
+            }
+
+            $property = new Property();
+            return $this->processInfoForm($request, $property);
+        } */
     }
 
     /**
@@ -57,8 +71,6 @@ class PropertiesController extends Controller
     private function processForm(Request $request, Property $property): JsonResponse
     {
         $this->validateRequest($request, $property);
-
-        dd($property);
         $user   = authUser();
         $userId = $user->id;
 
@@ -67,57 +79,17 @@ class PropertiesController extends Controller
             $property->place_id     = $request->place_id;
             $property->latitude     = $request->latitude;
             $property->longitude    = $request->longitude;
-            $property->address      = $request->address;
-            $property->star_rating  = $request->star_rating;
-            $property->city_id      = $city->id;
             $property->created_by   = $userId;
+            $property->client_id    = $userId;
+            $property->reviews      = 0;
         }
 
-        $property->user_id      = $request->user_id;
         $property->updated_by   = $userId;
-
-        if($request->image_url) {
-            $response = Http::get($request->image_url);
-
-            if ($response->successful()) {
-                $extension = match ($response->header('Content-Type')) {
-                    'image/jpeg' => 'jpg',
-                    'image/png' => 'png',
-                    'image/webp' => 'webp',
-                    default => 'jpg',
-                };
-    
-                $property->property_image = Str::slug($property->name) . '.' . $extension;
-
-                Storage::disk('public')->put(getFilePath('property-images') . $property->property_image, $response->body());
-            }
-        }
 
         $saved = $property->save();
 
-        if($saved && $property->wasRecentlyCreated) {
-            $requestArray = [
-                "api-token"     => $user->createToken('api-token')->plainTextToken,
-                "property_id"   => $property->id,
-                "property_name" => $property->name,
-                "city_name"     => $city->name,
-                "latitude"      => $property->latitude,
-                "longitude"     => $property->longitude,
-            ];
-
-            try {
-                $response = Http::post("https://api.xplorerate.com/api/property/new", $requestArray)->json();
-            } catch (ConnectionException $e) {
-                $response = ['error' => 'The request timed out. Please try again later.'];
-            }
-
-            $property->scrap_request  = $requestArray;
-            $property->scrap_response = $response;
-            $property->save();
-        }
-
         $message = $saved
-            ? ['message' => __("Property " . ($property->wasRecentlyCreated ? 'added' : 'updated') . " successfully"), 'reloadTable' => 'properties-table', 'closeModal' => 'general-modal']
+            ? ['message' => __("Property " . ($property->wasRecentlyCreated ? 'added' : 'updated') . " successfully"), 'redirect' => route('properties.infos', $property->id)]
             : ['message' => __("Some error occurred")];
 
         return response()->json($message);
@@ -134,21 +106,8 @@ class PropertiesController extends Controller
                     'required',
                     'string',
                     'max:250',
-                    Rule::unique('properties')->ignore($property?->id ?? null),
                 ],
-                'address' => ['required', 'string'],
-                'latitude' => ['required', 'numeric', 'between:-90,90'],
-                'longitude' => ['required', 'numeric', 'between:-180,180'],
-                'place_id' => ['required', 'string'],
-                'image_url' => ['nullable', 'url'],
-                'city' => ['required', 'string', 'max:100'],
-                'state' => ['required', 'string', 'max:100'],
-                'country' => ['required', 'string', 'max:100'],
-                'user_id' => ['nullable', 'exists:users,id']
-            ]);
-        } else {
-            $request->validate([
-                'user_id' => ['nullable', 'exists:users,id']
+                'place_id' => ['required', 'string']
             ]);
         }
     }

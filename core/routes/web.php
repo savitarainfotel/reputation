@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(PropertiesController::class)->name('properties.')->prefix('properties')->group(function () {
         Route::get('', 'index')->name('index');
         Route::match(['get', 'post'], 'add', 'addOrUpdate')->name('create');
+        Route::match(['get', 'post'], 'infos/{id?}', 'infos')->name('infos');
     });
 });
 
