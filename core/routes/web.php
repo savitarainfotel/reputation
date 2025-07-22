@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompititorsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
@@ -18,6 +19,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::controller(PropertiesController::class)->name('properties.')->prefix('properties')->group(function () {
+        Route::get('', 'index')->name('index');
+    });
+
+    Route::controller(CompititorsController::class)->name('compititors.')->prefix('compititors')->group(function () {
         Route::get('', 'index')->name('index');
     });
 });
