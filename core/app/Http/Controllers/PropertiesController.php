@@ -7,9 +7,7 @@ use Illuminate\View\View;
 use App\Models\Property;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+use App\Events\ImageDownload;
 
 class PropertiesController extends Controller
 {
@@ -110,6 +108,8 @@ class PropertiesController extends Controller
         $property->updated_by   = $userId;
 
         $saved = $property->save();
+
+        event(new ImageDownload($request->image_url, $property));
 
         $message = $saved
             ? ['message' => __("Property " . ($property->wasRecentlyCreated ? 'added' : 'updated') . " successfully"), 'redirect' => route('properties.add.platforms', $property)]
