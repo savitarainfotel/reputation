@@ -18,7 +18,7 @@ class PropertiesController extends Controller
      */
     public function index(Request $request): View
     {
-        $data['properties'] = Property::all();
+        $data['properties'] = Property::where('client_id', authUser()->id)->get();
         return view('properties.list', $data);
     }
 
@@ -42,6 +42,28 @@ class PropertiesController extends Controller
             $property = new Property();
             return $this->processForm($request, $property);
         }
+    }
+
+    /**
+     * Show the form for creating or updating a new resource.
+     */
+    public function addPlatforms(Request $request, Property $property): View|JsonResponse
+    {
+        if ($request->isMethod('get')) {
+            $data['property'] = $property;
+            $data['title']    = __('Add More Platforms');
+
+            return view('properties.add-platforms', $data);
+        }
+
+        /* if ($request->isMethod('post')) {
+            if (!$request->ajax()) {
+                return abort(404);
+            }
+
+            $property = new Property();
+            return $this->processInfoForm($request, $property);
+        } */
     }
 
     /**
@@ -90,7 +112,7 @@ class PropertiesController extends Controller
         $saved = $property->save();
 
         $message = $saved
-            ? ['message' => __("Property " . ($property->wasRecentlyCreated ? 'added' : 'updated') . " successfully"), 'redirect' => route('properties.infos', $property->id)]
+            ? ['message' => __("Property " . ($property->wasRecentlyCreated ? 'added' : 'updated') . " successfully"), 'redirect' => route('properties.add.platforms', $property)]
             : ['message' => __("Some error occurred")];
 
         return response()->json($message);

@@ -3,13 +3,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-start overflow-auto">
-                    <div class="stepper-item {{ showActive('properties.create') }} ">
+                    <div class="stepper-item {{ showActive('properties.create') }} {{ showActive('properties.add.platforms') }} {{ showActive('properties.infos') }}">
                         <div class="stepper-circle">
                             <i class="fas fa-search"></i>
                         </div>
                         <div class="stepper-label">@lang('Find Your Business')</div>
                     </div>
-                    <div class="stepper-item {{ showActive('properties.add.platforms') }}">
+                    <div class="stepper-item {{ showActive('properties.add.platforms') }} {{ showActive('properties.infos') }}">
                         <div class="stepper-circle">
                             <i class="fas fa-filter"></i>
                         </div>
