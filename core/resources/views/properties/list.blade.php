@@ -10,7 +10,7 @@
     </div>
 
     @push('script')
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMznm-jJXo1zOwHyFkQz8WgwEKegN7BsQ&libraries=places" defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key={{ gs('maps-api') }}&libraries=places" defer></script>
         <script>
             let map;
             let marker;
