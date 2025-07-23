@@ -21,7 +21,7 @@
                             <div class="col-md-9 col-12 mb-4">
                                 <div class="row">
                                     <div class="input-group border rounded-1">
-                                        <input type="text" class="form-control border-0 ps-2" id="" placeholder="@lang('Your property URL')" />
+                                        <x-text-input data-action="{{ route('platforms.search') }}" data-method="get" name="platform[{{ $platform->encId }}]" type="text" class="border-0 focus-in-field" placeholder="Your property URL" maxlength="255" />
                                         <a href="{{ $platform->platform_url }}" class="input-group-text bg-transparent px-6 border-0 text-danger pe-0" target="_blank">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="round-20"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"></path></svg>
                                         </a>

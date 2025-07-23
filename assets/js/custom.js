@@ -102,3 +102,27 @@ $(document).on('click', '.general-modal-button', function(event) {
 		modal.modal('show');
     }
 });
+
+$('.focus-in-field').each(function() {
+	$(this).on("focusin", function() {
+		$(this).data("original-value", $(this).val().trim());
+	});
+
+	$(this).on("input", function() {
+		const newValue = $(this).val().trim();
+		const originalValue = $(this).data("original-value").trim();
+
+		if (newValue !== '' && newValue !== originalValue) {
+			const action = $(this).data('action');
+			const method = $(this).data('method');
+			const name = $(this).attr('name');
+			const form = createForm(action, method, {
+				[name]: newValue
+			});
+
+			submitForm(form, true);
+		}
+
+		return;
+	});
+});
