@@ -8,6 +8,7 @@ use App\Models\Property;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Rule;
 use App\Events\ImageDownload;
+use App\Events\GoogleReviewsScrape;
 
 class PropertiesController extends Controller
 {
@@ -110,6 +111,7 @@ class PropertiesController extends Controller
         $saved = $property->save();
 
         event(new ImageDownload($request->image_url, $property));
+        event(new GoogleReviewsScrape($property));
 
         $message = $saved
             ? ['message' => __("Property " . ($property->wasRecentlyCreated ? 'added' : 'updated') . " successfully"), 'redirect' => route('properties.add.platforms', $property)]
