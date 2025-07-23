@@ -11,31 +11,49 @@
                 </p>
                 <div class="col-12 mt-4">
                     <div class="row">
-                        <div class="col-lg-4">
-                            <div class="card overflow-hidden hover-img">
-                                <div class="position-relative">
-                                <a href="javascript:void(0)">
-                                    <img src="../assets/images/blog/blog-img1.jpg" class="card-img-top" alt="modernize-img">
-                                </a>
-                                <span class="badge text-bg-light text-dark fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">2
-                                    min Read</span>
-                                <img src="../assets/images/profile/user-3.jpg" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Georgeanna Ramero">
+                        @if ($property->platforms->count())
+                            @foreach ($property->platforms as $platform)
+                                <div class="col-lg-5">
+                                    <div class="card h-95">
+                                        <div class="position-relative">
+                                            <a href="javascript:void(0)">
+                                                {!! $property->getImageLink('card-img-top', '200') !!}
+                                            </a>
+                                            <img src="{{ gs('admin-url') }}uploads/platforms-logos/{{ $platform->platform->logo }}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9 bg-white p-1" width="40" height="40">
+                                        </div>
+                                        <div class="card-body p-4">
+                                            <a class="d-block my-4 fs-3 text-dark fw-semibold link-primary mb-2" href="javascript:void(0)">{{ $property->name }}</a>
+                                            <p class="text-justify">
+                                                {{ $property->address }}
+                                            </p>
+                                            <div class="d-flex align-items-center gap-4">
+                                                <a href="javascript:void(0)" class="btn btn-light d-flex align-items-center gap-2 {{ $platform->platform->is_default == TRUE ? 'disabled' : '' }}" disabled>
+                                                    <i class="ti ti-trash text-dark fs-5"></i>
+                                                </a>
+                                                <a href="javascript:void(0)" class="btn btn-light d-flex align-items-center gap-2 {{ $platform->platform->is_default == TRUE ? 'disabled' : '' }}" disabled>
+                                                    <i class="ti ti-edit text-dark fs-5"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-body p-4">
-                                <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3">Social</span>
-                                <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" href="javascript:void(0)">As yen tumbles, gadget-loving Japan goes
-                                    for secondhand iPhones</a>
-                                <div class="d-flex align-items-center gap-4">
-                                    <div class="d-flex align-items-center gap-2">
-                                    <i class="ti ti-eye text-dark fs-5"></i>9,125
+                            @endforeach
+                        @endif
+                        <div class="col-lg-5">
+                            <div class="card h-95">
+                                <div class="card-body d-flex justify-content-center align-items-center">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="mb-6 round-32">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="col-12 text-center">
+                                            <x-secondary-button type="button" class="general-modal-button" data-action="{{ route('platforms.create', $property) }}">
+                                                @lang('Add another listing')
+                                            </x-secondary-button>
+                                        </div>
                                     </div>
-                                    <div class="d-flex align-items-center gap-2">
-                                    <i class="ti ti-message-2 text-dark fs-5"></i>3
-                                    </div>
-                                    <div class="d-flex align-items-center fs-2 ms-auto">
-                                    <i class="ti ti-point text-dark"></i>Mon, Dec 19
-                                    </div>
-                                </div>
                                 </div>
                             </div>
                         </div>

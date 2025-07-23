@@ -55,9 +55,9 @@ class PropertiesController extends Controller
         if ($request->isMethod('get')) {
             $data['property']  = $property;
             $data['title']     = __('Add More Platforms');
-            $data['platforms'] = Platform::where('exclude', Status::NO)->where('is_default', Status::NO)->where('is_delete', Status::NO)->get();
+            $platformsCount    = Platform::where('exclude', Status::NO)->where('is_default', Status::NO)->where('is_delete', Status::NO)->count();
 
-            if(!$data['platforms']->count()) {
+            if(!$platformsCount) {
                 return redirect()->route('properties.infos', $property);
             }
 

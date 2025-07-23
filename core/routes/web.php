@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(PlatformsController::class)->name('platforms.')->prefix('platforms')->group(function () {
         Route::get('search/{property}/{platform}', 'search')->name('search');
+        Route::match(['get', 'post'], 'add/{property}/{platform?}', 'addOrUpdate')->name('create');
     });
 });
 
