@@ -10,9 +10,13 @@
                     @lang('Simply search your location on Google Maps. Your business is not listed on Google? Hit \'skip\' to use our copy-paste generator without Review Inbox or Analytics.')
                 </p>
                 <div class="form-group mb-3">
-                    <x-input-label for="autocomplete" :value="__('Property Name')" />
-                    <x-text-input id="autocomplete" type="text" value="{{ $property->name }}" maxlength="255" required />
-                    <x-text-input id="name" name="name" type="text" value="{{ $property->name }}" hidden />
+                    <div class="input-group border rounded-1">
+                        <span class="input-group-text bg-transparent px-6 border-0" id="basic-addon1">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        <x-text-input id="autocomplete" type="text" class="border-0" value="{{ $property->name }}" maxlength="255" required placeholder="Search your business on Google Maps" />
+                        <x-text-input id="name" name="name" type="text" value="{{ $property->name }}" hidden />
+                    </div>
                     <input id="address" name="address" type="address" hidden />
                     <input id="latitude" name="latitude" type="latitude" hidden />
                     <input id="longitude" name="longitude" type="longitude" hidden />

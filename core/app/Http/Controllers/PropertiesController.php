@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Property;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
 use App\Events\ImageDownload;
 use App\Events\GoogleReviewsScrape;
+use App\Models\Platform;
+use App\Constants\Status;
 
 class PropertiesController extends Controller
 {
@@ -46,11 +49,16 @@ class PropertiesController extends Controller
     /**
      * Show the form for creating or updating a new resource.
      */
-    public function addPlatforms(Request $request, Property $property): View|JsonResponse
+    public function addPlatforms(Request $request, Property $property): View|JsonResponse|RedirectResponse
     {
         if ($request->isMethod('get')) {
-            $data['property'] = $property;
-            $data['title']    = __('Add More Platforms');
+            $data['property']  = $property;
+            $data['title']     = __('Add More Platforms');
+            $data['platforms'] = Platform::where('exclude', Status::NO)->where('is_default', Status::NO)->where('is_delete', Status::NO)->get();
+
+            if(!$data['platforms']->count()) {
+                return redirect()->route('properties.infos', $property);
+            }
 
             return view('properties.add-platforms', $data);
         }
