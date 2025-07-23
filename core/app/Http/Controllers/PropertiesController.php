@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 use App\Events\ImageDownload;
 use App\Events\GoogleReviewsScrape;
 use App\Models\Platform;
+use App\Models\RatingSetting;
 use App\Constants\Status;
 
 class PropertiesController extends Controller
@@ -103,26 +104,36 @@ class PropertiesController extends Controller
         $this->validateRequest($request, $property);
         $user   = authUser();
         $userId = $user->id;
-
-        if (!$property->exists) {
-            $property->name         = $request->name;
-            $property->place_id     = $request->place_id;
-            $property->latitude     = $request->latitude;
-            $property->longitude    = $request->longitude;
-            $property->created_by   = $userId;
-            $property->client_id    = $userId;
-            $property->reviews      = 0;
-        }
-
+        
+        $property->name         = $request->name;
+        $property->place_id     = $request->place_id;
+        $property->latitude     = $request->latitude;
+        $property->longitude    = $request->longitude;
+        $property->address      = $request->address;
+        $property->created_by   = $userId;
+        $property->client_id    = $userId;
         $property->updated_by   = $userId;
-
+        $property->reviews      = 0;
         $saved = $property->save();
+
+        $platform = Platform::where('is_default', Status::YES)->where('is_delete', Status::NO)->first();
+
+        if($platform) {
+            $ratingSetting = new RatingSetting();
+            $ratingSetting->property_id = $property->id;
+            $ratingSetting->rating_platform_id = $platform->id;
+            $ratingSetting->status = Status::YES;
+            $ratingSetting->min_rating = 4;
+            $ratingSetting->average_review = 4;
+            $ratingSetting->rating_url = "https://search.google.com/local/writereview?placeid={$request->place_id}";
+            $ratingSetting->save();
+        }
 
         event(new ImageDownload($request->image_url, $property));
         event(new GoogleReviewsScrape($property));
 
         $message = $saved
-            ? ['message' => __("Property " . ($property->wasRecentlyCreated ? 'added' : 'updated') . " successfully"), 'redirect' => route('properties.add.platforms', $property)]
+            ? ['message' => __("Property added successfully"), 'redirect' => route('properties.add.platforms', $property)]
             : ['message' => __("Some error occurred")];
 
         return response()->json($message);

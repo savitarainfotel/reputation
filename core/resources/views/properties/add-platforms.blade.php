@@ -10,34 +10,41 @@
                     @lang('We\'ve added the following profiles for the different platforms. Confirm the selection or add/change a listing if needed.')
                 </p>
                 <div class="col-12 mt-4">
-                    @foreach ($platforms as $platform)
-                        <div class="row">
-                            <div class="col-md-3 col-12 mb-4">
-                                <span class="border border-dark rounded me-2 py-3 px-2 ">
-                                    <img src="{{ gs('admin-url') }}uploads/platforms-logos/{{ $platform->logo }}" alt="icon" class="round-32" />
-                                </span>
-                                <x-input-label for="autocomplete" :value="__($platform->platform)" />
-                            </div>
-                            <div class="col-md-9 col-12 mb-4">
-                                <div class="row">
-                                    <div class="input-group border rounded-1">
-                                        <x-text-input data-action="{{ route('platforms.search') }}" data-method="get" name="platform[{{ $platform->encId }}]" type="text" class="border-0 focus-in-field" placeholder="Your property URL" maxlength="255" />
-                                        <a href="{{ $platform->platform_url }}" class="input-group-text bg-transparent px-6 border-0 text-danger pe-0" target="_blank">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="round-20"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"></path></svg>
-                                        </a>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card overflow-hidden hover-img">
+                                <div class="position-relative">
+                                <a href="javascript:void(0)">
+                                    <img src="../assets/images/blog/blog-img1.jpg" class="card-img-top" alt="modernize-img">
+                                </a>
+                                <span class="badge text-bg-light text-dark fs-2 lh-sm mb-9 me-9 py-1 px-2 fw-semibold position-absolute bottom-0 end-0">2
+                                    min Read</span>
+                                <img src="../assets/images/profile/user-3.jpg" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9" width="40" height="40" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Georgeanna Ramero">
+                                </div>
+                                <div class="card-body p-4">
+                                <span class="badge text-bg-light fs-2 py-1 px-2 lh-sm  mt-3">Social</span>
+                                <a class="d-block my-4 fs-5 text-dark fw-semibold link-primary" href="javascript:void(0)">As yen tumbles, gadget-loving Japan goes
+                                    for secondhand iPhones</a>
+                                <div class="d-flex align-items-center gap-4">
+                                    <div class="d-flex align-items-center gap-2">
+                                    <i class="ti ti-eye text-dark fs-5"></i>9,125
                                     </div>
+                                    <div class="d-flex align-items-center gap-2">
+                                    <i class="ti ti-message-2 text-dark fs-5"></i>3
+                                    </div>
+                                    <div class="d-flex align-items-center fs-2 ms-auto">
+                                    <i class="ti ti-point text-dark"></i>Mon, Dec 19
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-12">
-                        <x-secondary-button type="submit" class="float-end py-8 mt-2 rounded-2 ms-3">
+                        <a href="{{ route('properties.infos', $property) }}" class="btn btn-secondary float-end py-8 mt-2 rounded-2 ms-3">
                             {{ __('Continue') }}
-                        </x-secondary-button>
-                        <a href="{{ route('properties.infos', $property) }}" class="btn btn-light float-end py-8 mt-2 rounded-2">
-                            {{ __('Skip') }}
                         </a>
                     </div>
                 </div>
