@@ -107,6 +107,70 @@ class PlatformsController extends Controller
     }
 
     /**
+     * Scrape the platforms url.
+     */
+    public function scrapeBooking(String $requestUrl, Property $property, Platform $platform): Array
+    {
+        try {
+            $response = Http::get($requestUrl);
+
+            if($response->successful()){
+                $crawler = new Crawler($response->body());
+
+                $return = ["platform_url" => $requestUrl, 'status' => Status::YES];
+
+                $titleNode = $crawler->filter('div[data-capla-component-boundary="b-property-web-property-page/PropertyHeaderName"]')->first();
+
+                if ($titleNode->count() && !empty($titleNode->text())) {
+                    $return['name']   = $titleNode->text();
+                }
+
+                $addressNode = $crawler->filter('div[data-testid="PropertyHeaderAddressDesktop-wrapper"]')->first();
+
+                if ($addressNode->count()) {
+                    $anchorNode = $addressNode->filter('a[data-atlas-latlng]')->first();
+
+                    if ($anchorNode->count()) {
+                        $buttonNode = $addressNode->filter('button')->first();
+
+                        if ($buttonNode->count()) {
+                            $divNode = $buttonNode->filter('div')->first();
+
+                            if ($divNode->count()) {
+                                $firstDivNode = $divNode->getNode(0);
+
+                                if(!empty($firstDivNode->childNodes)) {
+                                    $address = '';
+
+                                    foreach ($firstDivNode->childNodes as $child) {
+                                        if ($child->nodeType === XML_TEXT_NODE) {
+                                            $address .= $child->nodeValue;
+                                        }
+                                    }
+
+                                    $return['address'] = trim($address);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                $imageNode = $crawler->filter('div#photo_wrapper img')->first();
+
+                if ($imageNode->count()) {
+                    $return['picture'] = $imageNode->attr('src');
+                }
+
+                return !empty($return['name']) && !empty($return['address']) && !empty($return['picture']) ? $return : ['message' => __("Unsupported platform URL.")];
+            } else {
+                return ['message' => __("Unsupported platform URL.")];
+            }
+        } catch (\Exception $e) {
+            return ['message' => __("Unsupported platform URL.")];
+        }
+    }
+
+    /**
      * Show the form for creating or updating a new resource.
      */
     public function addOrUpdate(Request $request, Property $property, RatingSetting $ratingSetting): JsonResponse
