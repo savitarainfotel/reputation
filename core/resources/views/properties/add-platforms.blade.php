@@ -17,14 +17,14 @@
                                     <div class="card h-95">
                                         <div class="position-relative">
                                             <a href="javascript:void(0)">
-                                                {!! $property->getImageLink('card-img-top', '200') !!}
+                                                {!! $platform->picture ? $platform->getImageLink('card-img-top', '200') : $property->getImageLink('card-img-top', '200') !!}
                                             </a>
                                             <img src="{{ gs('admin-url') }}uploads/platforms-logos/{{ $platform->platform->logo }}" alt="modernize-img" class="img-fluid rounded-circle position-absolute bottom-0 start-0 mb-n9 ms-9 bg-white p-1" width="40" height="40">
                                         </div>
                                         <div class="card-body p-4">
-                                            <a class="d-block my-4 fs-3 text-dark fw-semibold link-primary mb-2" href="javascript:void(0)">{{ $property->name }}</a>
+                                            <a class="d-block my-4 fs-3 text-dark fw-semibold link-primary mb-2" href="javascript:void(0)">{{ $platform->name ?? $property->name }}</a>
                                             <p class="text-justify">
-                                                {{ $property->address }}
+                                                {{ $platform->address ?? $property->address }}
                                             </p>
                                             <div class="d-flex align-items-center gap-4">
                                                 <a href="javascript:void(0)" class="btn btn-light d-flex align-items-center gap-2 {{ $platform->platform->is_default == TRUE ? 'disabled' : '' }}" disabled>

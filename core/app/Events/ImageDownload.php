@@ -2,15 +2,12 @@
 
 namespace App\Events;
 
-use Illuminate\Queue\SerializesModels;
 use App\Models\Property;
 use App\Models\RatingSetting;
 use Illuminate\Support\Str;
 
 class ImageDownload
 {
-    use SerializesModels;
-
     public $imagePath;
     public $property;
     public $ratingSetting;

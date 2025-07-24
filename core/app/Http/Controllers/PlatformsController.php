@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Property;
 use App\Models\Platform;
+use App\Models\RatingSetting;
 use App\Constants\Status;
 use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
+use App\Events\ImageDownload;
 
 class PlatformsController extends Controller
 {
@@ -107,17 +109,17 @@ class PlatformsController extends Controller
     /**
      * Show the form for creating or updating a new resource.
      */
-    public function addOrUpdate(Request $request, Property $property, Platform $platform): JsonResponse
+    public function addOrUpdate(Request $request, Property $property, RatingSetting $ratingSetting): JsonResponse
     {
         if (!$request->ajax()) {
             return abort(404);
         }
 
         if ($request->isMethod('get')) {
-            $data['property'] = $property;
-            $data['platform'] = $platform;
-            $platforms        = Platform::where('exclude', Status::NO)->where('is_default', Status::NO)->where('is_delete', Status::NO);
-            $ratingPlatforms  = $property->platforms->pluck('rating_platform_id');
+            $data['property']      = $property;
+            $data['ratingSetting'] = $ratingSetting;
+            $platforms             = Platform::where('exclude', Status::NO)->where('is_default', Status::NO)->where('is_delete', Status::NO);
+            $ratingPlatforms       = $property->platforms->pluck('rating_platform_id');
 
             if($ratingPlatforms->count()) {
                 $platforms->whereNotIn('id', $ratingPlatforms);
@@ -126,57 +128,48 @@ class PlatformsController extends Controller
             $data['platforms'] = $platforms->get();
 
             $view = view('platforms.form', $data)->render();
-            $title = __($platform->exists ? __('Update listing') : __('Add listing'));
+            $title = __($ratingSetting->exists ? __('Update listing') : __('Add listing'));
 
-            return response()->json(['html' => $view, 'title' => $title, 'triggerMethod' => $platform->exists ? '' : 'initSelectWithLogo']);
+            return response()->json(['html' => $view, 'title' => $title, 'triggerMethod' => $ratingSetting->exists ? '' : 'initSelectWithLogo']);
         }
 
         if ($request->isMethod('post')) {
-            return $this->processForm($request, $property, $platform);
-            // "platform_id" => "gw2qnwgv-kd79-em1n-93oj-8ylx4zr6p59y"
-            // "name" => "The Leela Ambience Convention Hotel Delhi"
-            // "address" => "1,CBD, Maharaja Surajmal Road, Near Yamuna Sports Complex, East Delhi, New Delhi and NCR, India, 110032"
-            // "picture" => "//pix8.agoda.net/hotelImages/393/393148/393148_13061319270013033438.jpg?ca=0&ce=1&s=1024x768"
-            // "platform_url" => "https://www.agoda.com/en-in/the-leela-ambience-convention-hotel/hotel/new-delhi-and-ncr-in.html"
-            // return $this->processForm($request, $property);
+            return $this->processForm($request, $property, $ratingSetting);
         }
     }
     
     /**
      * Process the resource in storage.
      */
-    private function processForm(Request $request, Property $property, Platform $platform): JsonResponse
+    private function processForm(Request $request, Property $property, RatingSetting $ratingSetting): JsonResponse
     {
-        $this->validateRequest($request, $property, $platform);
-        
-        $ratingSetting = new RatingSetting();
-        $ratingSetting->name = $request->name;
-        $ratingSetting->address = $request->address;
-        $ratingSetting->property_id = $property->id;
-        $ratingSetting->rating_platform_id = $platform->id;
-        $ratingSetting->status = Status::YES;
-        $ratingSetting->min_rating = 4;
-        $ratingSetting->average_review = 4;
-        $ratingSetting->rating_url = $request->platform_url;
-        // $ratingSetting->save();
+        $this->validateRequest($request, $property);
 
-        event(new ImageDownload($request->image_url, $property));
+        $platform = Platform::find($this->getDecodedId($request->platform_id));
 
-        $ratingSetting = new RatingSetting();
-        
-        $ratingSetting->property_id = $property->id;
-        $ratingSetting->rating_platform_id = $platform->id;
-        $ratingSetting->status = Status::YES;
-        $ratingSetting->min_rating = 4;
-        $ratingSetting->average_review = 4;
-        $ratingSetting->rating_url = "https://search.google.com/local/writereview?placeid={$request->place_id}";
-        $ratingSetting->save();
+        if($platform) {
+            if(!$ratingSetting->exists) {
+                $ratingSetting = new RatingSetting();
+            }
 
-        event(new ImageDownload($request->image_url, $property, $ratingSetting));
+            $ratingSetting->name = $request->name;
+            $ratingSetting->address = $request->address;
+            $ratingSetting->property_id = $property->id;
+            $ratingSetting->rating_platform_id = $platform->id;
+            $ratingSetting->status = Status::YES;
+            $ratingSetting->min_rating = 4;
+            $ratingSetting->average_review = 4;
+            $ratingSetting->rating_url = $request->platform_url;
+            $saved = $ratingSetting->save();
 
-        $message = $saved
-            ? ['message' => __("Property added successfully"), 'redirect' => route('properties.add.platforms', $property)]
-            : ['message' => __("Some error occurred")];
+            event(new ImageDownload($request->picture, $property, $ratingSetting, $request->name, ['ratingSetting']));
+
+            $message = $saved
+                ? ['message' => __("Listing added successfully"), 'redirect' => route('properties.add.platforms', $property)]
+                : ['message' => __("Some error occurred")];
+        } else {
+            $message = ['message' => __("Platform not found!")];
+        }
 
         return response()->json($message);
     }
@@ -184,7 +177,7 @@ class PlatformsController extends Controller
     /**
      * Validate the resource.
      */
-    private function validateRequest(Request $request, Property $property, Platform $platform)
+    private function validateRequest(Request $request, Property $property)
     {
         if (!$property->exists) {
             $request->validate([

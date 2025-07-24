@@ -2,16 +2,12 @@
 
 namespace App\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use App\Events\ImageDownload;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
-class HandleImageDownload implements ShouldQueue
+class HandleImageDownload 
 {
-    use InteractsWithQueue;
-
     /**
      * Handle the event.
      */
