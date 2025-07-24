@@ -1,6 +1,7 @@
 <!-- Sidebar Start -->
 <aside class="left-sidebar with-vertical">
-    <div>
+    <div class="position-relative">
+        <img src="{{ asset('assets/images/sidebar_background.png') }}" alt="" srcset="" class="position-absolute background-image">
         <div class="brand-logo d-flex align-items-center justify-content-center">
             <a href="{{ route('dashboard') }}" class="text-nowrap logo-img">
                 <img src="{{ asset('assets/images/logo.svg') }}" class="dark-logo" alt="Logo-Dark" height="50" />
@@ -24,40 +25,42 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                         <span class="d-flex">
-                            <i class="ti ti-layout-grid"></i>
+                            {{-- <i class="ti ti-layout-grid"></i> --}}
+                            <img src="{{ asset('assets/images/svg/answer.svg') }}" alt="answer" srcset="">
                         </span>
                         <span class="hide-menu">@lang('Answer Feedback')</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
                                     <i class="ti ti-circle"></i>
-                                </div>
+                                    
+                                </div> --}}
                                 <span class="hide-menu">@lang('Review inbox')</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
                                     <i class="ti ti-circle"></i>
-                                </div>
+                                </div> --}}
                                 <span class="hide-menu">@lang('Automation')</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
                                     <i class="ti ti-circle"></i>
-                                </div>
+                                </div> --}}
                                 <span class="hide-menu">@lang('Review Reply Generator')</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
                                     <i class="ti ti-circle"></i>
-                                </div>
+                                </div> --}}
                                 <span class="hide-menu">@lang('Rating Reply Generator')</span>
                             </a>
                         </li>
@@ -67,32 +70,33 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow " href="javascript:void(0)" aria-expanded="false">
                         <span class="d-flex">
-                            <i class="ti ti-layout-grid"></i>
+                            {{-- <i class="ti ti-layout-grid"></i> --}}
+                            <img src="{{ asset('assets/images/svg/property.svg') }}" alt="property" srcset="">
                         </span>
                         <span class="hide-menu">@lang('Property Overview')</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
                                     <i class="ti ti-circle"></i>
-                                </div>
+                                </div> --}}
                                 <span class="hide-menu">@lang('Group Overview')</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
                                     <i class="ti ti-circle"></i>
-                                </div>
+                                </div> --}}
                                 <span class="hide-menu">@lang('Review Insight')</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
                                     <i class="ti ti-circle"></i>
-                                </div>
+                                </div> --}}
                                 <span class="hide-menu">@lang('Report')</span>
                             </a>
                         </li>
@@ -101,7 +105,8 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="javascript:;" aria-expanded="false">
                         <span>
-                            <i class="ti ti-cpu"></i>
+                            {{-- <i class="ti ti-cpu"></i> --}}
+                            <img src="{{ asset('assets/images/svg/survey.svg') }}" alt="survey" srcset="">
                         </span>
                         <span class="hide-menu">@lang('Survey')</span>
                     </a>
@@ -114,7 +119,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('properties.index') }}" aria-expanded="false">
                         <span>
-                            <i class="ti ti-settings"></i>
+                            <img src="{{ asset('assets/images/svg/setting.svg') }}" alt="setting" srcset="">
                         </span>
                         <span class="hide-menu">@lang('Settings')</span>
                     </a>
@@ -122,7 +127,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="javascript:;" aria-expanded="false">
                         <span>
-                            <i class="ti ti-bug"></i>
+                            <img src="{{ asset('assets/images/svg/report.svg') }}" alt="report" srcset="">
                         </span>
                         <span class="hide-menu">@lang('Report Bug')</span>
                     </a>
@@ -130,7 +135,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="javascript:;" aria-expanded="false">
                         <span>
-                            <i class="ti ti-help"></i>
+                            <img src="{{ asset('assets/images/svg/help.svg') }}" alt="help" srcset="">
                         </span>
                         <span class="hide-menu">@lang('Help')</span>
                     </a>
@@ -140,7 +145,7 @@
                         @csrf
                         <a class="sidebar-link" href="javascript:;" onclick="event.preventDefault(); this.closest('form').submit();">
                             <span>
-                                <i class="ti ti-power"></i>
+                                <img src="{{ asset('assets/images/svg/logout.svg') }}" alt="logout" srcset="">
                             </span>
                             <span class="hide-menu">@lang('Logout')</span>
                         </a>

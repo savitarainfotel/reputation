@@ -24,3 +24,160 @@ function validatePassword() {
 }
 
 $('#password, #password_confirmation').on('input', validatePassword);
+
+const notify = (text) => {
+    toastr.info(
+      text,
+      ``,
+      {
+        positionClass: "toastr toast-top-center",
+        containerId: "toast-top-center",
+      }
+    );
+}
+
+const ajax_error_message_rsp = (jqXHR, exception) => {
+	let _ajx_error_msg = "";
+    
+	if (jqXHR.status === 0) {
+		_ajx_error_msg = "Not connect.\n Verify Network.";
+	} else if (jqXHR.status == 404) {
+		_ajx_error_msg = "Requested page not found. [404]";
+	} else if (jqXHR.status == 500) {
+		_ajx_error_msg = "Internal Server Error [500].";
+	} else if (exception === "parsererror") {
+		_ajx_error_msg = "Requested JSON parse failed.";
+	} else if (exception === "timeout") {
+		_ajx_error_msg = "Time out error.";
+	} else if (exception === "abort") {
+		_ajx_error_msg = "Ajax request aborted.";
+	} else {
+		try {
+			const responseJson = JSON.parse(jqXHR.responseText);
+			_ajx_error_msg = responseJson.message || "Unknown error occurred";
+		} catch (e) {
+			_ajx_error_msg = "Uncaught Error.";
+		}
+	}
+
+	return _ajx_error_msg;
+}
+
+$(document).on('click', '.general-modal-button', function(event) {
+	const modal = $('#general-modal');
+
+	if (event.originalEvent && event.originalEvent.isTrusted) {
+        const action = $(this).data('action');
+		const form = createForm(action, "GET", {});
+
+		submitForm(form, true).done(function(response){
+			if (response.html) {
+				modal.find('form').attr('action', action);
+				modal.find('.modal-body').html(response.html);
+				modal.find('.modal-dialog').removeClass('modal-xl');
+				validateForm(".general-modal-form");
+				if(response.footer) {
+					modal.find('.modal-footer').html(response.footer);
+				}
+				if(response.title) {
+					modal.find('.modal-title').text(response.title);
+				}
+				if(response.classXl) {
+					modal.find('.modal-dialog').addClass('modal-xl');
+				}
+				modal.modal('show');
+			}
+		});
+    } else {
+		let data = $(this).data();
+		modal.find('form').attr('action', `${data.action}`);
+		modal.find('.modal-body').html(data.question);
+		validateForm(".general-modal-form");
+		if(data.footer) {
+			modal.find('.modal-footer').html(data.footer);
+		}
+		if(data.title) {
+			modal.find('.modal-title').text(data.title);
+		}
+		modal.modal('show');
+    }
+});
+
+const initFocusInFields = (element) => {
+	$(element).each(function() {
+		$(this).on("focusin", function() {
+			$(this).data("original-value", $(this).val().trim());
+		});
+	
+		$(this).on("input", function() {
+			const newValue = $(this).val().trim();
+			const originalValue = $(this).data("original-value").trim();
+			const skeleton = $(this).data('skeleton').trim();
+
+			if(skeleton) {
+				$(`#${skeleton}`).hide();
+				$(`#${skeleton}`).addClass('loading-skeleton');
+			}
+	
+			if (newValue !== '' && newValue !== originalValue) {
+				const action = $(this).data('action');
+				const method = $(this).data('method');
+				const name = $(this).attr('name');
+				const form = createForm(action, method, {
+					[name]: newValue
+				});
+
+				$(`#${skeleton}`).show();
+	
+				submitForm(form, true).done(function(response){
+					if(skeleton) {
+						if(response.status) {
+							if(response.name) {
+								$(`input[name=name]`).val(response.name);
+								$(`input[name=picture]`).val(response.picture);
+								$(`input[name=address]`).val(response.address);
+								$(`input[name=platform_url]`).val(response.platform_url);
+
+								$(`#${skeleton}`).find('img').attr('src', response.picture);
+								$(`#${skeleton}`).find('.card-title').text(response.name);
+								$(`#${skeleton}`).find('.card-text').text(response.address);
+
+								$(`#${skeleton}`).removeClass('loading-skeleton');
+							}
+						} else {
+							$(`#${skeleton}`).hide();
+						}
+					}
+				}).fail(function(){
+					if(skeleton) {
+						$(`#${skeleton}`).hide();
+					}
+				});
+			}
+
+			return;
+		});
+	});
+}
+
+initFocusInFields('.focus-in-field');
+
+const logoFormat = (logo) => {
+	if (!logo.id) {
+		return logo.text;
+	}
+
+	return `<img src="${$(logo.element).data("logo")}" class="mb-1 me-2" /> ${logo.text}`;
+}
+
+const initSelectWithLogo = (element) => {
+	$(element).select2({
+		minimumResultsForSearch: Infinity,
+		templateResult: logoFormat,
+		templateSelection: logoFormat,
+		escapeMarkup: function (es) {
+			return es;
+		},
+        dropdownParent: $ ('#general-modal')
+	});
+}

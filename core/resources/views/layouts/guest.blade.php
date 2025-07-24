@@ -22,12 +22,12 @@
         {{ $slot }}
         <div class="dark-transparent sidebartoggler"></div>
         <!-- Import Js Files -->
+        <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
         <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('assets/libs/simplebar/dist/simplebar.min.js') }}"></script>
         <script src="{{ asset('assets/js/theme/app.init.js') }}"></script>
         <script src="{{ asset('assets/js/theme/theme.js') }}"></script>
         <script src="{{ asset('assets/js/theme/app.min.js') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="{{ asset('assets/js/custom.js') }}"></script>
 
         <!-- solar icons -->
