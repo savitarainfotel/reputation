@@ -1,43 +1,39 @@
 <x-app-layout>
     <x-add-property-top-nav />
 
-    <form action="{{ route('properties.create') }}" method="post" class="ajax-form">
+    <form action="{{ route('properties.infos', $property) }}" method="post" class="ajax-form">
         <div class="row">
             <div class="col-md-6 offset-md-3 col-12">
-                <small>@lang('Welcome to RMS! Set up your account in four easy steps.')</small>
-                <h4 class="mt-3 mb-3">@lang('Find Your Business')</h4>
+                <span>@lang('Welcome to RMS! Set up your account in four easy steps.')</span>
+                <h6 class="mt-3 mb-3">@lang('Step ') <span class="text-secondary">3/4</span></h6>
+                <h4 class="mt-3 mb-3">@lang('Is This Your Business Type?')</h4>
                 <p>
-                    @lang('Simply search your location on Google Maps. Your business is not listed on Google? Hit \'skip\' to use our copy-paste generator without Review Inbox or Analytics.')
+                    @lang('Can be changed later.')
                 </p>
                 <div class="form-group mb-3">
-                    <x-input-label for="autocomplete" :value="__('Property Name')" />
-                    <x-text-input id="autocomplete" type="text" value="{{ $property->name }}" maxlength="255" required />
-                    <x-text-input id="name" name="name" type="text" value="{{ $property->name }}" hidden />
-                    <input id="address" name="address" type="address" hidden />
-                    <input id="latitude" name="latitude" type="latitude" hidden />
-                    <input id="longitude" name="longitude" type="longitude" hidden />
-                    <input id="place_id" name="place_id" type="text" hidden />
-                    <input id="image_url" name="image_url" type="text" hidden />
-                    <input id="city" name="city" type="text" hidden />
-                    <input id="state" name="state" type="text" hidden />
-                    <input id="country" name="country" type="text" hidden />
+                    <input type="radio" class="btn-check" name="business_type" id="hotel" autocomplete="off" checked value="Hotel" />
+                    <label class="btn btn-outline-dark me-2" for="hotel">@lang('Hotel')</label>
+                    <input type="radio" class="btn-check" name="business_type" id="restaurant" autocomplete="off" {{ $property->business_type === "Restaurant" ? 'checked' : ''; }} value="Restaurant" />
+                    <label class="btn btn-outline-dark me-2" for="restaurant">@lang('Restaurant')</label>
+                    <input type="radio" class="btn-check" name="business_type" id="app" autocomplete="off" {{ $property->business_type === "App" ? 'checked' : ''; }} value="App" />
+                    <label class="btn btn-outline-dark me-2" for="app">@lang('App')</label>
+                    <input type="radio" class="btn-check" name="business_type" id="webshop" autocomplete="off" {{ $property->business_type === "Webshop" ? 'checked' : ''; }} value="Webshop" />
+                    <label class="btn btn-outline-dark me-2" for="webshop">@lang('Webshop')</label>
+                    <input type="radio" class="btn-check" name="business_type" id="other" autocomplete="off" {{ $property->business_type === "Other" ? 'checked' : ''; }} />
+                    <label class="btn btn-outline-dark" for="other">@lang('Other')</label>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 col-12">
-                        <img id="location-image" src="" alt="" />
-                    </div>
-                    <div class="col-md-6 col-12">
-                        <div id="map"></div>
-                    </div>
+                <div class="form-group mb-3">
+                    <x-input-label for="autocomplete" :value="__('What Is The Name Of Your Business?')" />
+                    <p>
+                        @lang('Can be changed later.')
+                    </p>
+                    <x-text-input id="autocomplete" type="text" value="{{ $property->name }}" name="name" maxlength="255" required />
                 </div>
                 <div class="row mt-3">
                     <div class="col-12">
                         <x-secondary-button type="submit" class="float-end py-8 mt-2 rounded-2 ms-3">
                             {{ __('Continue') }}
                         </x-secondary-button>
-                        {{-- <x-light-button type="button" class="float-end py-8 mt-2 rounded-2">
-                            {{ __('Skip') }}
-                        </x-light-button> --}}
                     </div>
                 </div>
             </div>

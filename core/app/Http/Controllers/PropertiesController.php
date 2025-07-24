@@ -75,14 +75,58 @@ class PropertiesController extends Controller
             return view('properties.infos', $data);
         }
 
-        /* if ($request->isMethod('post')) {
+        if ($request->isMethod('post')) {
             if (!$request->ajax()) {
                 return abort(404);
             }
 
-            $property = new Property();
-            return $this->processInfoForm($request, $property);
-        } */
+            $request->validate([
+                'name'          => ['required','string','max:250'],
+                'business_type' => ['required','string','max:250']
+            ]);
+
+            $property->name = $request->name;
+            $property->business_type = $request->business_type;
+            $saved = $property->save();
+
+            $message = $saved
+                ? ['message' => __("Property Type saved successfully"), 'redirect' => route('properties.add.signature', $property)]
+                : ['message' => __("Some error occurred")];
+
+            return response()->json($message);
+        }
+    }
+
+    /**
+     * Show the form for creating or updating a new resource.
+     */
+    public function addSignature(Request $request, Property $property): View|JsonResponse
+    {
+        if ($request->isMethod('get')) {
+            $data['property'] = $property;
+            $data['title']    = __('Add Signature');
+
+            return view('properties.signature', $data);
+        }
+
+        if ($request->isMethod('post')) {
+            if (!$request->ajax()) {
+                return abort(404);
+            }
+
+            $request->validate([
+                'signature' => ['required','string','max:250']
+            ]);
+
+            $property->signature = $request->signature;
+            $saved = $property->save();
+
+            $message = $saved
+                ? ['message' => __("Property signature saved successfully"), 'redirect' => route('properties.index', $property)]
+                : ['message' => __("Some error occurred")];
+
+            return response()->json($message);
+        }
     }
 
     /**

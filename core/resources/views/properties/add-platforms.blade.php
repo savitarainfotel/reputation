@@ -4,7 +4,8 @@
     <form action="{{ route('properties.add.platforms', $property) }}" method="post" class="ajax-form">
         <div class="row">
             <div class="col-md-6 offset-md-3 col-12">
-                <small>@lang('Welcome to RMS! Set up your account in four easy steps.')</small>
+                <span>@lang('Welcome to RMS! Set up your account in four easy steps.')</span>
+                <h6 class="mt-3 mb-3">@lang('Step ') <span class="text-secondary">2/4</span></h6>
                 <h4 class="mt-3 mb-3">@lang('Confirm Your Listings')</h4>
                 <p>
                     @lang('We\'ve added the following profiles for the different platforms. Confirm the selection or add/change a listing if needed.')

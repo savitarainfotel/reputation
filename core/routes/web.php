@@ -21,8 +21,9 @@ Route::middleware('auth')->group(function () {
     Route::controller(PropertiesController::class)->name('properties.')->prefix('properties')->group(function () {
         Route::get('', 'index')->name('index');
         Route::match(['get', 'post'], 'add', 'addOrUpdate')->name('create');
-        Route::match(['get', 'post'], 'add-platforms/{property?}', 'addPlatforms')->name('add.platforms');
-        Route::match(['get', 'post'], 'infos/{property?}', 'infos')->name('infos');
+        Route::get('add-platforms/{property}', 'addPlatforms')->name('add.platforms');
+        Route::match(['get', 'post'], 'infos/{property}', 'infos')->name('infos');
+        Route::match(['get', 'post'], 'signature/{property}', 'addSignature')->name('add.signature');
     });
 
     Route::controller(PlatformsController::class)->name('platforms.')->prefix('platforms')->group(function () {

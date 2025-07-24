@@ -4,7 +4,8 @@
     <form action="{{ route('properties.create') }}" method="post" class="ajax-form">
         <div class="row">
             <div class="col-md-6 offset-md-3 col-12">
-                <small>@lang('Welcome to RMS! Set up your account in four easy steps.')</small>
+                <span>@lang('Welcome to RMS! Set up your account in four easy steps.')</span>
+                <h6 class="mt-3 mb-3">@lang('Step ') <span class="text-secondary">1/4</span></h6>
                 <h4 class="mt-3 mb-3">@lang('Find Your Business')</h4>
                 <p>
                     @lang('Simply search your location on Google Maps. Your business is not listed on Google? Hit \'skip\' to use our copy-paste generator without Review Inbox or Analytics.')
