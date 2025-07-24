@@ -4,6 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Models\Property;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
+use App\Events\ImageDownload;
+use App\Events\GoogleReviewsScrape;
+use App\Models\Platform;
+use App\Models\RatingSetting;
+use App\Constants\Status;
 
 class PropertiesController extends Controller
 {
@@ -12,6 +21,138 @@ class PropertiesController extends Controller
      */
     public function index(Request $request): View
     {
-        return view('properties.list');
+        $data['properties'] = Property::where('client_id', authUser()->id)->get();
+        return view('properties.list', $data);
+    }
+
+    /**
+     * Show the form for creating or updating a new resource.
+     */
+    public function addOrUpdate(Request $request): View|JsonResponse
+    {
+        if ($request->isMethod('get')) {
+            $data['property'] = new Property();
+            $data['title']    = __('Find Your Business');
+
+            return view('properties.form', $data);
+        }
+
+        if ($request->isMethod('post')) {
+            if (!$request->ajax()) {
+                return abort(404);
+            }
+
+            $property = new Property();
+            return $this->processForm($request, $property);
+        }
+    }
+
+    /**
+     * Show the form for creating or updating a new resource.
+     */
+    public function addPlatforms(Request $request, Property $property): View|JsonResponse|RedirectResponse
+    {
+        if ($request->isMethod('get')) {
+            $data['property']  = $property;
+            $data['title']     = __('Add More Platforms');
+            $platformsCount    = Platform::where('exclude', Status::NO)->where('is_default', Status::NO)->where('is_delete', Status::NO)->count();
+
+            if(!$platformsCount) {
+                return redirect()->route('properties.infos', $property);
+            }
+
+            return view('properties.add-platforms', $data);
+        }
+
+        /* if ($request->isMethod('post')) {
+            if (!$request->ajax()) {
+                return abort(404);
+            }
+
+            $property = new Property();
+            return $this->processInfoForm($request, $property);
+        } */
+    }
+
+    /**
+     * Show the form for creating or updating a new resource.
+     */
+    public function infos(Request $request, Property $property): View|JsonResponse
+    {
+        if ($request->isMethod('get')) {
+            $data['property'] = $property;
+            $data['title']    = __('Add More Platforms');
+
+            return view('properties.infos', $data);
+        }
+
+        /* if ($request->isMethod('post')) {
+            if (!$request->ajax()) {
+                return abort(404);
+            }
+
+            $property = new Property();
+            return $this->processInfoForm($request, $property);
+        } */
+    }
+
+    /**
+     * Process the resource in storage.
+     */
+    private function processForm(Request $request, Property $property): JsonResponse
+    {
+        $this->validateRequest($request, $property);
+        $user   = authUser();
+        $userId = $user->id;
+        
+        $property->name         = $request->name;
+        $property->place_id     = $request->place_id;
+        $property->latitude     = $request->latitude;
+        $property->longitude    = $request->longitude;
+        $property->address      = $request->address;
+        $property->created_by   = $userId;
+        $property->client_id    = $userId;
+        $property->updated_by   = $userId;
+        $property->reviews      = 0;
+        $saved = $property->save();
+
+        $platform = Platform::where('is_default', Status::YES)->where('is_delete', Status::NO)->first();
+
+        if($platform) {
+            $ratingSetting = new RatingSetting();
+            $ratingSetting->property_id = $property->id;
+            $ratingSetting->rating_platform_id = $platform->id;
+            $ratingSetting->status = Status::YES;
+            $ratingSetting->min_rating = 4;
+            $ratingSetting->average_review = 4;
+            $ratingSetting->rating_url = "https://search.google.com/local/writereview?placeid={$request->place_id}";
+            $ratingSetting->save();
+        }
+
+        event(new ImageDownload($request->image_url, $property));
+        event(new GoogleReviewsScrape($property));
+
+        $message = $saved
+            ? ['message' => __("Property added successfully"), 'redirect' => route('properties.add.platforms', $property)]
+            : ['message' => __("Some error occurred")];
+
+        return response()->json($message);
+    }
+
+    /**
+     * Validate the resource.
+     */
+    private function validateRequest(Request $request, Property $property)
+    {
+        if (!$property->exists) {
+            $request->validate([
+                'name' => [
+                    'required',
+                    'string',
+                    'max:250',
+                ],
+                'place_id' => ['required', 'string']
+            ]);
+        }
     }
 }

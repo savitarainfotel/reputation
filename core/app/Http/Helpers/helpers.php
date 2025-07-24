@@ -4,6 +4,7 @@ use App\Constants\Status;
 use App\Models\Role;
 use Carbon\Carbon;
 use App\Lib\FileManager;
+use App\Models\GeneralSetting;
 
 if (!function_exists('generate_datatables')) {
     function generate_datatables(&$data) {
@@ -99,4 +100,9 @@ function fileManager() {
 
 function showActive($route) {
     return Route::currentRouteName() === $route ? 'active' : '';
+}
+
+function gs($key = null) {
+    $general = $general = GeneralSetting::where('setting_key', $key)->first();
+    return @$general->setting_value;
 }
