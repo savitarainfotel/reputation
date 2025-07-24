@@ -14757,7 +14757,7 @@
   --bs-highlight-bg: #ffefd2;
   --bs-border-width: 1px;
   --bs-border-style: solid;
-  --bs-border-color: #152C5680;
+  --bs-border-color: #152C564D;
   --bs-border-color-translucent: rgba(0, 0, 0, 0.175);
   --bs-border-radius: 7px;
   --bs-border-radius-sm: 5px;
@@ -22715,6 +22715,9 @@ fieldset:disabled .btn {
 }
 .vh-100 {
   height: 100vh !important;
+}
+.vh-90{
+  height: 90vh !important;
 }
 .min-vh-100 {
   min-height: 100vh !important;

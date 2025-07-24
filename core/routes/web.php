@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
+use App\Http\Controllers\RatingReplyController;
+use App\Http\Controllers\ReplyReviewController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -18,6 +20,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::controller(PropertiesController::class)->name('properties.')->prefix('properties')->group(function () {
+        Route::get('', 'index')->name('index');
+    });
+    Route::controller(ReplyReviewController::class)->name('reply-review.')->prefix('reply-review')->group(function () {
+        Route::get('', 'index')->name('index');
+    });
+    Route::controller(RatingReplyController::class)->name('rating-reply.')->prefix('rating-reply')->group(function () {
         Route::get('', 'index')->name('index');
     });
 });
