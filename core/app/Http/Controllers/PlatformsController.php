@@ -89,7 +89,7 @@ class PlatformsController extends Controller
      */
     private function processForm(Request $request, Property $property, RatingSetting $ratingSetting): JsonResponse
     {
-        $this->validateRequest($request, $property);
+        $this->validateRequest($request);
 
         $platform = Platform::find($this->getDecodedId($request->platform_id));
 
@@ -123,16 +123,14 @@ class PlatformsController extends Controller
     /**
      * Validate the resource.
      */
-    private function validateRequest(Request $request, Property $property)
+    private function validateRequest(Request $request)
     {
-        if (!$property->exists) {
-            $request->validate([
-                'name' => ['required','string','max:250'],
-                'address' => ['required','string','max:250'],
-                'picture' => ['required','string'],
-                'platform_url' => ['required','string','max:250'],
-                'platform_id' => ['required', 'string']
-            ]);
-        }
+        $request->validate([
+            'name' => ['required','string','max:250'],
+            'address' => ['required','string','max:250'],
+            'picture' => ['required','string'],
+            'platform_url' => ['required','string','max:250'],
+            'platform_id' => ['required', 'string']
+        ]);
     }
 }

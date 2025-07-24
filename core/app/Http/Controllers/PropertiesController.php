@@ -52,26 +52,15 @@ class PropertiesController extends Controller
      */
     public function addPlatforms(Request $request, Property $property): View|JsonResponse|RedirectResponse
     {
-        if ($request->isMethod('get')) {
-            $data['property']  = $property;
-            $data['title']     = __('Add More Platforms');
-            $platformsCount    = Platform::where('exclude', Status::NO)->where('is_default', Status::NO)->where('is_delete', Status::NO)->count();
+        $data['property']  = $property;
+        $data['title']     = __('Add More Platforms');
+        $data['platforms'] = Platform::where('exclude', Status::NO)->where('is_default', Status::NO)->where('is_delete', Status::NO);
 
-            if(!$platformsCount) {
-                return redirect()->route('properties.infos', $property);
-            }
-
-            return view('properties.add-platforms', $data);
+        if(!$data['platforms']->count()) {
+            return redirect()->route('properties.infos', $property);
         }
 
-        /* if ($request->isMethod('post')) {
-            if (!$request->ajax()) {
-                return abort(404);
-            }
-
-            $property = new Property();
-            return $this->processInfoForm($request, $property);
-        } */
+        return view('properties.add-platforms', $data);
     }
 
     /**
