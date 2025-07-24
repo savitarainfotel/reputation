@@ -49,7 +49,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="javascript:void(0)" class="sidebar-link">
+                            <a href="{{ route('reply-review.index') }}" class="sidebar-link">
                                 {{-- <div class="round-16 d-flex align-items-center justify-content-center">
                                     <i class="ti ti-circle"></i>
                                 </div> --}}
@@ -57,7 +57,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="javascript:void(0)" class="sidebar-link">
+                            <a href="{{ route('rating-reply.index') }}" class="sidebar-link">
                                 {{-- <div class="round-16 d-flex align-items-center justify-content-center">
                                     <i class="ti ti-circle"></i>
                                 </div> --}}
