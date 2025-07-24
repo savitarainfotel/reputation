@@ -11,8 +11,8 @@
         <link rel="preconnect" href="https://fonts.bunny.net" />
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/styles.css').App\Constants\Status::ASSET_VERSION }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css').App\Constants\Status::ASSET_VERSION }}" />
         @stack('style')
     </head>
     <body class="link-sidebar">
@@ -65,7 +65,7 @@
         <script src="{{ asset('assets/js/theme/app.min.js') }}"></script>
         <script src="{{ asset('assets/js/theme/sidebarmenu.js') }}"></script>
         <script src="{{ asset('assets/js/plugins/toastr-init.js') }}"></script>
-        <script src="{{ asset('assets/js/custom.js') }}"></script>
+        <script src="{{ asset('assets/js/custom.js').App\Constants\Status::ASSET_VERSION }}"></script>
 
         <x-jquery-validation />
 

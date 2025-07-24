@@ -22,7 +22,7 @@ class PropertiesController extends Controller
     public function index(Request $request): View
     {
         $data['properties'] = Property::where('client_id', authUser()->id)->get();
-        return view('properties.list', $data);
+    return view('properties.list', $data);
     }
 
     /**
@@ -122,7 +122,7 @@ class PropertiesController extends Controller
             $saved = $property->save();
 
             $message = $saved
-                ? ['message' => __("Property signature saved successfully"), 'redirect' => route('properties.index', $property)]
+                ? ['message' => __("Property signature saved successfully"), 'redirect' => route('properties.index')]
                 : ['message' => __("Some error occurred")];
 
             return response()->json($message);
