@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\RatingReplyController;
 use App\Http\Controllers\ReplyReviewController;
+use App\Http\Controllers\ReportsController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -26,6 +27,9 @@ Route::middleware('auth')->group(function () {
         Route::get('', 'index')->name('index');
     });
     Route::controller(RatingReplyController::class)->name('rating-reply.')->prefix('rating-reply')->group(function () {
+        Route::get('', 'index')->name('index');
+    });
+    Route::controller(ReportsController::class)->name('reports.')->prefix('reports')->group(function () {
         Route::get('', 'index')->name('index');
     });
 });
