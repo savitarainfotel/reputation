@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <select class="form-control" id="select-with-logo" required name="platform">
+    <select class="form-control" id="select-with-logo" required name="platform_id">
         <option value="">@lang('Select listing')</option>
         @foreach ($platforms as $platformToSelect)
             <option value="{{ $platformToSelect->encId }}" data-logo="{{ gs('admin-url') }}uploads/platforms-logos/{{ $platformToSelect->logo }}">
@@ -11,6 +11,7 @@
     <input type="hidden" name="name" />
     <input type="hidden" name="address" />
     <input type="hidden" name="picture" />
+    <input type="hidden" name="platform_url" />
 </div>
 @foreach ($platforms as $platformToSelect)
     <div class="col-md-12 hide-all" id="show-{{ $platformToSelect->encId }}">
@@ -59,8 +60,10 @@
             $(`#show-${selected}`).show();
         }
 
-        $(this).closest("form")[0].reset();
-        $(this).val(selected);
+        $(`input[name=name]`).val('');
+        $(`input[name=picture]`).val('');
+        $(`input[name=address]`).val('');
+        $(`input[name=platform_url]`).val('');
     });
 
     $("#select-with-logo").trigger('change');

@@ -118,18 +118,18 @@ class PropertiesController extends Controller
 
         $platform = Platform::where('is_default', Status::YES)->where('is_delete', Status::NO)->first();
 
-        if($platform) {
-            $ratingSetting = new RatingSetting();
-            $ratingSetting->property_id = $property->id;
-            $ratingSetting->rating_platform_id = $platform->id;
-            $ratingSetting->status = Status::YES;
-            $ratingSetting->min_rating = 4;
-            $ratingSetting->average_review = 4;
-            $ratingSetting->rating_url = "https://search.google.com/local/writereview?placeid={$request->place_id}";
-            $ratingSetting->save();
-        }
+        $ratingSetting = new RatingSetting();
+        $ratingSetting->name = $request->name;
+        $ratingSetting->address = $request->address;
+        $ratingSetting->property_id = $property->id;
+        $ratingSetting->rating_platform_id = $platform->id;
+        $ratingSetting->status = Status::YES;
+        $ratingSetting->min_rating = 4;
+        $ratingSetting->average_review = 4;
+        $ratingSetting->rating_url = "https://search.google.com/local/writereview?placeid={$request->place_id}";
+        $ratingSetting->save();
 
-        event(new ImageDownload($request->image_url, $property));
+        event(new ImageDownload($request->image_url, $property, $ratingSetting));
         event(new GoogleReviewsScrape($property));
 
         $message = $saved

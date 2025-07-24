@@ -6,7 +6,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Events\ImageDownload;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class HandleImageDownload implements ShouldQueue
@@ -29,11 +28,19 @@ class HandleImageDownload implements ShouldQueue
                     default => 'jpg',
                 };
 
-                $event->property->image = Str::slug($event->property->name) . '.' . $extension;
+                $event->image = $event->image . '.' . $extension;
 
-                Storage::disk('public')->put(getFilePath('property-images') . $event->property->image, $response->body());
+                Storage::disk('public')->put(getFilePath('property-images') . $event->image, $response->body());
 
-                $event->property->save();
+                if(in_array('property', $event->type)) {
+                    $event->property->image = $event->image;
+                    $event->property->save();
+                }
+
+                if(in_array('ratingSetting', $event->type)) {
+                    $event->ratingSetting->picture = $event->image;
+                    $event->ratingSetting->save();
+                }
             }
         }
     }

@@ -78,10 +78,11 @@ class PlatformsController extends Controller
                                 $images = collect(data_get($hotel, 'mosaicInitData.images', []))->first();
 
                                 return [
-                                    "name"      => data_get($hotel, 'hotelInfo.name'),
-                                    "address"   => data_get($hotel, 'hotelInfo.address.full'),
-                                    "picture"   => $images['location'] ?? null,
-                                    "status"    => Status::YES
+                                    "name"         => data_get($hotel, 'hotelInfo.name'),
+                                    "address"      => data_get($hotel, 'hotelInfo.address.full'),
+                                    "picture"      => $images['location'] ?? null,
+                                    "platform_url" => $requestUrl,
+                                    "status"       => Status::YES
                                 ];
                             } else {
                                 return ['message' => __("Unsupported platform URL.")];
@@ -95,6 +96,8 @@ class PlatformsController extends Controller
                 } else {
                     return ['message' => __("Unsupported platform URL.")];
                 }
+            } else {
+                return ['message' => __("Unsupported platform URL.")];
             }
         } catch (\Exception $e) {
             return ['message' => __("Unsupported platform URL.")];
@@ -129,8 +132,68 @@ class PlatformsController extends Controller
         }
 
         if ($request->isMethod('post')) {
-            dd($request->all());
+            return $this->processForm($request, $property, $platform);
+            // "platform_id" => "gw2qnwgv-kd79-em1n-93oj-8ylx4zr6p59y"
+            // "name" => "The Leela Ambience Convention Hotel Delhi"
+            // "address" => "1,CBD, Maharaja Surajmal Road, Near Yamuna Sports Complex, East Delhi, New Delhi and NCR, India, 110032"
+            // "picture" => "//pix8.agoda.net/hotelImages/393/393148/393148_13061319270013033438.jpg?ca=0&ce=1&s=1024x768"
+            // "platform_url" => "https://www.agoda.com/en-in/the-leela-ambience-convention-hotel/hotel/new-delhi-and-ncr-in.html"
             // return $this->processForm($request, $property);
+        }
+    }
+    
+    /**
+     * Process the resource in storage.
+     */
+    private function processForm(Request $request, Property $property, Platform $platform): JsonResponse
+    {
+        $this->validateRequest($request, $property, $platform);
+        
+        $ratingSetting = new RatingSetting();
+        $ratingSetting->name = $request->name;
+        $ratingSetting->address = $request->address;
+        $ratingSetting->property_id = $property->id;
+        $ratingSetting->rating_platform_id = $platform->id;
+        $ratingSetting->status = Status::YES;
+        $ratingSetting->min_rating = 4;
+        $ratingSetting->average_review = 4;
+        $ratingSetting->rating_url = $request->platform_url;
+        // $ratingSetting->save();
+
+        event(new ImageDownload($request->image_url, $property));
+
+        $ratingSetting = new RatingSetting();
+        
+        $ratingSetting->property_id = $property->id;
+        $ratingSetting->rating_platform_id = $platform->id;
+        $ratingSetting->status = Status::YES;
+        $ratingSetting->min_rating = 4;
+        $ratingSetting->average_review = 4;
+        $ratingSetting->rating_url = "https://search.google.com/local/writereview?placeid={$request->place_id}";
+        $ratingSetting->save();
+
+        event(new ImageDownload($request->image_url, $property, $ratingSetting));
+
+        $message = $saved
+            ? ['message' => __("Property added successfully"), 'redirect' => route('properties.add.platforms', $property)]
+            : ['message' => __("Some error occurred")];
+
+        return response()->json($message);
+    }
+
+    /**
+     * Validate the resource.
+     */
+    private function validateRequest(Request $request, Property $property, Platform $platform)
+    {
+        if (!$property->exists) {
+            $request->validate([
+                'name' => ['required','string','max:250'],
+                'address' => ['required','string','max:250'],
+                'picture' => ['required','string'],
+                'platform_url' => ['required','string','max:250'],
+                'platform_id' => ['required', 'string']
+            ]);
         }
     }
 }

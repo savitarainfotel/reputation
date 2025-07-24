@@ -136,6 +136,7 @@ const initFocusInFields = (element) => {
 								$(`input[name=name]`).val(response.name);
 								$(`input[name=picture]`).val(response.picture);
 								$(`input[name=address]`).val(response.address);
+								$(`input[name=platform_url]`).val(response.platform_url);
 
 								$(`#${skeleton}`).find('img').attr('src', response.picture);
 								$(`#${skeleton}`).find('.card-title').text(response.name);
