@@ -2,7 +2,10 @@
     <x-properties-top-nav />
 
     @if ($properties->count())
-        <div class="row mt-5">
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ route('properties.create') }}" class="btn btn-info mb-3 float-end"><i class="far fa-plus"></i> @lang('Add New Property')</a>
+            </div>
             @foreach ($properties as $property)
                 <div class="col-3">
                     <div class="card">
