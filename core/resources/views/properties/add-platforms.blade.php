@@ -69,4 +69,12 @@
             </div>
         </div>
     </form>
+
+    @push('style')
+        <link rel="stylesheet" href="{{ asset('assets/libs/select2/dist/css/select2.min.css') }}" />
+    @endpush
+    @push('script')
+        <script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/select2/dist/js/select2.min.js') }}"></script>
+    @endpush
 </x-app-layout>

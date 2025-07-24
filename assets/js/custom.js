@@ -103,26 +103,80 @@ $(document).on('click', '.general-modal-button', function(event) {
     }
 });
 
-$('.focus-in-field').each(function() {
-	$(this).on("focusin", function() {
-		$(this).data("original-value", $(this).val().trim());
+const initFocusInFields = (element) => {
+	$(element).each(function() {
+		$(this).on("focusin", function() {
+			$(this).data("original-value", $(this).val().trim());
+		});
+	
+		$(this).on("input", function() {
+			const newValue = $(this).val().trim();
+			const originalValue = $(this).data("original-value").trim();
+			const skeleton = $(this).data('skeleton').trim();
+
+			if(skeleton) {
+				$(`#${skeleton}`).hide();
+				$(`#${skeleton}`).addClass('loading-skeleton');
+			}
+	
+			if (newValue !== '' && newValue !== originalValue) {
+				const action = $(this).data('action');
+				const method = $(this).data('method');
+				const name = $(this).attr('name');
+				const form = createForm(action, method, {
+					[name]: newValue
+				});
+
+				$(`#${skeleton}`).show();
+	
+				submitForm(form, true).done(function(response){
+					if(skeleton) {
+						if(response.status) {
+							if(response.name) {
+								$(`input[name=name]`).val(response.name);
+								$(`input[name=picture]`).val(response.picture);
+								$(`input[name=address]`).val(response.address);
+
+								$(`#${skeleton}`).find('img').attr('src', response.picture);
+								$(`#${skeleton}`).find('.card-title').text(response.name);
+								$(`#${skeleton}`).find('.card-text').text(response.address);
+
+								$(`#${skeleton}`).removeClass('loading-skeleton');
+							}
+						} else {
+							$(`#${skeleton}`).hide();
+						}
+					}
+				}).fail(function(){
+					if(skeleton) {
+						$(`#${skeleton}`).hide();
+					}
+				});
+			}
+
+			return;
+		});
 	});
+}
 
-	$(this).on("input", function() {
-		const newValue = $(this).val().trim();
-		const originalValue = $(this).data("original-value").trim();
+initFocusInFields('.focus-in-field');
 
-		if (newValue !== '' && newValue !== originalValue) {
-			const action = $(this).data('action');
-			const method = $(this).data('method');
-			const name = $(this).attr('name');
-			const form = createForm(action, method, {
-				[name]: newValue
-			});
+const logoFormat = (logo) => {
+	if (!logo.id) {
+		return logo.text;
+	}
 
-			submitForm(form, true);
-		}
+	return `<img src="${$(logo.element).data("logo")}" class="mb-1 me-2" /> ${logo.text}`;
+}
 
-		return;
+const initSelectWithLogo = (element) => {
+	$(element).select2({
+		minimumResultsForSearch: Infinity,
+		templateResult: logoFormat,
+		templateSelection: logoFormat,
+		escapeMarkup: function (es) {
+			return es;
+		},
+        dropdownParent: $ ('#general-modal')
 	});
-});
+}

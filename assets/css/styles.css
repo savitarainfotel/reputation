@@ -38704,3 +38704,28 @@ ul.first-level .sidebar-item:hover{
   width: 3px;
  
 }
+
+.loading-skeleton {
+    pointer-events: none;
+    animation: loading-skeleton 1s infinite alternate;
+}
+
+.loading-skeleton p,
+.loading-skeleton h5 {
+    color: transparent;
+    background-color: #eee;
+    border-color: #eee;
+}
+
+.loading-skeleton img {
+    filter: grayscale(100%) contrast(0%) brightness(1.8);
+}
+
+@keyframes loading-skeleton {
+    from {
+        opacity: 0.4;
+    }
+    to {
+        opacity: 1;
+    }
+}
