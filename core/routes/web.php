@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CompititorsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
@@ -20,10 +19,10 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(PropertiesController::class)->name('properties.')->prefix('properties')->group(function () {
         Route::get('', 'index')->name('index');
-    });
-
-    Route::controller(CompititorsController::class)->name('compititors.')->prefix('compititors')->group(function () {
-        Route::get('', 'index')->name('index');
+        Route::match(['get', 'post'], 'add', 'addOrUpdate')->name('create');
+        Route::match(['get', 'post'], 'add-platforms/{property?}', 'addPlatforms')->name('add.platforms');
+        Route::match(['get', 'post'], 'infos/{property?}', 'infos')->name('infos');
+        Route::match(['get', 'post'], 'add-signature/{property?}', 'addSign')->name('add-signature');
     });
 });
 
