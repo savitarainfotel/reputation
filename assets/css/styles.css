@@ -309,6 +309,9 @@
 .ti-armchair-off:before {
   content: "\f3be";
 }
+.ti-arrow-top-right:before {
+    content: "\e65a";
+}
 .ti-arrow-autofit-content:before {
   content: "\ef31";
 }
