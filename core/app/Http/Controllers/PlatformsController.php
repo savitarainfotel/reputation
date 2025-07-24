@@ -55,7 +55,7 @@ class PlatformsController extends Controller
     }
 
     /**
-     * Scrape the platforms url.
+     * Scrape the platforms url of Agoda.
      */
     public function scrapeAgoda(String $requestUrl, Property $property, Platform $platform): Array
     {
@@ -107,7 +107,7 @@ class PlatformsController extends Controller
     }
 
     /**
-     * Scrape the platforms url.
+     * Scrape the platforms url of Booking.
      */
     public function scrapeBooking(String $requestUrl, Property $property, Platform $platform): Array
     {
@@ -156,6 +156,46 @@ class PlatformsController extends Controller
                 }
 
                 $imageNode = $crawler->filter('div#photo_wrapper img')->first();
+
+                if ($imageNode->count()) {
+                    $return['picture'] = $imageNode->attr('src');
+                }
+
+                return !empty($return['name']) && !empty($return['address']) && !empty($return['picture']) ? $return : ['message' => __("Unsupported platform URL.")];
+            } else {
+                return ['message' => __("Unsupported platform URL.")];
+            }
+        } catch (\Exception $e) {
+            return ['message' => __("Unsupported platform URL.")];
+        }
+    }
+
+    /**
+     * Scrape the platforms url of Expedia.
+     */
+    public function scrapeExpedia(String $requestUrl, Property $property, Platform $platform): Array
+    {
+        try {
+            $response = Http::get("https://api.scraperapi.com/?api_key=".gs('scraper-api')."&url=".$requestUrl);
+
+            if($response->successful()){
+                $crawler = new Crawler($response->body());
+
+                $return = ["platform_url" => $requestUrl, 'status' => Status::YES];
+
+                $titleNode = $crawler->filter('h1[class="uitk-heading uitk-heading-3"]')->first();
+
+                if ($titleNode->count() && !empty($titleNode->text())) {
+                    $return['name'] = $titleNode->text();
+                }
+
+                $addressNode = $crawler->filter('div[class="uitk-text uitk-type-start uitk-type-300 uitk-text-default-theme"]')->first();
+
+                if ($addressNode->count() && !empty($addressNode->text())) {
+                    $return['address'] = $addressNode->text();
+                }
+
+                $imageNode = $crawler->filter('section#Overview img')->first();
 
                 if ($imageNode->count()) {
                     $return['picture'] = $imageNode->attr('src');
