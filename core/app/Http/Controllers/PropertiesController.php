@@ -22,7 +22,7 @@ class PropertiesController extends Controller
     public function index(Request $request): View
     {
         $data['properties'] = Property::where('client_id', authUser()->id)->get();
-    return view('properties.list', $data);
+        return view('properties.list', $data);
     }
 
     /**

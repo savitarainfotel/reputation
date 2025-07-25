@@ -15,12 +15,12 @@ class Property extends BaseModel
         return $this->hasMany(RatingSetting::class, 'property_id');
     }
 
-    public function getImageLink(string $class = null, int $height = null): string {
+    public function getImageLink(string $class = null, int $height = null, int $width = null): string {
         if (!$this->image) {
             return '';
         }
 
         $url = Storage::disk('public')->url(getFilePath('property-images') . $this->image);
-        return '<img src="' . $url . '" height="' . $height . '" class="' . $class . '" />';
+        return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" class="' . $class . '" />';
     }
 }
