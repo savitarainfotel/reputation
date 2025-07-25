@@ -12,7 +12,7 @@
                     <div>
                         <p class="text-danger mt-2">
                             <span>{{ __('Your email address is unverified.') }}</span>
-                            <x-primary-button type="submit">{{ __('Click here to re-send the verification email.') }}</x-primary-button>
+                            <x-secondary-button type="submit">{{ __('Click here to re-send the verification email.') }}</x-secondary-button>
                         </p>
 
                         @if (session('status') === 'verification-link-sent')
