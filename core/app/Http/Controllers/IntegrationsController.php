@@ -52,53 +52,43 @@ class IntegrationsController extends Controller
                 $message = $accessToken['error_description'];
             } else {
                 $client->setAccessToken($accessToken);
-                $service_account  = new Google_Service_MyBusinessAccountManagement($client);
     
-                $accountsResponse = $service_account->accounts->listAccounts();
-                $accounts = $accountsResponse->getAccounts();
-    
+                $accountService = new Google_Service_MyBusinessAccountManagement($client);
+                $accounts = $accountService->accounts->listAccounts()->getAccounts();
+
                 if (empty($accounts)) {
                     $message = __('No Google Business Profile accounts found!');
                 } else {
                     $accountName = $accounts[0]->getName();
-    
-                    $service_business = new Google_Service_MyBusinessBusinessInformation($client);
-    
+
+                    $locationService = new Google_Service_MyBusinessBusinessInformation($client);
+
                     $params = [
                         'pageSize' => 100,
                         'readMask' => ['name', 'title']
                     ];
-    
-                    $locationsResponse = $service_business->accounts_locations->listAccountsLocations($accountName, $params);
-                    $locations = $locationsResponse->getLocations();
-                    $selectedLocation = [];
-    
-                    if (!empty($locations)) {
-                        foreach ($locations as $k => $location) {
-                            if (strtolower($location->getTitle()) === strtolower($ratingSetting->name)) {
-                                $selectedLocation = $location->getName();
-                                break;
-                            }
-                        }
 
-                        if($selectedLocation) {
-                            $ratingSetting->google_location = $selectedLocation;
-                            $ratingSetting->access_token = $accessToken;
+                    $locations = $locationService->accounts_locations->listAccountsLocations($accountName, $params)->getLocations();
 
-                            $message = $ratingSetting->save() ? __("Google ".($request->code ? "connected" : "disconnected")."!") : __("Some error occurred");
-                        } else {
-                            $message = __("Google Business Location Not Assigned to {$ratingSetting->name}");
-                        }
+                    $selectedLocation = collect($locations)->first(function ($location) use ($ratingSetting) {
+                        return strtolower($location->getTitle()) === strtolower($ratingSetting->name);
+                    });
+
+                    if ($selectedLocation) {
+                        $ratingSetting->google_location = $selectedLocation->getName();
+                        $ratingSetting->access_token = $accessToken;
+
+                        $message = $ratingSetting->save() ? __('Google connected!') : __('Failed to connect google.');
                     } else {
-                        $message = __('No Google Business Location found!');
+                        $message = __("Google account not assigned to {$ratingSetting->name}");
                     }
                 }
             }
         } else {
             $ratingSetting->access_token = null;
-            $message = $ratingSetting->save() ? __("Google ".($request->code ? " " : " ")."!") : __("Some error occurred");
+            $message = $ratingSetting->save() ? __('Google disconnected!') : __('Failed to disconnect google.');
         }
 
-        return redirect()->to(route('integrations.index'))->with('status', $message);
+        return redirect()->route('integrations.index')->with('status', $message);
     }
 }
