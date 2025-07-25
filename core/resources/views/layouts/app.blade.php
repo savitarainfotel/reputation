@@ -25,7 +25,12 @@
 
             <div class="page-wrapper">
                 <!--  Header Start -->
+              
                 <header class="topbar">
+                    {{-- <div class="bg-primary d-flex align-items-center justify-content-between">
+                        <p class="text-white">Your free trial ended on 6/25/2025. You can upgrade<a href="javascript:void(0)">Here</a></p>
+
+                    </div> --}}
                     <div class="with-vertical">
                         <nav class="navbar navbar-expand-lg p-0">
                             <ul class="navbar-nav">

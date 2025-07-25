@@ -7,7 +7,7 @@
             </a>
         </li>
         <li class="nav-item me-3">
-            <a href="javascript:void(0)" class="btn btn-outline-dark d-flex align-items-center gap-6">
+            <a href="{{ route('integrations.index') }}" class="btn btn-outline-dark d-flex align-items-center gap-6 {{ showActive('integrations.index') }}">
                 <i class="fa-solid fa-network-wired"></i>
                 <span class="d-none d-md-block fw-medium fs-3">@lang('Integrations')</span>
             </a>

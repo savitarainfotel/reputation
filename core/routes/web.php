@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IntegrationsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
@@ -29,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::controller(PlatformsController::class)->name('platforms.')->prefix('platforms')->group(function () {
         Route::get('search/{property}/{platform}', 'search')->name('search');
         Route::match(['get', 'post'], 'add/{property}/{platform?}', 'addOrUpdate')->name('create');
+    });
+    Route::controller(IntegrationsController::class)->name('integrations.')->prefix('integrations')->group(function () {
+        Route::get('', 'index')->name('index');
     });
 });
 
