@@ -45,22 +45,22 @@ trait Scrapable
                                     "status"       => Status::YES
                                 ];
                             } else {
-                                return ['message' => __("Unsupported platform URL.")];
+                                return ['message' => __("Can't find metadata for this URL")];
                             }
                         } else {
-                            return ['message' => __("Unsupported platform URL.")];
+                            return ['message' => __("Can't find metadata for this URL")];
                         }
                     } else {
-                        return ['message' => __("Unsupported platform URL.")];
+                        return ['message' => __("Can't find metadata for this URL")];
                     }
                 } else {
-                    return ['message' => __("Unsupported platform URL.")];
+                    return ['message' => __("Can't find metadata for this URL")];
                 }
             } else {
-                return ['message' => __("Unsupported platform URL.")];
+                return ['message' => __("Can't find metadata for this URL")];
             }
         } catch (\Exception $e) {
-            return ['message' => __("Unsupported platform URL.")];
+            return ['message' => __("Can't find metadata for this URL")];
         }
     }
 
@@ -119,12 +119,12 @@ trait Scrapable
                     $return['picture'] = $imageNode->attr('src');
                 }
 
-                return !empty($return['name']) && !empty($return['address']) && !empty($return['picture']) ? $return : ['message' => __("Unsupported platform URL.")];
+                return !empty($return['name']) && !empty($return['address']) && !empty($return['picture']) ? $return : ['message' => __("Can't find metadata for this URL")];
             } else {
-                return ['message' => __("Unsupported platform URL.")];
+                return ['message' => __("Can't find metadata for this URL")];
             }
         } catch (\Exception $e) {
-            return ['message' => __("Unsupported platform URL.")];
+            return ['message' => __("Can't find metadata for this URL")];
         }
     }
 
@@ -159,12 +159,12 @@ trait Scrapable
                     $return['picture'] = $imageNode->attr('src');
                 }
 
-                return !empty($return['name']) && !empty($return['address']) && !empty($return['picture']) ? $return : ['message' => __("Unsupported platform URL.")];
+                return !empty($return['name']) && !empty($return['address']) && !empty($return['picture']) ? $return : ['message' => __("Can't find metadata for this URL")];
             } else {
-                return ['message' => __("Unsupported platform URL.")];
+                return ['message' => __("Can't find metadata for this URL")];
             }
         } catch (\Exception $e) {
-            return ['message' => __("Unsupported platform URL.")];
+            return ['message' => __("Can't find metadata for this URL")];
         }
     }
 }
