@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\Storage;
+use App\Constants\Status;
 
 class Property extends BaseModel
 {
@@ -22,5 +23,12 @@ class Property extends BaseModel
 
         $url = Storage::disk('public')->url(getFilePath('property-images') . $this->image);
         return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" class="' . $class . '" />';
+    }
+
+    public function google()
+    {
+        return $this->platforms()->whereHas('platform', function ($query) {
+            $query->where('is_default', Status::YES)->where('is_delete', Status::NO);
+        })->first();
     }
 }

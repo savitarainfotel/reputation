@@ -30,7 +30,15 @@
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center gap-2">
-                                            <a href="javascript:;" class="fs-4 text-secondary">@lang('Add Integration')</a>
+                                            @if ($property->google())
+                                                @if ($property->google()->access_token)
+                                                   <a href="{{ route('integrations.google.callback', "state=".$property->google()->encId) }}" class="fs-4 text-danger"><strong>@lang('Disconnect')</strong></a>
+                                                @else
+                                                    <a href="{{ route('integrations.google', $property->google()) }}" class="fs-4 text-secondary">@lang('Add Integration')</a>
+                                                @endif
+                                            @else
+                                            -
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

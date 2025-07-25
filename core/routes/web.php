@@ -34,6 +34,8 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(IntegrationsController::class)->name('integrations.')->prefix('integrations')->group(function () {
         Route::get('', 'index')->name('index');
+        Route::get('google/{ratingSetting}', 'google')->name('google');
+        Route::get('google-callback', 'googleCallback')->name('google.callback');
     });
 });
 
