@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\PlatformsController;
+use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\RatingReplyController;
 use App\Http\Controllers\ReplyReviewController;
 use App\Http\Controllers\ReportsController;
@@ -39,6 +40,9 @@ Route::middleware('auth')->group(function () {
         Route::get('', 'index')->name('index');
     });
     Route::controller(ReportsController::class)->name('reports.')->prefix('reports')->group(function () {
+        Route::get('', 'index')->name('index');
+    });
+    Route::controller(PropertyController::class)->name('property.')->prefix('property')->group(function () {
         Route::get('', 'index')->name('index');
     });
 });
