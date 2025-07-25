@@ -47,7 +47,7 @@
             width: 60px;
             padding: 10px 0;
             position: absolute;
-            top: -18px;
+            top: -29px;
             left: 405px;
             text-align: center;
             border-top-left-radius: 3px;
@@ -56,9 +56,9 @@
         .ribbon2:before {
             height: 0;
             width: 0;
-            right: 58px;
-            top: 0.2px;
-            border-bottom: 19px solid #186dde;
+            right: 60px;
+            top: 1.2px;
+            border-bottom: 30px solid #186dde;
             border-left: 20px solid transparent;
         }
         .ribbon2:before, .ribbon2:after {
