@@ -63,7 +63,7 @@ class CompetitorsController extends Controller
         $data['platforms'] = Platform::where('exclude', Status::NO)->where('is_default', Status::NO)->where('is_delete', Status::NO);
 
         if(!$data['platforms']->count()) {
-            return redirect()->route('competitors.infos');
+            return redirect()->route('competitors.infos', $competitor);
         }
 
         return view('competitors.add-platforms', $data);
@@ -105,7 +105,7 @@ class CompetitorsController extends Controller
             $competitorSetting->save();
         }
 
-        event(new ImageDownloadCompetitor($request->image_url, $competitor, $competitorSetting, null, ['competitor']));
+        event(new ImageDownloadCompetitor($request->image_url, $competitor, $competitorSetting, null, ['competitor', 'competitorSetting']));
 
         $message = $saved
             ? ['message' => __("Competitor added successfully"), 'redirect' => route('competitors.add.platforms', $competitor)]

@@ -7,15 +7,13 @@ use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use App\Constants\Status;
-use App\Models\Property;
-use App\Models\Platform;
 
 trait Scrapable
 {
     /**
      * Scrape the platforms url of Agoda.
      */
-    public function scrapeAgoda(String $requestUrl, Property $property, Platform $platform): Array
+    public function scrapeAgoda(String $requestUrl): Array
     {
         try {
             $response = Http::get($requestUrl);
@@ -67,7 +65,7 @@ trait Scrapable
     /**
      * Scrape the platforms url of Booking.
      */
-    public function scrapeBooking(String $requestUrl, Property $property, Platform $platform): Array
+    public function scrapeBooking(String $requestUrl): Array
     {
         try {
             $response = Http::get($requestUrl);
@@ -131,7 +129,7 @@ trait Scrapable
     /**
      * Scrape the platforms url of Expedia.
      */
-    public function scrapeExpedia(String $requestUrl, Property $property, Platform $platform): Array
+    public function scrapeExpedia(String $requestUrl): Array
     {
         try {
             $response = Http::get("https://api.scraperapi.com/?api_key=".gs('scraper-api')."&url=".$requestUrl);

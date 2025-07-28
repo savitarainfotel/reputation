@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-add-property-top-nav />
+    <x-add-competitor-top-nav />
 
     <form action="{{ route('competitors.create', $property) }}" method="post" class="ajax-form">
         <div class="row">

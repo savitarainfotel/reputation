@@ -29,8 +29,9 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::controller(PlatformsController::class)->name('platforms.')->prefix('platforms')->group(function () {
-        Route::get('search/{property}/{platform}', 'search')->name('search');
-        Route::match(['get', 'post'], 'add/{property}/{platform?}', 'addOrUpdate')->name('create');
+        Route::get('search/{platform}', 'search')->name('search');
+        Route::match(['get', 'post'], 'add-property/{property}/{platform?}', 'addProperty')->name('create.property');
+        Route::match(['get', 'post'], 'add-competitor/{competitor}/{platform?}', 'addCompetitor')->name('create.competitor');
     });
 
     Route::controller(IntegrationsController::class)->name('integrations.')->prefix('integrations')->group(function () {
@@ -42,7 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::controller(CompetitorsController::class)->name('competitors.')->prefix('competitors')->group(function () {
         Route::get('{property?}', 'index')->name('index');
         Route::match(['get', 'post'], 'add/{property}', 'addOrUpdate')->name('create');
-        Route::get('add-platforms/{property}', 'addPlatforms')->name('add.platforms');
+        Route::get('add-platforms/{competitor}', 'addPlatforms')->name('add.platforms');
+        Route::match(['get', 'post'], 'infos/{competitor}', 'infos')->name('infos');
     });
 });
 
