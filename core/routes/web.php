@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(CompetitorsController::class)->name('competitors.')->prefix('competitors')->group(function () {
         Route::get('{property?}', 'index')->name('index');
-        Route::match(['get', 'post'], 'add', 'addOrUpdate')->name('create');
+        Route::match(['get', 'post'], 'add/{property}', 'addOrUpdate')->name('create');
         Route::get('add-platforms/{property}', 'addPlatforms')->name('add.platforms');
     });
 });

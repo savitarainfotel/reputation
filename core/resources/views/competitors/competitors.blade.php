@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="position-relative px-2 pt-2">
                     <a href="javascript:void(0)">
-                        {!! $competitor->getImageLink('card-img-top', '200') !!}
+                        {!! $competitor->getImage('card-img-top', '200') !!}
                     </a>
                 </div>
                 <div class="card-body p-4">

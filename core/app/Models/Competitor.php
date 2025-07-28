@@ -15,4 +15,9 @@ class Competitor extends BaseModel
         $url = Storage::disk('public')->url(getFilePath('property-images') . $this->image);
         return '<img src="' . $url . '" height="' . $height . '" width="' . $width . '" class="' . $class . '" />';
     }
+
+    public function platforms()
+    {
+        return $this->hasMany(CompetitorSetting::class, 'competitor_id');
+    }
 }

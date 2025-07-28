@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Competitor;
+use App\Models\CompetitorSetting;
 use App\Models\Property;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
-use App\Events\ImageDownload;
+use App\Events\ImageDownloadCompetitor;
 use App\Models\Platform;
 use App\Constants\Status;
 
@@ -24,7 +25,7 @@ class CompetitorsController extends Controller
             $data['competitors'] = $property->competitors;
             $view = view('competitors.competitors', $data)->render();
 
-            return response()->json(['html' => $view, 'progress' => $data['competitors']->count() / 5 * 100, 'count' => $data['competitors']->count()]);
+            return response()->json(['html' => $view, 'progress' => $data['competitors']->count() / 5 * 100, 'count' => $data['competitors']->count(), 'href' => route('competitors.create', $property)]);
         } else {
             $data['properties'] = Property::where('client_id', authUser()->id)->get();
             return view('competitors.list', $data);
@@ -34,10 +35,10 @@ class CompetitorsController extends Controller
     /**
      * Show the form for creating or updating a new resource.
      */
-    public function addOrUpdate(Request $request): View|JsonResponse
+    public function addOrUpdate(Request $request, Property $property): View|JsonResponse
     {
         if ($request->isMethod('get')) {
-            $data['competitor'] = new Competitor();
+            $data['property'] = $property;
             $data['title']    = __('Find Your Business');
 
             return view('competitors.form', $data);
@@ -48,8 +49,7 @@ class CompetitorsController extends Controller
                 return abort(404);
             }
 
-            $competitor = new Competitor();
-            return $this->processForm($request, $competitor);
+            return $this->processForm($request, $property);
         }
     }
 
@@ -63,7 +63,7 @@ class CompetitorsController extends Controller
         $data['platforms'] = Platform::where('exclude', Status::NO)->where('is_default', Status::NO)->where('is_delete', Status::NO);
 
         if(!$data['platforms']->count()) {
-            return redirect()->route('competitors.infos', $competitor);
+            return redirect()->route('competitors.infos');
         }
 
         return view('competitors.add-platforms', $data);
@@ -72,13 +72,16 @@ class CompetitorsController extends Controller
     /**
      * Process the resource in storage.
      */
-    private function processForm(Request $request, Competitor $competitor): JsonResponse
+    private function processForm(Request $request, Property $property): JsonResponse
     {
-        $this->validateRequest($request, $competitor);
+        $this->validateRequest($request);
+        
         $user   = authUser();
         $userId = $user->id;
-        
+
+        $competitor               = new Competitor();
         $competitor->name         = $request->name;
+        $competitor->property_id  = $property->id;
         $competitor->place_id     = $request->place_id;
         $competitor->latitude     = $request->latitude;
         $competitor->longitude    = $request->longitude;
@@ -87,24 +90,22 @@ class CompetitorsController extends Controller
         $competitor->client_id    = $userId;
         $competitor->updated_by   = $userId;
         $competitor->reviews      = 0;
-        $competitor->signature    = "Best Regards,\n{$request->name}";
         $saved = $competitor->save();
 
         $platform = Platform::where('is_default', Status::YES)->where('is_delete', Status::NO)->first();
 
-        $ratingSetting = new RatingSetting();
-        $ratingSetting->name = $request->name;
-        $ratingSetting->address = $request->address;
-        $ratingSetting->competitor_id = $competitor->id;
-        $ratingSetting->rating_platform_id = $platform->id;
-        $ratingSetting->status = Status::YES;
-        $ratingSetting->min_rating = 4;
-        $ratingSetting->average_review = 4;
-        $ratingSetting->rating_url = !empty($request->url) ? $request->url : "https://search.google.com/local/writereview?placeid={$request->place_id}";
-        $ratingSetting->save();
+        if($platform) {
+            $competitorSetting = new CompetitorSetting();
+            $competitorSetting->name = $request->name;
+            $competitorSetting->address = $request->address;
+            $competitorSetting->competitor_id = $competitor->id;
+            $competitorSetting->rating_platform_id = $platform->id;
+            $competitorSetting->status = Status::YES;
+            $competitorSetting->rating_url = !empty($request->url) ? $request->url : "https://search.google.com/local/writereview?placeid={$request->place_id}";
+            $competitorSetting->save();
+        }
 
-        event(new ImageDownload($request->image_url, $competitor, $ratingSetting));
-        event(new GoogleReviewsScrape($competitor));
+        event(new ImageDownloadCompetitor($request->image_url, $competitor, $competitorSetting, null, ['competitor']));
 
         $message = $saved
             ? ['message' => __("Competitor added successfully"), 'redirect' => route('competitors.add.platforms', $competitor)]
@@ -116,17 +117,15 @@ class CompetitorsController extends Controller
     /**
      * Validate the resource.
      */
-    private function validateRequest(Request $request, Competitor $competitor)
+    private function validateRequest(Request $request)
     {
-        if (!$competitor->exists) {
-            $request->validate([
-                'name' => [
-                    'required',
-                    'string',
-                    'max:250',
-                ],
-                'place_id' => ['required', 'string']
-            ]);
-        }
+        $request->validate([
+            'name' => [
+                'required',
+                'string',
+                'max:250',
+            ],
+            'place_id' => ['required', 'string']
+        ]);
     }
 }

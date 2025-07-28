@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="col-12 text-end">
-            <a href="{{ route('competitors.create') }}" class="btn btn-info mb-3 "><i class="far fa-plus"></i> @lang('Add New Competitor')</a>
+            <a href="javascript:;" class="btn btn-info mb-3" id="add-competitor-link"><i class="far fa-plus"></i> @lang('Add New Competitor')</a>
         </div>
     </div>
 
@@ -44,6 +44,7 @@
                 competetersDiv.html('');
                 counts.find('span').text('0/5');
                 counts.find('.progress-bar').css('width', '0%');
+                $('#add-competitor-link').attr('href', 'javascript:;');
 
                 const form = createForm(`{{ route('competitors.index') }}/${selected}`, "GET", {});
 
@@ -51,6 +52,7 @@
                     competetersDiv.html(response.html);
                     counts.find('span').text(`${response.count}/5`);
                     counts.find('.progress-bar').css('width', `${response.progress}%`);
+                    $('#add-competitor-link').attr('href', response.href);
                 });
             });
 
