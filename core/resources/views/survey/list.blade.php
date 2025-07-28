@@ -20,9 +20,9 @@
                         <li><a class="dropdown-item" href="#">General Enquiry</a></li>
                     </ul>
                 </div>
-                <x-secondary-button type="button" class="ms-auto" data-action="{{ route('survey.addsurvey') }}">
+                <a href="{{ route('survey.add') }}" type="button" class="btn btn-secondary ms-auto">
                     <i class="fas fa-plus text-white me-2"></i>@lang('Create New Survey')
-                </x-secondary-button>
+                </a>
             </div>
         </div>
         <div class="col-lg-4 mt-4">

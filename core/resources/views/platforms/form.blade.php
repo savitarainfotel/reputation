@@ -8,7 +8,7 @@
             </option>
         @endforeach
     </select>
-    <input type="hidden" name="name" />
+    <input type="hidden" name="name" /> 
     <input type="hidden" name="address" />
     <input type="hidden" name="picture" />
     <input type="hidden" name="platform_url" />
