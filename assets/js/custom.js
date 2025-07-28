@@ -167,17 +167,23 @@ const logoFormat = (logo) => {
 		return logo.text;
 	}
 
-	return `<img src="${$(logo.element).data("logo")}" class="mb-1 me-2" /> ${logo.text}`;
+	return `<img src="${$(logo.element).data("logo")}" class="mb-1 me-2" height="30" width="30" /> ${logo.text}`;
 }
 
 const initSelectWithLogo = (element) => {
-	$(element).select2({
+	const $element = $(element);
+	const options = {
 		minimumResultsForSearch: Infinity,
 		templateResult: logoFormat,
 		templateSelection: logoFormat,
 		escapeMarkup: function (es) {
 			return es;
-		},
-        dropdownParent: $ ('#general-modal')
-	});
-}
+		}
+	};
+
+	if ($element.closest('#general-modal').length > 0) {
+		options.dropdownParent = $('#general-modal');
+	}
+
+	$element.select2(options);
+};

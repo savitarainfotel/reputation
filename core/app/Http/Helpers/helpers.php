@@ -5,6 +5,7 @@ use App\Models\Role;
 use Carbon\Carbon;
 use App\Lib\FileManager;
 use App\Models\GeneralSetting;
+use App\Models\RatingSetting;
 
 if (!function_exists('generate_datatables')) {
     function generate_datatables(&$data) {
@@ -105,4 +106,17 @@ function showActive($route) {
 function gs($key = null) {
     $general = $general = GeneralSetting::where('setting_key', $key)->first();
     return @$general->setting_value;
+}
+
+function google_Client(RatingSetting $ratingSetting) {
+    $client = new Google_Client();
+    $client->setClientId(gs('google-client-id'));
+    $client->setClientSecret(gs('google-client-secret'));
+    $client->setRedirectUri(route('integrations.google.callback'));
+    $client->setAccessType('offline');
+    $client->setIncludeGrantedScopes(true);
+    $client->addScope(Status::GOOGLE_SCOPES);
+    $client->setState($ratingSetting->encID);
+
+    return $client;
 }

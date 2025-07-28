@@ -4,12 +4,8 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\Storage;
 
-class RatingSetting extends BaseModel
+class CompetitorSetting extends BaseModel
 {
-    protected $casts = [
-        'access_token' => 'array',
-    ];
-
     public function platform()
     {
         return $this->belongsTo(Platform::class, 'rating_platform_id');

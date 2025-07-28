@@ -380,4 +380,8 @@
         const form = this.closest('form');
         submitForm(form, true);
     });
+
+    @if (session('status'))
+        notify(`{{ session('status') }}`);
+    @endif
 </script>

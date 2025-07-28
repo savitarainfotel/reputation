@@ -22,7 +22,7 @@ class PropertiesController extends Controller
     public function index(Request $request): View
     {
         $data['properties'] = Property::where('client_id', authUser()->id)->get();
-    return view('properties.list', $data);
+        return view('properties.list', $data);
     }
 
     /**
@@ -147,6 +147,7 @@ class PropertiesController extends Controller
         $property->client_id    = $userId;
         $property->updated_by   = $userId;
         $property->reviews      = 0;
+        $property->signature    = "Best Regards,\n{$request->name}";
         $saved = $property->save();
 
         $platform = Platform::where('is_default', Status::YES)->where('is_delete', Status::NO)->first();
@@ -159,7 +160,7 @@ class PropertiesController extends Controller
         $ratingSetting->status = Status::YES;
         $ratingSetting->min_rating = 4;
         $ratingSetting->average_review = 4;
-        $ratingSetting->rating_url = "https://search.google.com/local/writereview?placeid={$request->place_id}";
+        $ratingSetting->rating_url = !empty($request->url) ? $request->url : "https://search.google.com/local/writereview?placeid={$request->place_id}";
         $ratingSetting->save();
 
         event(new ImageDownload($request->image_url, $property, $ratingSetting));

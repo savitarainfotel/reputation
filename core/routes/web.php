@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\IntegrationsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\PlatformsController;
+use App\Http\Controllers\CompetitorsController;
 use App\Http\Controllers\SurveyController;
 
 Route::get('/', function () {
@@ -28,8 +30,22 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::controller(PlatformsController::class)->name('platforms.')->prefix('platforms')->group(function () {
-        Route::get('search/{property}/{platform}', 'search')->name('search');
-        Route::match(['get', 'post'], 'add/{property}/{platform?}', 'addOrUpdate')->name('create');
+        Route::get('search/{platform}', 'search')->name('search');
+        Route::match(['get', 'post'], 'add-property/{property}/{platform?}', 'addProperty')->name('create.property');
+        Route::match(['get', 'post'], 'add-competitor/{competitor}/{platform?}', 'addCompetitor')->name('create.competitor');
+    });
+
+    Route::controller(IntegrationsController::class)->name('integrations.')->prefix('integrations')->group(function () {
+        Route::get('', 'index')->name('index');
+        Route::get('google/{ratingSetting}', 'google')->name('google');
+        Route::get('google-callback', 'googleCallback')->name('google.callback');
+    });
+
+    Route::controller(CompetitorsController::class)->name('competitors.')->prefix('competitors')->group(function () {
+        Route::get('{property?}', 'index')->name('index');
+        Route::match(['get', 'post'], 'add/{property}', 'addOrUpdate')->name('create');
+        Route::get('add-platforms/{competitor}', 'addPlatforms')->name('add.platforms');
+        Route::match(['get', 'post'], 'infos/{competitor}', 'infos')->name('infos');
     });
     
     Route::controller(SurveyController::class)->name('survey.')->prefix('survey')->group(function () {

@@ -7,15 +7,13 @@ use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use App\Constants\Status;
-use App\Models\Property;
-use App\Models\Platform;
 
 trait Scrapable
 {
     /**
      * Scrape the platforms url of Agoda.
      */
-    public function scrapeAgoda(String $requestUrl, Property $property, Platform $platform): Array
+    public function scrapeAgoda(String $requestUrl): Array
     {
         try {
             $response = Http::get($requestUrl);
@@ -45,29 +43,29 @@ trait Scrapable
                                     "status"       => Status::YES
                                 ];
                             } else {
-                                return ['message' => __("Unsupported platform URL.")];
+                                return ['message' => __("Can't find metadata for this URL")];
                             }
                         } else {
-                            return ['message' => __("Unsupported platform URL.")];
+                            return ['message' => __("Can't find metadata for this URL")];
                         }
                     } else {
-                        return ['message' => __("Unsupported platform URL.")];
+                        return ['message' => __("Can't find metadata for this URL")];
                     }
                 } else {
-                    return ['message' => __("Unsupported platform URL.")];
+                    return ['message' => __("Can't find metadata for this URL")];
                 }
             } else {
-                return ['message' => __("Unsupported platform URL.")];
+                return ['message' => __("Can't find metadata for this URL")];
             }
         } catch (\Exception $e) {
-            return ['message' => __("Unsupported platform URL.")];
+            return ['message' => __("Can't find metadata for this URL")];
         }
     }
 
     /**
      * Scrape the platforms url of Booking.
      */
-    public function scrapeBooking(String $requestUrl, Property $property, Platform $platform): Array
+    public function scrapeBooking(String $requestUrl): Array
     {
         try {
             $response = Http::get($requestUrl);
@@ -119,19 +117,19 @@ trait Scrapable
                     $return['picture'] = $imageNode->attr('src');
                 }
 
-                return !empty($return['name']) && !empty($return['address']) && !empty($return['picture']) ? $return : ['message' => __("Unsupported platform URL.")];
+                return !empty($return['name']) && !empty($return['address']) && !empty($return['picture']) ? $return : ['message' => __("Can't find metadata for this URL")];
             } else {
-                return ['message' => __("Unsupported platform URL.")];
+                return ['message' => __("Can't find metadata for this URL")];
             }
         } catch (\Exception $e) {
-            return ['message' => __("Unsupported platform URL.")];
+            return ['message' => __("Can't find metadata for this URL")];
         }
     }
 
     /**
      * Scrape the platforms url of Expedia.
      */
-    public function scrapeExpedia(String $requestUrl, Property $property, Platform $platform): Array
+    public function scrapeExpedia(String $requestUrl): Array
     {
         try {
             $response = Http::get("https://api.scraperapi.com/?api_key=".gs('scraper-api')."&url=".$requestUrl);
@@ -159,12 +157,12 @@ trait Scrapable
                     $return['picture'] = $imageNode->attr('src');
                 }
 
-                return !empty($return['name']) && !empty($return['address']) && !empty($return['picture']) ? $return : ['message' => __("Unsupported platform URL.")];
+                return !empty($return['name']) && !empty($return['address']) && !empty($return['picture']) ? $return : ['message' => __("Can't find metadata for this URL")];
             } else {
-                return ['message' => __("Unsupported platform URL.")];
+                return ['message' => __("Can't find metadata for this URL")];
             }
         } catch (\Exception $e) {
-            return ['message' => __("Unsupported platform URL.")];
+            return ['message' => __("Can't find metadata for this URL")];
         }
     }
 }

@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-9 col-12 mt-5">
                 <div class="input-group border rounded-1">
-                    <x-text-input data-action="{{ route('platforms.search', [$property, $platformToSelect]) }}" data-method="get" name="platform[{{ $platformToSelect->encId }}]" type="text" class="border-0 focus-in-field" placeholder="Your property URL" maxlength="255" required data-skeleton="skeleton" />
+                    <x-text-input data-action="{{ route('platforms.search', $platformToSelect) }}" data-method="get" name="platform[{{ $platformToSelect->encId }}]" type="text" class="border-0 focus-in-field" placeholder="Your property URL" maxlength="255" required data-skeleton="skeleton" />
                     <a href="{{ $platformToSelect->platform_url }}" class="input-group-text bg-transparent border-0 text-danger px-6" target="_blank">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="round-20"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"></path></svg>
                     </a>
@@ -36,7 +36,7 @@
 <div class="loading-skeleton mt-4" id="skeleton">
     <div class="col-md-6">
         <div class="card">
-            {!! $property->getImageLink('card-img-top', '200') !!}
+            {!! !empty($property) ? $property->getImage('card-img-top', '200') : $competitor->getImage('card-img-top', '200') !!}
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
