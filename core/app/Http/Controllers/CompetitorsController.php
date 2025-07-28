@@ -115,6 +115,38 @@ class CompetitorsController extends Controller
     }
 
     /**
+     * Show the form for creating or updating a new resource.
+     */
+    public function infos(Request $request, Competitor $competitor): View|JsonResponse
+    {
+        if ($request->isMethod('get')) {
+            $data['competitor'] = $competitor;
+            $data['title']    = __('Add More Platforms');
+
+            return view('competitors.infos', $data);
+        }
+
+        if ($request->isMethod('post')) {
+            if (!$request->ajax()) {
+                return abort(404);
+            }
+
+            $request->validate([
+                'name'          => ['required','string','max:250']
+            ]);
+
+            $competitor->name = $request->name;
+            $saved = $competitor->save();
+
+            $message = $saved
+                ? ['message' => __("Competitor name saved successfully"), 'redirect' => route('competitors.index')]
+                : ['message' => __("Some error occurred")];
+
+            return response()->json($message);
+        }
+    }
+
+    /**
      * Validate the resource.
      */
     private function validateRequest(Request $request)
