@@ -11,7 +11,7 @@
                     <div class="card">
                         <div class="position-relative px-2 pt-2">
                             <a href="javascript:void(0)">
-                                {!! $property->getImageLink('card-img-top', '200') !!}
+                                {!! $property->getImage('card-img-top', '200') !!}
                             </a>
                         </div>
                         <div class="card-body p-4">

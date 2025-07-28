@@ -15,7 +15,7 @@ class RatingSetting extends BaseModel
         return $this->belongsTo(Platform::class, 'rating_platform_id');
     }
 
-    public function getImageLink(string $class = null, int $height = null): string {
+    public function getImage(string $class = null, int $height = null): string {
         if (!$this->picture) {
             return '';
         }

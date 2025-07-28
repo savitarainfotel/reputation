@@ -12,14 +12,14 @@
                 <span class="d-none d-md-block fw-medium fs-3">@lang('Integrations')</span>
             </a>
         </li>
-        <li class="nav-item me-3">
+        {{-- <li class="nav-item me-3">
             <a href="javascript:void(0)" class="btn btn-outline-dark d-flex align-items-center gap-6">
                 <i class="fa-solid fa-user"></i>
                 <span class="d-none d-md-block fw-medium fs-3">@lang('Users')</span>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item me-3">
-            <a href="javascript:void(0)" class="btn btn-outline-dark d-flex align-items-center gap-6">
+            <a href="{{ route('competitors.index') }}" class="btn btn-outline-dark d-flex align-items-center gap-6 {{ showActive('competitors.index') }}">
                 <i class="fas fa-chart-bar"></i>
                 <span class="d-none d-md-block fw-medium fs-3">@lang('Competitors')</span>
             </a>

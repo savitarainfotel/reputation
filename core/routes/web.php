@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\PlatformsController;
+use App\Http\Controllers\CompetitorsController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -36,6 +37,12 @@ Route::middleware('auth')->group(function () {
         Route::get('', 'index')->name('index');
         Route::get('google/{ratingSetting}', 'google')->name('google');
         Route::get('google-callback', 'googleCallback')->name('google.callback');
+    });
+
+    Route::controller(CompetitorsController::class)->name('competitors.')->prefix('competitors')->group(function () {
+        Route::get('{property?}', 'index')->name('index');
+        Route::match(['get', 'post'], 'add', 'addOrUpdate')->name('create');
+        Route::get('add-platforms/{property}', 'addPlatforms')->name('add.platforms');
     });
 });
 

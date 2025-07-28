@@ -22,7 +22,7 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            {!! $property->getImageLink('rounded-2', '42', '42') !!}
+                                            {!! $property->getImage('rounded-2', '42', '42') !!}
                                             <div class="ms-3">
                                                 <p class="fs-4 mb-1">{{ $property->name }}</p>
                                             </div>
