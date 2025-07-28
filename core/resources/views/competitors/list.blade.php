@@ -38,11 +38,12 @@
 
             $("#select-with-logo").change(function() {
                 const selected = $(this).val();
+                const maxCompetitors = `{{ gs('max-competitors') }}`;
 
                 const competetersDiv = $("#competeters");
                 const counts = $("#counts");
                 competetersDiv.html('');
-                counts.find('span').text('0/5');
+                counts.find('span').text(`0/${maxCompetitors}`);
                 counts.find('.progress-bar').css('width', '0%');
                 $('#add-competitor-link').attr('href', 'javascript:;');
 
@@ -50,7 +51,7 @@
 
                 submitForm(form).done(function(response){
                     competetersDiv.html(response.html);
-                    counts.find('span').text(`${response.count}/5`);
+                    counts.find('span').text(`${response.count}/${maxCompetitors}`);
                     counts.find('.progress-bar').css('width', `${response.progress}%`);
                     $('#add-competitor-link').attr('href', response.href);
                 });

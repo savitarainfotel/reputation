@@ -25,7 +25,7 @@ class CompetitorsController extends Controller
             $data['competitors'] = $property->competitors;
             $view = view('competitors.competitors', $data)->render();
 
-            return response()->json(['html' => $view, 'progress' => $data['competitors']->count() / 5 * 100, 'count' => $data['competitors']->count(), 'href' => route('competitors.create', $property)]);
+            return response()->json(['html' => $view, 'progress' => $data['competitors']->count() / gs('max-competitors') * 100, 'count' => $data['competitors']->count(), 'href' => route('competitors.create', $property)]);
         } else {
             $data['properties'] = Property::where('client_id', authUser()->id)->get();
             return view('competitors.list', $data);
@@ -35,11 +35,15 @@ class CompetitorsController extends Controller
     /**
      * Show the form for creating or updating a new resource.
      */
-    public function addOrUpdate(Request $request, Property $property): View|JsonResponse
+    public function addOrUpdate(Request $request, Property $property): View|JsonResponse|RedirectResponse
     {
         if ($request->isMethod('get')) {
             $data['property'] = $property;
             $data['title']    = __('Find Your Business');
+
+            if($property->competitors->count() >= gs('max-competitors')) {
+                return redirect()->route("competitors.index")->with('status', __("All competitors for the property have been added!"));
+            }
 
             return view('competitors.form', $data);
         }
