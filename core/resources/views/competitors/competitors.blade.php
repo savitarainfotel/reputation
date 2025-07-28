@@ -1,6 +1,6 @@
 @if ($competitors->count())
     @foreach ($competitors as $competitor)
-        <div class="col-3">
+        <div class="col-md-3">
             <div class="card">
                 <div class="position-relative px-2 pt-2">
                     <a href="javascript:void(0)">

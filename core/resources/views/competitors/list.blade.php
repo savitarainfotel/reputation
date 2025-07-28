@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div id="competeters"></div>
+    <div id="competeters" class="row"></div>
 
     @push('style')
         <link rel="stylesheet" href="{{ asset('assets/libs/select2/dist/css/select2.min.css') }}" />

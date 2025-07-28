@@ -7,7 +7,7 @@
                 <a href="{{ route('properties.create') }}" class="btn btn-info mb-3 float-end"><i class="far fa-plus"></i> @lang('Add New Property')</a>
             </div>
             @foreach ($properties as $property)
-                <div class="col-3">
+                <div class="col-md-3">
                     <div class="card">
                         <div class="position-relative px-2 pt-2">
                             <a href="javascript:void(0)">
