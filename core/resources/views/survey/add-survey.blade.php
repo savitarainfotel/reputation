@@ -22,9 +22,9 @@
             background-color:#1877F2 !important;
             
         }
-        .question{
+        .question-wrapper{
             padding:30px;
-            margin:-20PX 20PX 0 20PX;
+            margin:-20PX 55PX 0 55PX;
         }
     </style>
     <div class="row">
@@ -120,8 +120,8 @@
                             <option>Star (3 - 5)</option>                            
                         </select>
                         <label class="form-label fw-semibold fs-5 mt-2">Question 1 <i class="fas fa-info-circle ms-2"></i></label>
-                        <textarea class="form-control" rows="1" placeholder="question">How would you rate your overall experience staying at Savitara Infotel Pvt. Ltd.</textarea>
-                        <a href="#" class="text-end d-block"><i class="fas fa-plus me-2"></i>Add More Question <i class="fas fa-info-circle ms-2"></i></a>
+                        <textarea class="form-control" id="new-question" rows="1" placeholder="How would you rate your overall experience staying at Savitara Infotel Pvt. Ltd."></textarea>
+                        <a href="#" id="add-question-btn" class="text-end d-block"><i class="fas fa-plus me-2"></i>Add More Question <i class="fas fa-info-circle ms-2"></i></a>
                         <label class="form-label fw-semibold fs-5 mt-2">Comment <i class="fas fa-info-circle ms-2"></i></label>
                         <textarea class="form-control" rows="2" placeholder="comment"></textarea>
                     </div>
@@ -162,7 +162,7 @@
             <div class="col-lg-12 p-3 bg-bluelight">
                 <div class="row mb-3 pb-5">
                     <div class="col-12 text-end mb-2">
-                        <a href="#" class=" btn bg-white text-secondary py-2 px-3 rounded"><i class="fas fa-zoom me-2"></i>Full Screen Preview</a>
+                        <a href="#" class=" btn bg-white text-secondary py-2 px-3 rounded"><i class="fas fa-expand me-2"></i>Full Screen Preview</a>
                     </div>
                     <div class="col-5">
                         <img src="{{ asset('assets/images/review.png') }}" alt="survey" srcset="" class="w-100 h-20vh">
@@ -174,9 +174,9 @@
                 </div>
             </div>
             <div>
-                <div class="card question">
-                    <div>
-                        <h6>Q 1. How would you rate your overall experience staying at Budget Inn? *</h6>
+                <div class="card question-wrapper">
+                    <div class="question">
+                        <h6 class="fs-4 fw-semibold">Q 1. How would you rate your overall experience staying at Budget Inn? *</h6>
                         <span class="ms-3">
                           <i class="far fa-star"></i>  
                           <i class="far fa-star"></i>  
@@ -186,8 +186,8 @@
                         </span>
                         <div class="ms-3"><span>poor</span><span class="ms-5">great</span></div>
                     </div>
-                    <div>
-                        <h6>Q 2. How would you rate your overall experience staying at Budget Inn? *</h6>
+                    <div class="question">
+                        <h6 class="fs-4 fw-semibold">Q 2. How would you rate your overall experience staying at Budget Inn? *</h6>
                         <span class="ms-3">
                           <i class="far fa-star"></i>  
                           <i class="far fa-star"></i>  
@@ -196,8 +196,8 @@
                           <i class="far fa-star"></i>  
                         </span>
                     </div>
-                    <div>
-                        <h6>Q 3. How would you rate your overall experience staying at Budget Inn? *</h6>
+                    <div class="question">
+                        <h6 class="fs-4 fw-semibold">Q 3. How would you rate your overall experience staying at Budget Inn? *</h6>
                         <span class="ms-3">
                           <i class="far fa-star"></i>  
                           <i class="far fa-star"></i>  
@@ -206,8 +206,8 @@
                           <i class="far fa-star"></i>  
                         </span>
                     </div>
-                    <div>
-                        <h6>Q 4. How would you rate your overall experience staying at Budget Inn? *</h6>
+                    <div class="question">
+                        <h6 class="fs-4 fw-semibold">Q 4. How would you rate your overall experience staying at Budget Inn? *</h6>
                         <span class="ms-3">
                           <i class="far fa-star"></i>  
                           <i class="far fa-star"></i>  
@@ -216,12 +216,48 @@
                           <i class="far fa-star"></i>  
                         </span>
                     </div>
-                    <div class="mt-3">
+                    <div class="mt-3 ">
                         <label class="form-label fw-semibold fs-5">Description <i class="fas fa-info-circle ms-2"></i></label>
                         <textarea class="form-control" rows="2" placeholder="Description"></textarea>
                     </div>
                 </div>
             </div>
+            <div class="text-center mt-4">
+                <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" srcset="">
+                <p class="text-white mb-0 fs-4 fw-medium">@lang('Powered by') </p>
+                <a href="#" class="text-white">Hotelxplore</a>
+            </div>
         </div>
     </div>
+    
 </x-app-layout>
+<script>
+        $(document).ready(function () {
+            let questionCount = $('.question-wrapper .question').length;
+
+            $('#add-question-btn').click(function (e) {
+                // e.preventDefault();
+
+                let questionText = $('#new-question').val().trim();
+                if (questionText === '') return;
+
+                questionCount++;
+
+                let newQuestion = `
+                    <div class="question mt-3">
+                        <h6 class="fs-4 fw-semibold">Q ${questionCount}. ${questionText} *</h6>
+                        <span class="ms-3">
+                            <i class="far fa-star"></i>  
+                            <i class="far fa-star"></i>  
+                            <i class="far fa-star"></i>  
+                            <i class="far fa-star"></i>  
+                            <i class="far fa-star"></i>  
+                        </span>
+                    </div>
+                `;
+
+                $('.question-wrapper').append(newQuestion);
+                $('#new-question').val('');
+            });
+        });
+    </script>
