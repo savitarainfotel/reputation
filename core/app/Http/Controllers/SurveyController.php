@@ -19,4 +19,9 @@ class SurveyController extends Controller
         
         return view('survey.add-survey');
     }
+    public function report(Request $request): View
+    {
+        
+        return view('survey.report');
+    }
 }
