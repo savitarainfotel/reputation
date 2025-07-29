@@ -94,7 +94,6 @@ class CompetitorsController extends Controller
         $competitor->created_by   = $userId;
         $competitor->client_id    = $userId;
         $competitor->updated_by   = $userId;
-        $competitor->reviews      = 0;
         $saved = $competitor->save();
 
         $platform = Platform::where('is_default', Status::YES)->where('is_delete', Status::NO)->first();
