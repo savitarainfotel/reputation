@@ -18,5 +18,5 @@ class Status {
       'https://www.googleapis.com/auth/plus.business.manage' // Legacy scope, still useful for broader access
    ];
 
-   const ASSET_VERSION = '?v=1.0.0';
+   const ASSET_VERSION = '?v=1.0.1';
 }

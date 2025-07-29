@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row widget-app-columns mt-5">
-        <div class="col-md-6 scrollable mh-n100 border-end" data-simplebar="">
+        <div class="col-6 scrollable mh-n205 border-end" data-simplebar="">
             <div class="row">
                 @foreach ($reviews as $review)
                     <div class="col-xl-6 col-lg-12 col-md-6">
@@ -55,7 +55,7 @@
         @php
             $review = $reviews->first();
         @endphp
-        <div class="col-md-6 scrollable mh-n100" data-simplebar="">
+        <div class="col-6 scrollable mh-n205" data-simplebar="">
             <div class="row ms-1">
                 <div class="card border">
                     <div class="card-header d-flex align-items-center justify-content-between bg-transparent">

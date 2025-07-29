@@ -47791,6 +47791,10 @@ body .connect-sorting-content {
 	max-height: calc(100vh - 100px);
 }
 
+.mh-n205 {
+	max-height: calc(100vh - 205px);
+}
+
 .h-n150 {
 	height: calc(100vh - 150px);
 }
