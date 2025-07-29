@@ -20,4 +20,9 @@ class Competitor extends BaseModel
     {
         return $this->hasMany(CompetitorSetting::class, 'competitor_id');
     }
+
+    public function reviews()
+    {
+        return number_format($this->platforms->pluck('reviews')->sum());
+    }
 }

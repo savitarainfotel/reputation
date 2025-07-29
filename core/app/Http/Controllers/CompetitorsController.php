@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\Rule;
 use App\Events\ImageDownloadCompetitor;
+use App\Events\ReviewsCountScrapeCompetitor;
 use App\Models\Platform;
 use App\Constants\Status;
 
@@ -109,7 +110,10 @@ class CompetitorsController extends Controller
             $competitorSetting->save();
         }
 
-        event(new ImageDownloadCompetitor($request->image_url, $competitor, $competitorSetting, null, ['competitor', 'competitorSetting']));
+        if($saved) {
+            event(new ImageDownloadCompetitor($request->image_url, $competitor, $competitorSetting, null, ['competitor', 'competitorSetting']));
+            event(new ReviewsCountScrapeCompetitor($competitor, $competitorSetting));
+        }
 
         $message = $saved
             ? ['message' => __("Competitor added successfully"), 'redirect' => route('competitors.add.platforms', $competitor)]

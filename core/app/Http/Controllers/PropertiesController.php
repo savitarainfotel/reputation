@@ -163,8 +163,10 @@ class PropertiesController extends Controller
         $ratingSetting->rating_url = !empty($request->url) ? $request->url : "https://search.google.com/local/writereview?placeid={$request->place_id}";
         $ratingSetting->save();
 
-        event(new ImageDownload($request->image_url, $property, $ratingSetting));
-        event(new GoogleReviewsScrape($property, $ratingSetting));
+        if($saved) {
+            event(new ImageDownload($request->image_url, $property, $ratingSetting));
+            event(new GoogleReviewsScrape($property, $ratingSetting));
+        }
 
         $message = $saved
             ? ['message' => __("Property added successfully"), 'redirect' => route('properties.add.platforms', $property)]

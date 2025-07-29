@@ -16,6 +16,7 @@ use App\Events\ImageDownloadCompetitor;
 use App\Events\AgodaReviewsScrape;
 use App\Events\BookingReviewsScrape;
 use App\Events\ExpediaReviewsScrape;
+use App\Events\ReviewsCountScrapeCompetitor;
 
 class PlatformsController extends Controller
 {
@@ -202,7 +203,10 @@ class PlatformsController extends Controller
             $competitorSetting->rating_url = $request->platform_url;
             $saved = $competitorSetting->save();
 
-            event(new ImageDownloadCompetitor($request->picture, $competitor, $competitorSetting, $request->name.'-'.$platform->platform, ['competitor', 'competitorSetting']));
+            if($saved) {
+                event(new ImageDownloadCompetitor($request->picture, $competitor, $competitorSetting, $request->name.'-'.$platform->platform, ['competitor', 'competitorSetting']));
+                event(new ReviewsCountScrapeCompetitor($competitor, $competitorSetting));
+            }
 
             $message = $saved
                 ? ['message' => __("Listing added successfully"), 'redirect' => route('competitors.add.platforms', $competitor)]
