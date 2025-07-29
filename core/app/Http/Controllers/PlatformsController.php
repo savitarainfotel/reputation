@@ -13,6 +13,9 @@ use App\Constants\Status;
 use App\Traits\Scrapable;
 use App\Events\ImageDownload;
 use App\Events\ImageDownloadCompetitor;
+use App\Events\AgodaReviewsScrape;
+use App\Events\BookingReviewsScrape;
+use App\Events\ExpediaReviewsScrape;
 
 class PlatformsController extends Controller
 {
@@ -143,7 +146,29 @@ class PlatformsController extends Controller
             $ratingSetting->rating_url = $request->platform_url;
             $saved = $ratingSetting->save();
 
-            event(new ImageDownload($request->picture, $property, $ratingSetting, $request->name.'-'.$platform->platform, ['ratingSetting']));
+            if($saved) {
+                $requestUrl = $request->platform_url;
+                $platformUrlHost = parse_url($platform->platform_url ?? '')['host'] ?? '';
+                $requestUrlHost = parse_url($requestUrl ?? '')['host'] ?? '';
+    
+                if($platformUrlHost === $requestUrlHost) {
+                    switch ($platformUrlHost) {
+                        case 'www.agoda.com':
+                            event(new AgodaReviewsScrape($property, $ratingSetting));
+                            break;
+
+                        case 'www.booking.com':
+                            event(new BookingReviewsScrape($property, $ratingSetting));
+                            break;
+
+                        case 'www.expedia.com':
+                            event(new ExpediaReviewsScrape($property, $ratingSetting));
+                            break;
+                    }
+                }
+
+                event(new ImageDownload($request->picture, $property, $ratingSetting, $request->name.'-'.$platform->platform, ['ratingSetting']));
+            }
 
             $message = $saved
                 ? ['message' => __("Listing added successfully"), 'redirect' => route('properties.add.platforms', $property)]
