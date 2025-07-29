@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\PlatformsController;
 use App\Http\Controllers\CompetitorsController;
+use App\Http\Controllers\ReviewsController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -45,6 +46,10 @@ Route::middleware('auth')->group(function () {
         Route::match(['get', 'post'], 'add/{property}', 'addOrUpdate')->name('create');
         Route::get('add-platforms/{competitor}', 'addPlatforms')->name('add.platforms');
         Route::match(['get', 'post'], 'infos/{competitor}', 'infos')->name('infos');
+    });
+
+    Route::controller(ReviewsController::class)->name('reviews.')->prefix('reviews')->group(function () {
+        Route::get('{property?}', 'index')->name('index');
     });
 });
 

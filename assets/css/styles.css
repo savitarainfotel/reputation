@@ -48127,3 +48127,11 @@ ul.first-level .sidebar-item:hover {
 	height: 40px;
 	width: 40px;
 }
+
+.logo-on-user{
+	position: absolute;
+    left: 55px;
+    top: 105px;
+    z-index: 2;
+    border-radius: 50%;
+}

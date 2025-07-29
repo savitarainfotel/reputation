@@ -30,6 +30,7 @@ class HandleGoogleReviewsScrape implements ShouldQueue
                     foreach ($response['reviews'] as $review) {
                         $newReview                     = new Review();
                         $newReview->rating_platform_id = $event->ratingSetting->id;
+                        $newReview->property_id        = $event->ratingSetting->property_id;
                         $newReview->title              = $review["text"] ?? null;
                         $newReview->url                = $review["url"] ?? null;
                         $newReview->reviewer           = $review["reviewer"] ?? null;
