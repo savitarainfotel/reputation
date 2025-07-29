@@ -3,7 +3,7 @@
 
     <form action="{{ route('properties.infos', $property) }}" method="post" class="ajax-form">
         <div class="row">
-            <div class="col-md-6 offset-md-3 col-12">
+            <div class="col-lg-6 offset-lg-3 col-12">
                 <span>@lang('Welcome to RMS! Set up your account in four easy steps.')</span>
                 <h6 class="mt-3 mb-3">@lang('Step ') <span class="text-secondary">3/4</span></h6>
                 <h4 class="mt-3 mb-3">@lang('Is This Your Business Type?')</h4>

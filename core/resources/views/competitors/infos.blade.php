@@ -3,7 +3,7 @@
 
     <form action="{{ route('competitors.infos', $competitor) }}" method="post" class="ajax-form">
         <div class="row">
-            <div class="col-md-6 offset-md-3 col-12">
+            <div class="col-lg-6 offset-lg-3 col-12">
                 <h6 class="mt-3 mb-3">@lang('Step ') <span class="text-secondary">3/3</span></h6>
                 <h4 class="mt-3 mb-3">@lang('What is the name of your Hotel?')</h4>
                 <p>

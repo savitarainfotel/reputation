@@ -218,7 +218,7 @@ h6 {
 }
 
     .stepper {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(90deg, rgba(21, 44, 86, 1) 0%,rgba(33, 150, 243, 1) 100%);
         padding: 2rem 0;
         margin-bottom: 2rem;
         overflow: auto;
@@ -226,12 +226,14 @@ h6 {
     
     .stepper-item {
         position: relative;
-        flex: 1;
+        /* flex: 1; */
         text-align: center;
         color: white;
+        /* display: flex;
+        align-items: center; */
     }
     
-    .stepper-item:not(:last-child)::after {
+    /* .stepper-item:not(:last-child)::after {
         content: '';
         position: absolute;
         top: 20px;
@@ -244,13 +246,13 @@ h6 {
     
     .stepper-item.active:not(:last-child)::after {
         background: rgba(255, 255, 255, 0.8);
-    }
+    } */
     
     .stepper-circle {
         width: 40px;
         height: 40px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10%;
+        border: 1px solid white        ;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -275,6 +277,7 @@ h6 {
         font-size: 0.9rem;
         font-weight: 500;
         opacity: 0.8;
+        margin-left: 5px;
     }
     
     .stepper-item.active .stepper-label {

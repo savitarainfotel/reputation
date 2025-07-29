@@ -1,5 +1,5 @@
 <div class="col-12">
-    <ul class="mb-4 rounded d-flex align-items-center flex-row">
+    <ul class="mb-4 rounded d-flex align-items-center flex-row overflow-auto text-nowrap">
         <li class="nav-item me-3">
             <a href="{{ route('properties.index') }}" class="btn btn-outline-dark d-flex align-items-center gap-6 {{ showActive('properties.index') }}">
                 <i class="fa-solid fa-city"></i>

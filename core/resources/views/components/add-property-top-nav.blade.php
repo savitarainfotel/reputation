@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-start overflow-auto">
-                    <div class="stepper-item {{ showActive('properties.create') }} {{ showActive('properties.add.platforms') }} {{ showActive('properties.infos') }} {{ showActive('properties.add.signature') }}">
+                    <div class="stepper-item  {{ showActive('properties.create') }} {{ showActive('properties.add.platforms') }} {{ showActive('properties.infos') }} {{ showActive('properties.add.signature') }}">
                         <div class="stepper-circle">
                             <i class="fas fa-search"></i>
                         </div>

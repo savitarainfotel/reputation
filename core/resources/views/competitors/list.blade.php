@@ -4,8 +4,8 @@
     <div class="row">
         <div class="col-12 d-flex align-items-center">
             <h6>@lang('Competitors of Property')</h6>
-            <div class="mx-3">
-                <select class="form-control w-50 " id="select-with-logo" required name="property_id">
+            <div class="mx-3 w-30">
+                <select class="form-control " id="select-with-logo" required name="property_id">
                     @foreach ($properties as $property)
                         <option value="{{ $property->encId }}" data-logo="{{ $property->getImageLink() }}">
                             {{ __($property->name) }}
