@@ -164,7 +164,7 @@ class PropertiesController extends Controller
         $ratingSetting->save();
 
         event(new ImageDownload($request->image_url, $property, $ratingSetting));
-        event(new GoogleReviewsScrape($property));
+        event(new GoogleReviewsScrape($property, $ratingSetting));
 
         $message = $saved
             ? ['message' => __("Property added successfully"), 'redirect' => route('properties.add.platforms', $property)]

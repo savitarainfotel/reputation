@@ -6,6 +6,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Http;
 use App\Events\GoogleReviewsScrape;
+use App\Models\Review;
 
 class HandleGoogleReviewsScrape implements ShouldQueue
 {
@@ -16,11 +17,34 @@ class HandleGoogleReviewsScrape implements ShouldQueue
      */
     public function handle(GoogleReviewsScrape $event): void
     {
-        $response = Http::get("https://serpapi.com/search.json?engine=google_maps_reviews&place_id=".$event->property->place_id."&reviews=1&gl=us&hl=en&api_key=".gs('serp-api'));
+        $response = Http::get("https://wextractor.com/api/v1/reviews/google?id=".$event->property->place_id."&auth_token=".gs('wextractor-api')."&sort=relevancy");
 
         if ($response->successful()){
-            $event->property->googleapis_log = $response->json();
-            $event->property->save();
+            $response = $response->json();
+
+            if(!empty($response['reviews'])) {
+                foreach ($response['reviews'] as $review) {
+                    $newReview                     = new Review();
+                    $newReview->rating_platform_id = $event->ratingSetting->id;
+                    $newReview->title              = $review["text"] ?? null;
+                    $newReview->url                = $review["url"] ?? null;
+                    $newReview->reviewer           = $review["reviewer"] ?? null;
+                    $newReview->reviewer_avatar    = $review["reviewer_avatar"] ?? null;
+                    $newReview->reviewer_id        = $review["reviewer_id"] ?? null;
+                    $newReview->reviewer_url       = $review["reviewer_url"] ?? null;
+                    $newReview->datetime           = $review["datetime"] ?? null;
+                    $newReview->rating             = $review["rating"] ?? null;
+                    $newReview->language           = $review["language"] ?? null;
+                    $newReview->likes              = $review["likes"] ?? null;
+                    $newReview->reply              = $review["reply"] ?? null;
+                    $newReview->created_by         = $event->property->created_by;
+                    $newReview->updated_by         = $event->property->updated_by;
+                    $newReview->save();
+                }
+
+                $event->property->reviews = count($response['reviews']);
+                $event->property->save();
+            }
         }
     }
 }
