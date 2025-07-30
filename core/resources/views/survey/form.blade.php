@@ -110,13 +110,48 @@
                 <div class="card question-wrapper p-4">
                     <div class="question">
                         <h6 class="fs-4 fw-semibold">Q 1. How would you rate your overall experience staying at Budget Inn?*</h6>
-                        <span class="ms-3">
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                        </span>
+                        <div class="rating-group">
+                            <fieldset class="rating">
+                                <div class="main-rating-container">
+                                <input type="radio" id="rating1-star5" name="service_rating1" value="5" />
+                                <label class="full" for="rating1-star5" title="Awesome - 5 stars"></label>
+
+                                <input type="radio" id="rating1-star4" name="service_rating1" value="4" />
+                                <label class="full" for="rating1-star4" title="Pretty good - 4 stars"></label>
+
+                                <input type="radio" id="rating1-star3" name="service_rating1" value="3" />
+                                <label class="full" for="rating1-star3" title="Meh - 3 stars"></label>
+
+                                <input type="radio" id="rating1-star2" name="service_rating1" value="2" />
+                                <label class="full" for="rating1-star2" title="Kinda bad - 2 stars"></label>
+
+                                <input type="radio" id="rating1-star1" name="service_rating1" value="1" />
+                                <label class="full" for="rating1-star1" title="Sucks big time - 1 star"></label>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="rating-group">
+                            <fieldset class="rating">
+                                <div class="main-rating-container">
+                                <input type="radio" id="rating2-star5" name="service_rating2" value="5" />
+                                <label class="full" for="rating2-star5" title="Awesome - 5 stars"></label>
+
+                                <input type="radio" id="rating2-star4" name="service_rating2" value="4" />
+                                <label class="full" for="rating2-star4" title="Pretty good - 4 stars"></label>
+
+                                <input type="radio" id="rating2-star3" name="service_rating2" value="3" />
+                                <label class="full" for="rating2-star3" title="Meh - 3 stars"></label>
+
+                                <input type="radio" id="rating2-star2" name="service_rating2" value="2" />
+                                <label class="full" for="rating2-star2" title="Kinda bad - 2 stars"></label>
+
+                                <input type="radio" id="rating2-star1" name="service_rating2" value="1" />
+                                <label class="full" for="rating2-star1" title="Sucks big time - 1 star"></label>
+                                </div>
+                            </fieldset>
+                        </div>
+
                     </div>
                     <div class="mt-3">
                         <label class="form-label fw-semibold fs-5">@lang('Comment') <i class="fas fa-info-circle ms-2"></i></label>
@@ -138,11 +173,6 @@
     @push('style')
         <link rel="stylesheet" href="{{ asset('assets/libs/select2/dist/css/select2.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/libs/@claviska/jquery-minicolors/jquery.minicolors.css') }}" />
-        <style>
-            .minicolors-swatch{
-                display: none;
-            }
-        </style>
     @endpush
 
     @push('script')
@@ -200,6 +230,19 @@
             });
 
             $("#selected-color").trigger('change');
+
+            $('.main-rating-container').each(function () {
+                let $lastChecked = null;
+
+                $(this).find('input[type="radio"]').on('click', function () {
+                    if ($(this).is($lastChecked)) {
+                    $(this).prop('checked', false);
+                    $lastChecked = null;
+                    } else {
+                    $lastChecked = $(this);
+                    }
+                });
+            });
         </script>
     @endpush
 

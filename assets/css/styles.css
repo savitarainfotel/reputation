@@ -48188,3 +48188,46 @@ ul.first-level .sidebar-item:hover {
 .form-control-border {
 	border: 1px solid #152C5680 !important;
 }
+
+.rating {
+	border: none;
+}
+
+.rating>.main-rating-container {
+	float: left;
+}
+
+.main-rating-container > input[type="radio"] {
+	display: none;
+}
+
+.main-rating-container > label:before {
+	margin: 5px;
+	font-size: 1.5em;
+	font-family: FontAwesome;
+	content: "\f005";
+	display: inline-block;
+}
+
+.main-rating-container > label {
+	color: #ddd;
+	float: right;
+	cursor: pointer;
+}
+
+.main-rating-container > input[type="radio"]:checked ~ label,
+.main-rating-container:not(:checked) > label:hover,
+.main-rating-container:not(:checked) > label:hover ~ label {
+	color: #FFD700;
+}
+
+.main-rating-container > input[type="radio"]:checked + label:hover,
+.main-rating-container > input[type="radio"]:checked ~ label:hover,
+.main-rating-container > label:hover ~ input[type="radio"]:checked ~ label,
+.main-rating-container > input[type="radio"]:checked ~ label:hover ~ label {
+	color: #FFED85;
+}
+
+.minicolors-swatch{
+	display: none;
+}
