@@ -48146,7 +48146,6 @@ ul.first-level .sidebar-item:hover {
 }
 
 .bg-bluelight {
-	background-color: #1877F2 !important;
 	border-radius: 0 0 100px 100px;
 }
 
@@ -48160,7 +48159,6 @@ ul.first-level .sidebar-item:hover {
 }
 
 .question-wrapper {
-	padding: 30px;
 	margin: -55px 55px 0 55px;
 }
 

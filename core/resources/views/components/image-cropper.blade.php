@@ -1,3 +1,5 @@
+{{----------------------------------- Taken from https://codepen.io/piyushpd139/pen/ZEOYKNZ -----------------------------------}}
+
 <div class="modal fade cropImageModal" id="cropImagePop" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">

@@ -77,7 +77,7 @@
                                 </div>
 
                                 <div class="col-lg-9">
-                                    <x-text-input type="text" class="form-control-border" id="selected-color" name="selected_color" data-position="bottom right" value="#1877F2" />
+                                    <x-text-input type="text" class="form-control-border" id="selected-color" name="selected_color" data-position="bottom right" value="#1877F2" readonly />
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
             </div>
         </div>
         <div class="col-lg-6 bg-blue px-0">
-            <div class="col-lg-12 p-5 bg-bluelight">
+            <div class="col-lg-12 p-5 bg-bluelight change-bg-color">
                 @if ($survey->exists)
                     <div class="col-12 text-end mb-2">
                         <a href="javascript:;" class=" btn bg-white text-secondary py-2 px-3 rounded"><i class="fas fa-expand me-2"></i> @lang('Full Screen Preview')</a>
@@ -106,8 +106,8 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <div class="card question-wrapper">
+            <div class="col-12">
+                <div class="card question-wrapper p-4">
                     <div class="question">
                         <h6 class="fs-4 fw-semibold">Q 1. How would you rate your overall experience staying at Budget Inn?*</h6>
                         <span class="ms-3">
@@ -123,6 +123,9 @@
                         <x-text-area class="form-control-border" rows="2" placeholder="Please let us know what led to this rating. What did you like and what did you not like?" />
                     </div>
                 </div>
+                <button class="btn btn-lg change-bg-color text-white question-wrapper mt-4 w-30">
+                    @lang('Next')
+                </button>
             </div>
             <div class="text-center mt-4">
                 <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" />
@@ -135,6 +138,11 @@
     @push('style')
         <link rel="stylesheet" href="{{ asset('assets/libs/select2/dist/css/select2.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/libs/@claviska/jquery-minicolors/jquery.minicolors.css') }}" />
+        <style>
+            .minicolors-swatch{
+                display: none;
+            }
+        </style>
     @endpush
 
     @push('script')
@@ -173,6 +181,25 @@
             });
 
             $("#select-with-logo").trigger('change');
+
+            $(document).on('change', 'input[name="color"]', function() {
+                $("#selected-color").val(this.value).trigger('change');
+            });
+
+            $(document).on('change', "#selected-color", function() {
+                const selectedColor = this.value;
+                $(".change-bg-color").css('background-color', selectedColor);
+
+                const hasMatch  = $('input[name="color"]').filter(function () {
+                    return selectedColor === this.value;
+                }).length > 0;
+
+                if(!hasMatch) {
+                    $('input[name="color"]').prop('checked', false);
+                }
+            });
+
+            $("#selected-color").trigger('change');
         </script>
     @endpush
 
