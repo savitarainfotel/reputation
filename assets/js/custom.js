@@ -187,3 +187,25 @@ const initSelectWithLogo = (element) => {
 
 	$element.select2(options);
 };
+
+const initMinicolors = (element) => {
+	$(element).minicolors({
+		control: $(element).attr("data-control") || "hue",
+		defaultValue: $(element).attr("data-defaultValue") || "",
+		format: $(element).attr("data-format") || "hex",
+		keywords: $(element).attr("data-keywords") || "",
+		inline: $(element).attr("data-inline") === "true",
+		letterCase: $(element).attr("data-letterCase") || "lowercase",
+		opacity: $(element).attr("data-opacity"),
+		position: $(element).attr("data-position") || "bottom left",
+		swatches: $(element).attr("data-swatches") ? $(element).attr("data-swatches").split("|") : [],
+		change: function (value, opacity) {
+			if (!value) return;
+			if (opacity) value += ", " + opacity;
+			if (typeof console === "object") {
+				console.log(value);
+			}
+		},
+		theme: "bootstrap",
+	});
+};

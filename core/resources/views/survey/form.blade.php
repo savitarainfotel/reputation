@@ -12,143 +12,120 @@
                     <div class="dropdown w-100 mt-3">
                         <select class="form-control " id="select-with-logo" required name="property_id">
                             @foreach ($properties as $property)
-                                <option value="{{ $property->encId }}" data-logo="{{ $property->getImageLink() }}">
-                                    {{ __($property->name) }}
-                                </option>
+                            <option value="{{ $property->encId }}" data-logo="{{ $property->getImageLink() }}">
+                                {{ __($property->name) }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="col-lg-12 mt-2">
                     <a class="fs-6 fw-bold text-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        <i class="fas fa-chevron-down me-2"></i>Survey Header
+                        <i class="fas fa-chevron-down me-2"></i> @lang('Survey Header')
                     </a>
                     <div class="collapse show" id="collapseExample">
-                          <div class="text-center mb-3">                                 
-                                <img src="{{ asset('assets/images/review.png') }}" class="rounded mb-3" alt="review">
-                                <div class="d-flex justify-content-center gap-2">
-                                    <a class="btn btn-sm btn-secondary">
-                                    <i class=" me-2 fas fa-pencil"></i> Change Image
-                                    </a>
-                                    <a class="btn btn-sm btn-outline-secondary">
-                                    <i class=" me-2 fas fa-trash"></i> Delete Image
-                                    </a>
-                                </div>
+                        <div class="text-center mb-3">
+                            <img src="" class="mb-3 rounded-circle round-200 logo-preview" alt="" />
+                            <div class="d-flex justify-content-center gap-2">
+                                <label for="item-img" class="btn btn-secondary logo-buttons">
+                                    <i class="me-2 fas fa-edit"></i> @lang('Change Image')
+                                </label>
+                                <a class="btn btn-outline-secondary logo-buttons delete-image">
+                                    <i class="me-2 fas fa-trash-alt"></i> @lang('Delete Image')
+                                </a>
+                                <label for="item-img" class="cursor-pointer p-3 w-100 drag-label">
+                                    <x-text-input type="file" class="d-none w-100 item-img" id="item-img" accept="image/jpeg,image/png,image/jpg" />
+                                    <span>
+                                        <svg class="round-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon" class="w-5 h-5 "><path d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15ZM1.5 10.146V6a3 3 0 0 1 3-3h5.379a2.25 2.25 0 0 1 1.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 0 1 3 3v1.146A4.483 4.483 0 0 0 19.5 9h-15a4.483 4.483 0 0 0-3 1.146Z"></path></svg>
+                                        @lang('Drag your files here or') <strong>@lang('choose file')</strong>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold fs-5">@lang('Title')</label>
+                            <x-text-input type="text" class="form-control-border" placeholder="Your survey name" :value="__('Guest Experience Survey')" />
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold fs-5">@lang('Description')</label>
+                            <x-text-area class="form-control-border" rows="2" placeholder="@lang('We hope you enjoyed your stay')" :value="__('We hope you enjoyed your stay with us. Please let us know how we did.')" />
+                        </div>
+
+                        <!-- Accent Color -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold d-block">@lang('Accent Color')</label>
+                            <div class="row">
+                                <div class="d-flex mb-2 col-lg-3 align-items-center">
+                                    <x-text-input type="radio" class="circle" name="color" id="color-1" value="#f87171" />
+                                    <label class="circle-label" for="color-1"><span style="border-radius: 50%; background-color: #f87171;"></span></label>
+
+                                    <x-text-input type="radio" class="circle" name="color" id="color-2" value="#60a5fa" />
+                                    <label class="circle-label" for="color-2"><span style="border-radius: 50%; background-color: #60a5fa;"></span></label>
+
+                                    <x-text-input type="radio" class="circle" name="color" id="color-3" value="#34d399" />
+                                    <label class="circle-label" for="color-3"><span style="border-radius: 50%; background-color: #34d399;"></span></label>
+
+                                    <x-text-input type="radio" class="circle" name="color" id="color-4" value="#fbbf24" />
+                                    <label class="circle-label" for="color-4"><span style="border-radius: 50%; background-color: #fbbf24;"></span></label>
+
+                                    <x-text-input type="radio" class="circle" name="color" id="color-5" value="#a78bfa" />
+                                    <label class="circle-label" for="color-5"><span style="border-radius: 50%; background-color: #a78bfa;"></span></label>
                                 </div>
 
-                                <!-- Title -->
-                                <div class="mb-3">
-                                <label class="form-label fw-semibold fs-5">Title</label>
-                                <input type="text" class="form-control" placeholder="Guest Experience Survey Budget Inn">
-                                </div>
-
-                                <!-- Description -->
-                                <div class="mb-3">
-                                <label class="form-label fw-semibold fs-5">Description</label>
-                                <textarea class="form-control" rows="2" placeholder="We hope you enjoyed your stay with us. Please let us know how we did."></textarea>
-                                </div>
-
-                                <!-- Accent Color -->
-                                <div class="mb-3">
-                                <label class="form-label fw-semibold d-block">Accent Color</label>
-                                <div class="d-flex mb-2">
-                                    <div class="color-dot" style="background-color: #f87171;"></div>
-                                    <div class="color-dot" style="background-color: #60a5fa;"></div>
-                                    <div class="color-dot" style="background-color: #34d399;"></div>
-                                    <div class="color-dot" style="background-color: #fbbf24;"></div>
-                                    <div class="color-dot" style="background-color: #a78bfa;"></div>
-                                    <input type="text" class="form-control form-control-sm accent-input" value="#000000">
-                                    <i class="fas fa-pen ms-2 fs-4"></i>
+                                <div class="col-lg-9">
+                                    <x-text-input type="text" class="form-control-border" id="selected-color" name="selected_color" data-position="bottom right" value="#1877F2" />
                                 </div>
                             </div>
-                    </div>
-                </div>
-                <div class="col-lg-12 mt-2">
-                    <a class="fs-6 fw-bold text-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
-                        <i class="fas fa-chevron-down me-2"></i>Question & Rating Scale
-                    </a>
-                    <div class="collapse show" id="collapseExample1">
-                        <label class="form-label fw-semibold fs-5">Rating Scale <i class="fas fa-info-circle ms-2"></i></label>
-                        <select class="form-control" id="select-2" required name="">
-                            <option>Star (1 - 5)</option>
-                            <option>Star (2 - 5)</option>
-                            <option>Star (3 - 5)</option>                            
-                        </select>
-                        <label class="form-label fw-semibold fs-5 mt-2">Question 1 <i class="fas fa-info-circle ms-2"></i></label>
-                        <textarea class="form-control" id="new-question" rows="1" placeholder="How would you rate your overall experience staying at Savitara Infotel Pvt. Ltd."></textarea>
-                        <a href="#" id="add-question-btn" class="text-end d-block"><i class="fas fa-plus me-2"></i>Add More Question <i class="fas fa-info-circle ms-2"></i></a>
-                        <label class="form-label fw-semibold fs-5 mt-2">Comment <i class="fas fa-info-circle ms-2"></i></label>
-                        <textarea class="form-control" rows="2" placeholder="comment"></textarea>
-                    </div>
-                </div>
-                <div class="col-lg-12 mt-2">
-                    <a class="fs-6 fw-bold text-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
-                        <i class="fas fa-chevron-down me-2"></i>Public Review Generation
-                    </a>
-                    <p>To motivate satisfied guests to write public reviews, MARA utilizes their feedback from this survey and automatically generates a draft review that guests can easily copy and post on Google or Tripadvisor.</p>
-                    <div class="collapse show" id="collapseExample1">
-                        <label class="form-label fw-semibold fs-5">Review Platform <i class="fas fa-info-circle ms-2"></i></label>
-                        <select class="form-control" id="select-2" required name="">
-                            <option>Google</option>
-                            <option>Agoda</option>
-                            <option>google</option>                            
-                        </select>
-                        <label class="form-label fw-semibold fs-5 mt-2">Ask for a public review if the rating is ≥ <i class="fas fa-info-circle ms-2"></i></label>
-                        <select class="form-control" id="select-2" required name="">
-                            <option>3</option>
-                            <option>2</option>
-                            <option>5</option>                            
-                        </select>                       
-                        <label class="form-label fw-semibold fs-5 mt-2">Ask for contact details if the rating is < <i class="fas fa-info-circle ms-2"></i></label>
-                        <select class="form-control" id="select-2" required name="">
-                            <option>2</option>
-                            <option>3</option>
-                            <option>5</option>                            
-                        </select> 
-                        <div class="d-flex justify-content-end gap-2 my-3">
-                            <a class="btn  btn-outline-secondary">Save & Exit </a>
-                            <a class="btn  btn-secondary">Create Survey </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 bg-blue px-0" >
-            <div class="col-lg-12 p-3 bg-bluelight">
-                <div class="row mb-3 pb-5">
+        <div class="col-lg-6 bg-blue px-0">
+            <div class="col-lg-12 p-5 bg-bluelight">
+                @if ($survey->exists)
                     <div class="col-12 text-end mb-2">
-                        <a href="#" class=" btn bg-white text-secondary py-2 px-3 rounded"><i class="fas fa-expand me-2"></i>Full Screen Preview</a>
+                        <a href="javascript:;" class=" btn bg-white text-secondary py-2 px-3 rounded"><i class="fas fa-expand me-2"></i> @lang('Full Screen Preview')</a>
                     </div>
-                    <div class="col-5">
-                        <img src="{{ asset('assets/images/review.png') }}" alt="survey" srcset="" class="w-100 h-20vh">
+                @endif
+                <div class="row mb-3 pb-5">
+                    <div class="col-md-7 d-grid align-items-center">
+                        <h4 class="text-white">
+                            @lang('Guest Experience Survey Budget Inn')
+                            <p class="text-white fs-4 mt-3">
+                                @lang('We hope you enjoyed your stay with us. Please let us know how we did.')
+                            </p>
+                        </h4>
                     </div>
-                    <div class="col-7">
-                        <h4 class="text-secondary">Guest Experience Survey Budget Inn</h4>
-                        <p class="text-secondary">We hope you enjoyed your stay with us. Please let us know how we did.</p>
+                    <div class="col-md-5">
+                        <img src="" class="rounded-circle round-200 float-end logo-preview" alt="" />
                     </div>
                 </div>
             </div>
             <div>
                 <div class="card question-wrapper">
                     <div class="question">
-                        <h6 class="fs-4 fw-semibold">Q 1. How would you rate your overall experience staying at Budget Inn? *</h6>
+                        <h6 class="fs-4 fw-semibold">Q 1. How would you rate your overall experience staying at Budget Inn?*</h6>
                         <span class="ms-3">
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
                         </span>
-                        {{-- <div class="ms-3"><span>poor</span><span class="ms-5">great</span></div> --}}
                     </div>
-                    <div class="mt-3 ">
+                    <div class="mt-3">
                         <label class="form-label fw-semibold fs-5">@lang('Comment') <i class="fas fa-info-circle ms-2"></i></label>
-                        <textarea class="form-control" rows="2" placeholder="Please let us know what led to this rating. What did you like and what did you not like?"></textarea>
+                        <x-text-area class="form-control-border" rows="2" placeholder="Please let us know what led to this rating. What did you like and what did you not like?" />
                     </div>
                 </div>
             </div>
             <div class="text-center mt-4">
-                <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" srcset="">
+                <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" />
                 <p class="mb-0 fs-4 fw-medium">@lang('Powered by') </p>
                 <a href="{{ route('home') }}" class="fs-4 fw-medium">{{ env('APP_NAME') }}</a>
             </div>
@@ -157,82 +134,43 @@
 
     @push('style')
         <link rel="stylesheet" href="{{ asset('assets/libs/select2/dist/css/select2.min.css') }}" />
-        <style>
-            .color-dot {
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                border: 1px solid #ccc;
-                margin-right: 10px;
-                cursor: pointer;
-            }
-            .form-control{
-                border: 1px solid #152C5680 !important;
-            }
-            .bg-bluelight{
-                background-color: #1877F2 !important;
-                border-radius: 0 0 100px 100px;
-            }
-            .h-20vh{
-                height: 20vh;
-            }
-            .bg-blue{
-                background-color:#f3f3f3 !important;
-                
-            }
-            .question-wrapper{
-                padding:30px;
-                margin:-55px 55px 0 55px;
-            }
-        </style>
+        <link rel="stylesheet" href="{{ asset('assets/libs/@claviska/jquery-minicolors/jquery.minicolors.css') }}" />
     @endpush
 
     @push('script')
         <script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js') }}"></script>
         <script src="{{ asset('assets/libs/select2/dist/js/select2.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/jquery-asColor/dist/jquery-asColor.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/jquery-asGradient/dist/jquery-asGradient.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/jquery-asColorPicker/dist/jquery-asColorPicker.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/@claviska/jquery-minicolors/jquery.minicolors.min.js') }}"></script>
+
         <script>
             initSelectWithLogo("#select-with-logo");
+            initMinicolors("#selected-color");
+            $('.logo-preview').addClass("d-none");
+            $('.logo-buttons').addClass("d-none");
 
-            $("#select-with-logo").change(function() {
-                const selected = $(this).val();
-                const surveyDiv = $("#survey");
-                surveyDiv.html('');
+            $("#select-with-logo").change(function () {
+                const logo = $(this).find(':selected').data('logo');
 
-                const form = createForm(`{{ route('survey.index') }}/${selected}`, "GET", {});
-
-                submitForm(form).done(function(response){
-                    surveyDiv.html(response.html);
-                });
+                fetch(logo)
+                    .then(res => {
+                        if (res.ok) return res.blob();
+                    })
+                    .then(blob => {
+                        const reader = new FileReader();
+                        reader.onload = () => $('.logo-preview').attr('src', reader.result);
+                        reader.readAsDataURL(blob);
+                    })
+                    .catch(err => {
+                        $('.logo-preview').attr('src', "");
+                    });
             });
 
             $("#select-with-logo").trigger('change');
-
-            let questionCount = $('.question-wrapper .question').length;
-
-            $('#add-question-btn').click(function (e) {
-                // e.preventDefault();
-
-                let questionText = $('#new-question').val().trim();
-                if (questionText === '') return;
-
-                questionCount++;
-
-                let newQuestion = `
-                    <div class="question mt-3">
-                        <h6 class="fs-4 fw-semibold">Q ${questionCount}. ${questionText} *</h6>
-                        <span class="ms-3">
-                            <i class="far fa-star"></i>  
-                            <i class="far fa-star"></i>  
-                            <i class="far fa-star"></i>  
-                            <i class="far fa-star"></i>  
-                            <i class="far fa-star"></i>  
-                        </span>
-                    </div>
-                `;
-
-                $('.question-wrapper').append(newQuestion);
-                $('#new-question').val('');
-            });
         </script>
     @endpush
+
+    <x-image-cropper />
 </x-app-layout>

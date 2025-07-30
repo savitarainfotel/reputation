@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Property;
+use App\Models\Survey;
 
 class SurveyController extends Controller
 {
@@ -26,9 +27,11 @@ class SurveyController extends Controller
         }
     }
 
-    public function addOrUpdate(Request $request): View|JsonResponse|RedirectResponse
+    public function addOrUpdate(Request $request, Survey $survey): View|JsonResponse|RedirectResponse
     {
         $data['properties'] = Property::where('client_id', authUser()->id)->get();
+        $data['survey']     = $survey;
+
         return view('survey.form', $data);
     }
 

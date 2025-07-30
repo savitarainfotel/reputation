@@ -38878,6 +38878,11 @@ body table.dataTable>tbody>tr.selected>* {
 	height: 100px;
 }
 
+.round-200 {
+	width: 200px;
+	height: 200px;
+}
+
 .round-110 {
 	width: 110px;
 	height: 110px;
@@ -48138,4 +48143,50 @@ ul.first-level .sidebar-item:hover {
     top: 105px;
     z-index: 2;
     border-radius: 50%;
+}
+
+.bg-bluelight {
+	background-color: #1877F2 !important;
+	border-radius: 0 0 100px 100px;
+}
+
+.h-20vh {
+	height: 20vh;
+}
+
+.bg-blue {
+	background-color: #f3f3f3 !important;
+
+}
+
+.question-wrapper {
+	padding: 30px;
+	margin: -55px 55px 0 55px;
+}
+
+.circle, input[type=radio] {
+	display: none;
+}
+
+.circle, input[type=radio]:checked + label span {
+	border: 2px solid #000000;
+	transform: scale(1.25);
+}
+
+.circle-label {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.circle-label span {
+	display: block;
+	height: 25px;
+	width: 25px;
+}
+
+.form-control-border {
+	border: 1px solid #152C5680 !important;
 }
