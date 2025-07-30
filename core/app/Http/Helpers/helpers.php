@@ -120,3 +120,28 @@ function google_Client(RatingSetting $ratingSetting) {
 
     return $client;
 }
+
+if ( ! function_exists('getBackgroundForAlphabet')) {
+    function getBackgroundForAlphabet($alpha='') {
+        $alpha = strtoupper(substr($alpha, 0, 1));
+
+        $colors = [
+                    'A' => 'F44336', 'B' => 'E91E63', 'C' => '9C27B0', 'D' => '673AB7', 'E' => '3F51B5',
+                    'F' => '2196F3', 'G' => '03A9F4', 'H' => '00BCD4', 'I' => '009688', 'J' => '4CAF50',
+                    'K' => '8BC34A', 'L' => 'CDDC39', 'M' => 'C7B834', 'N' => 'FFC107', 'O' => 'FF9800',
+                    'P' => 'FF5722', 'Q' => '795548', 'R' => '9E9E9E', 'S' => '607D8B', 'T' => '333333',
+                    'U' => 'CE7A7A', 'V' => '000000', 'W' => 'FF00FF', 'X' => 'FFC0CB', 'Y' => 'FFA500',
+                    'Z' => 'B8B839'
+                ];
+
+        return '#'.(isset($colors[$alpha]) ? $colors[$alpha] : $colors["A"]);
+    }
+}
+
+if ( ! function_exists('getUserImageOrAlpha')) {
+    function getUserImageOrAlpha($review) {
+        return !empty($review->reviewer_avatar) ? 
+                    '<img src="'.$review->reviewer_avatar.'" alt="" class="stepper-circle me-2" />' : 
+                    '<strong class="stepper-circle me-2 text-white fs-4" style="background: '.getBackgroundForAlphabet($review->reviewer).'">'.strtoupper(substr($review->reviewer, 0, 1)).'</strong>';
+    }
+}

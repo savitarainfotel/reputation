@@ -15,52 +15,30 @@
         <nav class="sidebar-nav scroll-sidebar" data-simplebar>
             <ul id="sidebarnav">
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('dashboard') }}"aria-expanded="false">
-                        <span>
-                            <i class="ti ti-message-dots"></i>
-                        </span>
-                        <span class="hide-menu">@lang('Dashboard')</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
                     <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
                         <span class="d-flex">
-                            {{-- <i class="ti ti-layout-grid"></i> --}}
                             <img src="{{ asset('assets/images/svg/answer.svg') }}" alt="answer" srcset="">
                         </span>
                         <span class="hide-menu">@lang('Answer Feedback')</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
-                            <a href="javascript:void(0)" class="sidebar-link">
-                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                    
-                                </div> --}}
+                            <a href="{{ route('reviews.index') }}" class="sidebar-link">
                                 <span class="hide-menu">@lang('Review inbox')</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div> --}}
                                 <span class="hide-menu">@lang('Automation')</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div> --}}
                                 <span class="hide-menu">@lang('Review Reply Generator')</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div> --}}
                                 <span class="hide-menu">@lang('Rating Reply Generator')</span>
                             </a>
                         </li>
@@ -70,7 +48,6 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow " href="javascript:void(0)" aria-expanded="false">
                         <span class="d-flex">
-                            {{-- <i class="ti ti-layout-grid"></i> --}}
                             <img src="{{ asset('assets/images/svg/property.svg') }}" alt="property" srcset="">
                         </span>
                         <span class="hide-menu">@lang('Property Overview')</span>
@@ -78,25 +55,16 @@
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div> --}}
                                 <span class="hide-menu">@lang('Group Overview')</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div> --}}
                                 <span class="hide-menu">@lang('Review Insight')</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="javascript:void(0)" class="sidebar-link">
-                                {{-- <div class="round-16 d-flex align-items-center justify-content-center">
-                                    <i class="ti ti-circle"></i>
-                                </div> --}}
                                 <span class="hide-menu">@lang('Report')</span>
                             </a>
                         </li>
@@ -105,7 +73,6 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="javascript:;" aria-expanded="false">
                         <span>
-                            {{-- <i class="ti ti-cpu"></i> --}}
                             <img src="{{ asset('assets/images/svg/survey.svg') }}" alt="survey" srcset="">
                         </span>
                         <span class="hide-menu">@lang('Survey')</span>

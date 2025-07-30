@@ -6,7 +6,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\Property;
 use App\Models\RatingSetting;
 
-class GoogleReviewsScrape
+class ExpediaReviewsScrape
 {
     use SerializesModels;
 

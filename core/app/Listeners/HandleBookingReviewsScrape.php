@@ -5,20 +5,25 @@ namespace App\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Http;
-use App\Events\GoogleReviewsScrape;
+use App\Events\BookingReviewsScrape;
 use App\Models\Review;
 use Illuminate\Support\Facades\DB;
 
-class HandleGoogleReviewsScrape implements ShouldQueue
+class HandleBookingReviewsScrape implements ShouldQueue
 {
     use InteractsWithQueue;
 
     /**
      * Handle the event.
      */
-    public function handle(GoogleReviewsScrape $event): void
+    public function handle(BookingReviewsScrape $event): void
     {
-        $response = Http::get("https://wextractor.com/api/v1/reviews/google?id=".$event->property->place_id."&auth_token=".gs('wextractor-api')."&sort=relevancy");
+        $path = parse_url($event->ratingSetting->rating_url, PHP_URL_PATH);
+        $path = ltrim($path, '/');
+        $path = preg_replace('/\.html$/', '', $path);
+        $url = substr($path, strpos($path, '/') + 1);
+
+        $response = Http::get("https://wextractor.com/api/v1/reviews/booking?id=".$url."&auth_token=".gs('wextractor-api'));
 
         if ($response->successful()){
             $response = $response->json();
@@ -31,7 +36,7 @@ class HandleGoogleReviewsScrape implements ShouldQueue
                         $newReview                     = new Review();
                         $newReview->rating_platform_id = $event->ratingSetting->id;
                         $newReview->property_id        = $event->ratingSetting->property_id;
-                        $newReview->title              = $review["text"] ?? null;
+                        $newReview->title              = $review["title"] ?? null;
                         $newReview->url                = $review["url"] ?? null;
                         $newReview->reviewer           = $review["reviewer"] ?? null;
                         $newReview->reviewer_avatar    = $review["reviewer_avatar"] ?? null;
@@ -42,12 +47,14 @@ class HandleGoogleReviewsScrape implements ShouldQueue
                         $newReview->language           = $review["language"] ?? null;
                         $newReview->likes              = $review["likes"] ?? null;
                         $newReview->reply              = $review["reply"] ?? null;
-                        $newReview->created_by         = $event->property->created_by;
-                        $newReview->updated_by         = $event->property->updated_by;
+                        $newReview->pros               = $review["pros"] ?? null;
+                        $newReview->cons               = $review["cons"] ?? null;
+                        $newReview->created_by         = $event->ratingSetting->created_by;
+                        $newReview->updated_by         = $event->ratingSetting->updated_by;
                         $newReview->save();
                     }
 
-                    $event->property->reviews = count($response['reviews']);
+                    $event->property->reviews += count($response['reviews']);
                     $event->property->save();
 
                     DB::commit();

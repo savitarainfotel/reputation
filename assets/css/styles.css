@@ -47791,6 +47791,10 @@ body .connect-sorting-content {
 	max-height: calc(100vh - 100px);
 }
 
+.mh-n205 {
+	max-height: calc(100vh - 205px);
+}
+
 .h-n150 {
 	height: calc(100vh - 150px);
 }
@@ -48126,4 +48130,12 @@ ul.first-level .sidebar-item:hover {
 	cursor: pointer;
 	height: 40px;
 	width: 40px;
+}
+
+.logo-on-user{
+	position: absolute;
+    left: 55px;
+    top: 105px;
+    z-index: 2;
+    border-radius: 50%;
 }

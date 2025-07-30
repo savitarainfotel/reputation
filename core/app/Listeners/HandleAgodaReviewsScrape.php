@@ -5,20 +5,20 @@ namespace App\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Http;
-use App\Events\GoogleReviewsScrape;
+use App\Events\AgodaReviewsScrape;
 use App\Models\Review;
 use Illuminate\Support\Facades\DB;
 
-class HandleGoogleReviewsScrape implements ShouldQueue
+class HandleAgodaReviewsScrape implements ShouldQueue
 {
     use InteractsWithQueue;
 
     /**
      * Handle the event.
      */
-    public function handle(GoogleReviewsScrape $event): void
+    public function handle(AgodaReviewsScrape $event): void
     {
-        $response = Http::get("https://wextractor.com/api/v1/reviews/google?id=".$event->property->place_id."&auth_token=".gs('wextractor-api')."&sort=relevancy");
+        $response = Http::get("https://wextractor.com/api/v1/reviews/agoda?id=".$event->ratingSetting->rating_url."&auth_token=".gs('wextractor-api'));
 
         if ($response->successful()){
             $response = $response->json();
@@ -47,7 +47,7 @@ class HandleGoogleReviewsScrape implements ShouldQueue
                         $newReview->save();
                     }
 
-                    $event->property->reviews = count($response['reviews']);
+                    $event->property->reviews += count($response['reviews']);
                     $event->property->save();
 
                     DB::commit();
