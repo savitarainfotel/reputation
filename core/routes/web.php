@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(SurveyController::class)->name('survey.')->prefix('survey')->group(function () {
         Route::get('', 'index')->name('index');
         Route::get('add-survey', 'addsurvey')->name('add');
-        Route::get('add-survey', 'report')->name('report');
+        Route::get('report', 'report')->name('report');
     });
 });
 

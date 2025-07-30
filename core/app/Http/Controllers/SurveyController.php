@@ -21,6 +21,8 @@ class SurveyController extends Controller
     }
     public function report(Request $request): View
     {
+
+        
         
         return view('survey.report');
     }
