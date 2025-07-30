@@ -54,8 +54,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::controller(SurveyController::class)->name('survey.')->prefix('survey')->group(function () {
+        Route::match(['get', 'post'], 'add', 'addOrUpdate')->name('create');
         Route::get('{property?}', 'index')->name('index');
-        Route::match(['get', 'post'], 'add/{property}', 'addOrUpdate')->name('create');
         Route::get('report', 'report')->name('report');
     });
 });

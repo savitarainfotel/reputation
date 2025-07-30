@@ -1,32 +1,4 @@
 <x-app-layout>
-    <style>
-        .color-dot {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        border: 1px solid #ccc;
-        margin-right: 10px;
-        cursor: pointer;
-        }
-        .form-control{
-            border: 1px solid #152C5680 !important;
-        }
-        .bg-bluelight{
-            background-color: #BDE3FF !important;
-            border-radius: 0 0 100px 100px;
-        }
-        .h-20vh{
-            height: 20vh;
-        }
-        .bg-blue{
-            background-color:#1877F2 !important;
-            
-        }
-        .question-wrapper{
-            padding:30px;
-            margin:-20PX 55PX 0 55PX;
-        }
-    </style>
     <div class="row">
         <div class="col-lg-6">
             <div class="row">
@@ -34,35 +6,18 @@
                     <div class="d-flex">
                         <h5>@lang('Create New Survey')</h5>
                         <a href="javascript:void(0)" class="btn btn-secondary ms-auto">
-                            <i class="fa fa-plus text-white me-2"></i> @lang('Add Competitors')
+                            @lang('Load Template')
                         </a>
                     </div>
-                    {{-- <select class="form-control" id="select-with-logo" required name="">
-                        <option value="id" data-logo="{{asset('assets/images/logo.svg')}}">
-                            property
-                            <img src="{{asset('assets/images/logo.svg')}}" alt="icon" class="round-32" />
-                            Savitara Infotel Pvt Ltd.
-                        </option>
-                        
-                    </select> --}}
                     <div class="dropdown w-100 mt-3">
-                        <button class="btn border dropdown-toggle w-100 text-start" type="button" id="customDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Property <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" width="24" class="me-2 rounded-circle"> Savitara Infotel Pvt Ltd.
-                        </button>
-                        <ul class="dropdown-menu w-100" aria-labelledby="customDropdown">
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <img src="" alt="logo" width="24" class="me-2 rounded-circle">
-                                    Property - Savitara Infotel Pvt Ltd.
-                                </a>
-                            </li>
-                            <li><a class="dropdown-item" href="#">Customer Service Enquiry</a></li>
-                            <li><a class="dropdown-item" href="#">Legal Enquiry</a></li>
-                            <li><a class="dropdown-item" href="#">General Enquiry</a></li>
-                        </ul>
+                        <select class="form-control " id="select-with-logo" required name="property_id">
+                            @foreach ($properties as $property)
+                                <option value="{{ $property->encId }}" data-logo="{{ $property->getImageLink() }}">
+                                    {{ __($property->name) }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
-   
-                    
                 </div>
                 <div class="col-lg-12 mt-2">
                     <a class="fs-6 fw-bold text-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -184,55 +139,74 @@
                           <i class="far fa-star"></i>  
                           <i class="far fa-star"></i>  
                         </span>
-                        <div class="ms-3"><span>poor</span><span class="ms-5">great</span></div>
-                    </div>
-                    <div class="question">
-                        <h6 class="fs-4 fw-semibold">Q 2. How would you rate your overall experience staying at Budget Inn? *</h6>
-                        <span class="ms-3">
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                        </span>
-                    </div>
-                    <div class="question">
-                        <h6 class="fs-4 fw-semibold">Q 3. How would you rate your overall experience staying at Budget Inn? *</h6>
-                        <span class="ms-3">
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                        </span>
-                    </div>
-                    <div class="question">
-                        <h6 class="fs-4 fw-semibold">Q 4. How would you rate your overall experience staying at Budget Inn? *</h6>
-                        <span class="ms-3">
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                          <i class="far fa-star"></i>  
-                        </span>
+                        {{-- <div class="ms-3"><span>poor</span><span class="ms-5">great</span></div> --}}
                     </div>
                     <div class="mt-3 ">
-                        <label class="form-label fw-semibold fs-5">Description <i class="fas fa-info-circle ms-2"></i></label>
-                        <textarea class="form-control" rows="2" placeholder="Description"></textarea>
+                        <label class="form-label fw-semibold fs-5">@lang('Comment') <i class="fas fa-info-circle ms-2"></i></label>
+                        <textarea class="form-control" rows="2" placeholder="Please let us know what led to this rating. What did you like and what did you not like?"></textarea>
                     </div>
                 </div>
             </div>
             <div class="text-center mt-4">
                 <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" srcset="">
-                <p class="text-white mb-0 fs-4 fw-medium">@lang('Powered by') </p>
-                <a href="#" class="text-white">Hotelxplore</a>
+                <p class="mb-0 fs-4 fw-medium">@lang('Powered by') </p>
+                <a href="{{ route('home') }}" class="fs-4 fw-medium">{{ env('APP_NAME') }}</a>
             </div>
         </div>
     </div>
-    
-</x-app-layout>
-<script>
-        $(document).ready(function () {
+
+    @push('style')
+        <link rel="stylesheet" href="{{ asset('assets/libs/select2/dist/css/select2.min.css') }}" />
+        <style>
+            .color-dot {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 1px solid #ccc;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            .form-control{
+                border: 1px solid #152C5680 !important;
+            }
+            .bg-bluelight{
+                background-color: #1877F2 !important;
+                border-radius: 0 0 100px 100px;
+            }
+            .h-20vh{
+                height: 20vh;
+            }
+            .bg-blue{
+                background-color:#f3f3f3 !important;
+                
+            }
+            .question-wrapper{
+                padding:30px;
+                margin:-55px 55px 0 55px;
+            }
+        </style>
+    @endpush
+
+    @push('script')
+        <script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/select2/dist/js/select2.min.js') }}"></script>
+        <script>
+            initSelectWithLogo("#select-with-logo");
+
+            $("#select-with-logo").change(function() {
+                const selected = $(this).val();
+                const surveyDiv = $("#survey");
+                surveyDiv.html('');
+
+                const form = createForm(`{{ route('survey.index') }}/${selected}`, "GET", {});
+
+                submitForm(form).done(function(response){
+                    surveyDiv.html(response.html);
+                });
+            });
+
+            $("#select-with-logo").trigger('change');
+
             let questionCount = $('.question-wrapper .question').length;
 
             $('#add-question-btn').click(function (e) {
@@ -259,5 +233,6 @@
                 $('.question-wrapper').append(newQuestion);
                 $('#new-question').val('');
             });
-        });
-    </script>
+        </script>
+    @endpush
+</x-app-layout>

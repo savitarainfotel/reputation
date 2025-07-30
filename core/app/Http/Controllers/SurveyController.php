@@ -26,9 +26,10 @@ class SurveyController extends Controller
         }
     }
 
-    public function addOrUpdate(Request $request, Property $property): View
+    public function addOrUpdate(Request $request): View|JsonResponse|RedirectResponse
     {
-        return view('survey.add-survey');
+        $data['properties'] = Property::where('client_id', authUser()->id)->get();
+        return view('survey.form', $data);
     }
 
     public function report(Request $request): View
