@@ -26,7 +26,7 @@ class SurveyController extends Controller
         }
     }
 
-    public function addsurvey(Request $request, Property $property): View
+    public function addOrUpdate(Request $request, Property $property): View
     {
         return view('survey.add-survey');
     }

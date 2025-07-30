@@ -12,7 +12,7 @@
                         @endforeach
                     </select>
                 </div>
-                <a href="javascript:;" type="button" class="btn btn-secondary ms-auto">
+                <a href="javascript:;" type="button" class="btn btn-secondary ms-auto" id="add-survey-link">
                     <i class="fas fa-plus text-white me-2"></i>@lang('Create New Survey')
                 </a>
             </div>
@@ -90,24 +90,17 @@
             initSelectWithLogo("#select-with-logo");
 
             $("#select-with-logo").change(function() {
-                /* const selected = $(this).val();
-                const maxCompetitors = `{{ gs('max-competitors') }}`;
+                const selected = $(this).val();
+                const surveyDiv = $("#survey");
+                surveyDiv.html('');
+                $('#add-survey-link').attr('href', 'javascript:;');
 
-                const competetersDiv = $("#competeters");
-                const counts = $("#counts");
-                competetersDiv.html('');
-                counts.find('span').text(`0/${maxCompetitors}`);
-                counts.find('.progress-bar').css('width', '0%');
-                $('#add-competitor-link').attr('href', 'javascript:;');
-
-                const form = createForm(`{{ route('competitors.index') }}/${selected}`, "GET", {});
+                const form = createForm(`{{ route('survey.index') }}/${selected}`, "GET", {});
 
                 submitForm(form).done(function(response){
-                    competetersDiv.html(response.html);
-                    counts.find('span').text(`${response.count}/${maxCompetitors}`);
-                    counts.find('.progress-bar').css('width', `${response.progress}%`);
-                    $('#add-competitor-link').attr('href', response.href);
-                }); */
+                    surveyDiv.html(response.html);
+                    $('#add-survey-link').attr('href', response.href);
+                });
             });
 
             $("#select-with-logo").trigger('change');
