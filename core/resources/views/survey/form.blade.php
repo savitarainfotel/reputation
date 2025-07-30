@@ -162,6 +162,10 @@
                         const reader = new FileReader();
                         reader.onload = () => $('.logo-preview').attr('src', reader.result);
                         reader.readAsDataURL(blob);
+                        $('.logo-preview').removeClass("d-none");
+                        $('.item-img').val('');
+                        $('.drag-label').hide();
+                        $('.logo-buttons').removeClass("d-none");
                     })
                     .catch(err => {
                         $('.logo-preview').attr('src', "");
