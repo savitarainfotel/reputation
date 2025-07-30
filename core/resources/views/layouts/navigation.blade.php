@@ -71,7 +71,7 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="javascript:;" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('survey.index') }}" aria-expanded="false">
                         <span>
                             <img src="{{ asset('assets/images/svg/survey.svg') }}" alt="survey" srcset="">
                         </span>
