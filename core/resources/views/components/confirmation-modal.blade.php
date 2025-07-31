@@ -13,8 +13,8 @@
                     <h6 class="question"></h6>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-dark btn-lg " data-bs-dismiss="modal">@lang('No')</button>
-                    <button type="submit" class="btn btn-primary btn-lg ">@lang('Yes')</button>
+                    {{-- <button type="button" class="btn btn-dark btn-lg " data-bs-dismiss="modal">@lang('No')</button>
+                    <button type="submit" class="btn btn-primary btn-lg ">@lang('Yes')</button> --}}
                 </div>
             </form>
         </div>

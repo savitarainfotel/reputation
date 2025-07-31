@@ -9,8 +9,8 @@
                 @csrf
                 <div class="modal-body"></div>
                 <div class="modal-footer">
-                    <x-light-button type="button" class="btn-light btn-lg" data-bs-dismiss="modal">@lang('Cancel')</x-light-button>
-                    <x-secondary-button class="btn-lg" type="submit">@lang('Save')</x-secondary-button>
+                    {{-- <x-light-button type="button" class="btn-light btn-lg" data-bs-dismiss="modal">@lang('Cancel')</x-light-button>
+                    <x-secondary-button class="btn-lg" type="submit">@lang('Save')</x-secondary-button> --}}
                 </div>
             </form>
         </div>

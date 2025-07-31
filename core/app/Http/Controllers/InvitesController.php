@@ -39,14 +39,13 @@ class InvitesController extends Controller
                 $return .= '<button class="btn btn-sm me-1 general-modal-button" data-action="'.route('invites.edit', $invite->id).'" >
                                     <i class="fas fa-file-edit fa-lg"></i>
                                 </button>';
-                $return .= '<button class="btn btn-sm confirmationBtn" data-action="'.route('invites.delete', $invite->id).'" data-question="'.__('Are you sure to delete this record?').'">
+                $return .= '<button class="btn btn-sm general-modal-button" data-action="'.route('invites.delete', $invite->id).'">
                                     <i class="fa-solid fa-trash-alt fa-lg"></i>
                                 </button>';
                 $return .= '</div>';
                 return $return;
              })
             ->toArray();
-            // general-modal-button" data-action="{{ route('invites.edit', 1) }}
         return generate_datatables($data);        
 
     }
@@ -56,9 +55,11 @@ class InvitesController extends Controller
         if ($request->isMethod('get')) {
             $data = [];
             $view = view('invites.form', $data)->render();
+            $footer = '<button type="button" class="btn btn-dark btn-lg " data-bs-dismiss="modal">'.__('cancel').'</button>
+                       <button type="submit" class="btn btn-primary btn-lg ">'.__('Save').'</button>';            
             $title = __('Add invite');
 
-            return response()->json(['html' => $view, 'title' => $title, 'classXl' => true]);
+            return response()->json(['html' => $view, 'title' => $title, 'classXl' => true, 'footer' => $footer]);
         }else{
             $request->validate([
                 'name'              => 'required|string|max:250',
@@ -92,10 +93,13 @@ class InvitesController extends Controller
 
             $data['invite'] = Invite::find($id);
 
+            $footer = '<button type="button" class="btn btn-dark btn-lg " data-bs-dismiss="modal">'.__('cancel').'</button>
+                       <button type="submit" class="btn btn-primary btn-lg ">'.__('Save').'</button>';               
+
             $view = view('invites.form', $data)->render();
             $title = __('Add invite');
 
-            return response()->json(['html' => $view, 'title' => $title, 'classXl' => true]);
+            return response()->json(['html' => $view, 'title' => $title, 'footer' => $footer , 'classXl' => true]);
         }else{
 
             $request->validate([
@@ -111,7 +115,7 @@ class InvitesController extends Controller
             $updateInvite->phone = $request->phone;
             $updateInvite->save();
 
-            if($updateInvite->save()) {
+            if($updateInvite->save()) {       
                 $message = __('Invites edited successfully');
                 $notify = ['success' => $message, 'reloadTable' => 'invites-table', 'closeModal' => 'general-modal'];
             } else {
@@ -125,15 +129,31 @@ class InvitesController extends Controller
     }
     public function delete(Request $request, $id)
     {
-        $invite = Invite::find($id);
-        if ($invite) {
-            $invite->delete();
-            $message = __('Invite deleted successfully');
-            $notify = ['success' => $message, 'reloadTable' => 'invites-table', 'closeModal' => 'confirmationModal'];
-        } else {
-            $notify = ['error' => __('Invite not found')];
-        }
-        return response()->json($notify);
+        if ($request->isMethod('get')) {
+           
+
+            $data['invite'] = Invite::find($id);
+
+            $view = view('invites.form', $data)->render();
+            $html = '<h6 class="question">'.__('Are you sure you want to delete invite ?').'</h6>';
+            $title = __('Add invite');
+            $footer = '<button type="button" class="btn btn-dark btn-lg " data-bs-dismiss="modal">'.__('No').'</button>
+                       <button type="submit" class="btn btn-primary btn-lg ">'.__('Yes').'</button>';
+            $title = __('Confirm Delete Invite');         
+
+            return response()->json(['html' => $html, 'title' => $title,'footer' => $footer]);
+        }else{
+            $invite = Invite::find($id);
+            if ($invite) {
+                $invite->delete();
+                $message = __('Invite deleted successfully');
+                $notify = ['success' => $message, 'reloadTable' => 'invites-table', 'closeModal' => 'general-modal'];
+            } else {
+                $notify = ['error' => __('Invite not found')];
+            }
+            return response()->json($notify);            
+        }        
+
     }
 
     private function validateRequest(Request $request)
