@@ -20,7 +20,7 @@
                     <i class="fa-solid fa-upload me-2"></i>@lang('Bulk upload')
                 </a>
                 <a href="javascript:;" type="button" class="btn btn-secondary ms-auto" id="add-survey-link">
-                    <i class="fa-solid fa-download me-2"></i>@lang('Download Sample')
+                    <i class="fa-solid fa-download me-2"></i>@lang('Sample Excel')
                 </a>
                 <a href="javascript:;" type="button" class="btn btn-secondary ms-auto general-modal-button" data-action="{{ route('invites.store') }}">
                     <i class="fas fa-plus text-white me-2"></i>@lang('Add Invites')

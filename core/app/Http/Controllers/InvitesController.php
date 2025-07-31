@@ -36,11 +36,11 @@ class InvitesController extends Controller
         $data = DataTables::of(Invite::select('id', 'name', 'email', 'phone'))
              ->addColumn('action', function ($invite) {
                 $return = '<div class="d-flex justify-content-end">';
-                $return .= '<button class="btn btn-outline-primary btn-sm me-1 general-modal-button" data-action="'.route('invites.edit', $invite->id).'" >
-                                    <i class="fas fa-edit"></i>
+                $return .= '<button class="btn btn-sm me-1 general-modal-button" data-action="'.route('invites.edit', $invite->id).'" >
+                                    <i class="fas fa-file-edit fa-lg"></i>
                                 </button>';
-                $return .= '<button class="btn btn-outline-danger btn-sm confirmationBtn" data-action="'.route('invites.delete', $invite->id).'" data-question="'.__('Are you sure to delete this record?').'">
-                                    <i class="fa-solid fa-trash"></i>
+                $return .= '<button class="btn btn-sm confirmationBtn" data-action="'.route('invites.delete', $invite->id).'" data-question="'.__('Are you sure to delete this record?').'">
+                                    <i class="fa-solid fa-trash-alt fa-lg"></i>
                                 </button>';
                 $return .= '</div>';
                 return $return;

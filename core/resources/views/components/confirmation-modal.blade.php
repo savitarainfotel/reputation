@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">@lang('Confirmation Alert!')</h2>
+                <h4 class="modal-title">@lang('Confirmation Alert!')</h4>
                 <button type="button" class="close border border-dark rounded" data-bs-dismiss="modal" aria-label="Close">
                     <i class="las la-times"></i>
                 </button>
@@ -10,7 +10,7 @@
             <form action="" method="POST" id="confirmation-form" class="ajax-form">
                 @csrf
                 <div class="modal-body">
-                    <h4 class="question"></h4>
+                    <h6 class="question"></h6>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dark btn-lg " data-bs-dismiss="modal">@lang('No')</button>
