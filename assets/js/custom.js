@@ -206,3 +206,13 @@ const initMinicolors = (element) => {
 		theme: "bootstrap",
 	});
 };
+
+$('.custom-collapse').on('show.bs.collapse', function () {
+	const toggleBtn = $('[data-bs-target="#' + this.id + '"]');
+	toggleBtn.find('i').removeClass('fa-chevron-right').addClass('fa-chevron-down');
+});
+
+$('.custom-collapse').on('hide.bs.collapse', function () {
+	const toggleBtn = $('[data-bs-target="#' + this.id + '"]');
+	toggleBtn.find('i').removeClass('fa-chevron-down').addClass('fa-chevron-right');
+});

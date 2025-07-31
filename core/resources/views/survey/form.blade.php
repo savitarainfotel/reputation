@@ -23,7 +23,7 @@
                     <a class="fs-6 fw-bold text-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         <i class="fas fa-chevron-down me-2"></i> @lang('Survey Header')
                     </a>
-                    <div class="collapse show" id="collapseExample">
+                    <div class="custom-collapse collapse show" id="collapseExample">
                         <div class="text-center mb-3">
                             <img src="" class="mb-3 rounded-circle round-200 logo-preview" alt="" />
                             <div class="d-flex justify-content-center gap-2">
