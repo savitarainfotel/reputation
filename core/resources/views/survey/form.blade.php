@@ -102,7 +102,7 @@
                         </div>
                         <div class="form-group">
                             <x-input-label class="fw-semibold fs-5" for="comment" :value="__('Comment')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
-                            <x-text-area id="comment" rows="2" placeholder="comment" :value="__('Comment')" />
+                            <x-text-area id="comment" rows="1" placeholder="comment" :value="__('Comment')" />
                         </div>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <label class="form-label fw-semibold fs-5">@lang('Comment') <i class="fas fa-info-circle ms-2"></i></label>
+                        <label class="form-label fw-semibold fs-5" id="comment-label"></label>
                         <x-text-area class="form-control-border" rows="2" placeholder="Please let us know what led to this rating. What did you like and what did you not like?" />
                     </div>
                 </div>
@@ -250,6 +250,12 @@
                     $(question).find("input[type=radio]").attr('name', `rate[${questionNo}]`);
                 });
             }
+
+            $(document).on('input', "#comment", function() {
+                $('#comment-label').html(`@lang('${this.value}')`);
+            });
+
+            $("#comment").trigger('input');
         </script>
     @endpush
 
