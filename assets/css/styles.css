@@ -48241,6 +48241,4 @@ ul.first-level .sidebar-item:hover {
 .rating input:checked ~ label::before {
   content: "★";
   filter: drop-shadow(0 0 4px);
-  transform: rotate(0.2turn);
-  transition-delay: calc(0.1 * attr(data-idx integer));
 }

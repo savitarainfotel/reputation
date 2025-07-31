@@ -267,6 +267,19 @@ $("#select-with-logo").change(function () {
 				$('.logo-preview').attr('src', "");
 			});
 	}
+
+	if($('#review-platform').length) {
+		let options = '';
+		const platforms = $(this).find(':selected').data('platforms');
+
+		if(platforms && platforms.length) {
+			platforms.forEach(platform => {
+				options += `<option value="${platform.id}">${platform.name}</option>`;
+			});
+		}
+
+		$('#review-platform').html(options);
+	}
 });
 
 $(document).on('change', 'input[name="color"]', function() {
