@@ -58,7 +58,7 @@ class InvitesController extends Controller
             $view = view('invites.form', $data)->render();
             $title = __('Add invite');
 
-            return response()->json(['html' => $view, 'title' => $title]);
+            return response()->json(['html' => $view, 'title' => $title, 'classXl' => true]);
         }else{
             $request->validate([
                 'name'              => 'required|string|max:250',
@@ -95,7 +95,7 @@ class InvitesController extends Controller
             $view = view('invites.form', $data)->render();
             $title = __('Add invite');
 
-            return response()->json(['html' => $view, 'title' => $title]);
+            return response()->json(['html' => $view, 'title' => $title, 'classXl' => true]);
         }else{
 
             $request->validate([
