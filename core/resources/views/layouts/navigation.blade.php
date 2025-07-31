@@ -15,11 +15,11 @@
         <nav class="sidebar-nav scroll-sidebar" data-simplebar>
             <ul id="sidebarnav">
                 <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                    <a class="sidebar-link " href="javascript:void(0)" aria-expanded="false">
                         <span class="d-flex">
                             <img src="{{ asset('assets/images/svg/answer.svg') }}" alt="answer" srcset="">
                         </span>
-                        <span class="hide-menu">@lang('Answer Feedback')</span>
+                        <span class="hide-menu has-arrow">@lang('Answer Feedback')</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
@@ -46,11 +46,11 @@
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow " href="javascript:void(0)" aria-expanded="false">
+                    <a class="sidebar-link " href="javascript:void(0)" aria-expanded="false">
                         <span class="d-flex">
                             <img src="{{ asset('assets/images/svg/property.svg') }}" alt="property" srcset="">
                         </span>
-                        <span class="hide-menu">@lang('Property Overview')</span>
+                        <span class="hide-menu has-arrow">@lang('Property Overview')</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
