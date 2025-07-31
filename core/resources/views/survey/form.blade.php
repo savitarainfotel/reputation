@@ -83,6 +83,29 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-12 mt-2">
+                    <a class="fs-6 fw-bold text-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseQuestionRatingScale" aria-expanded="false" aria-controls="collapseQuestionRatingScale">
+                        <i class="fas fa-chevron-down me-2"></i> @lang('Question & Rating Scale')
+                    </a>
+                    <div class="custom-collapse collapse show" id="collapseQuestionRatingScale">
+                        <div class="form-group">
+                            <x-input-label class="fw-semibold fs-5" for="rating-scale" :value="__('Rating Scale')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
+                            <select class="form-control" id="rating-scale" required name="rating_scale">
+                                <option value="@lang('NPS (0-10)')">@lang('NPS (0-10)')</option>
+                                <option value="@lang('Star (1 - 5)')" selected>@lang('Star (1 - 5)')</option>
+                            </select>
+                        </div>
+                        <div class="form-group mt-3 question-list">
+                            <x-input-label class="fw-semibold fs-5" for="question-1" :value="__('Question 1')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
+                            <x-text-input id="question-1" :placeholder="__('How would you rate your overall experience with us?')" />
+                            <a href="javascript:;" id="add-question" class="text-end d-block mt-2"><i class="fas fa-plus me-2"></i> @lang('Add More Question') <i class="fas fa-info-circle ms-2"></i></a>
+                        </div>
+                        <div class="form-group">
+                            <x-input-label class="fw-semibold fs-5" for="comment" :value="__('Comment')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
+                            <x-text-area id="comment" rows="2" placeholder="comment" :value="__('Comment')" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-lg-6 bg-blue px-0">
@@ -107,25 +130,25 @@
                 </div>
             </div>
             <div class="col-12">
-                <div class="card question-wrapper p-4">
+                <div class="card question-wrapper p-4" id="questions">
                     <div class="question">
-                        <h6 class="fs-4 fw-semibold">Q 1. How would you rate your overall experience staying at Budget Inn?*</h6>
+                        <h6 class="fs-4 fw-semibold mb-0">Q <span>1</span>.</h6>
                         <div class="rating-group">
                             <div class="rating">
-                                <x-text-input type='radio' hidden name='rate' id='rating_opt5' data-idx='0' />
-                                <label for='rating_opt5'></label>
+                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-5' data-idx='0' />
+                                <label for='rating-opt-5'></label>
 
-                                <x-text-input type='radio' hidden name='rate' id='rating_opt4' data-idx='1' />
-                                <label for='rating_opt4'></label>
+                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-4' data-idx='1' />
+                                <label for='rating-opt-4'></label>
 
-                                <x-text-input type='radio' hidden name='rate' id='rating_opt3' data-idx='2' />
-                                <label for='rating_opt3'></label>
+                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-3' data-idx='2' />
+                                <label for='rating-opt-3'></label>
 
-                                <x-text-input type='radio' hidden name='rate' id='rating_opt2' data-idx='3' />
-                                <label for='rating_opt2'></label>
+                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-2' data-idx='3' />
+                                <label for='rating-opt-2'></label>
 
-                                <x-text-input type='radio' hidden name='rate' id='rating_opt1' data-idx='4' />
-                                <label for='rating_opt1'></label>
+                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-1' data-idx='4' />
+                                <label for='rating-opt-1'></label>
                             </div>
                         </div>
                     </div>
@@ -239,6 +262,59 @@
                     }
                 });
             });
+
+            $(document).on('click', '#add-question', function(){
+                const questionList = $(".question-list");
+                const id = generateRandomString();
+
+                const questioninput = `<div class="form-group question-list remove-${id}">
+                                        <x-input-label class="fw-semibold fs-5" for="question-${id}" :value="__('Question ${questionList.length + 1}')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
+                                        <x-text-input id="question-${id}" :placeholder="__('How would you rate your overall experience with us?')" />
+                                        <a href="javascript:;" class="text-end d-block mt-2 remove-question" id="remove-${id}"><i class="fas fa-minus me-2"></i> @lang('Remove Question')</a>
+                                    </div>`;
+
+                questionList.last().after(questioninput);
+
+                const questionDiv = `<div class="question remove-${id}">
+                                        <h6 class="fs-4 fw-semibold mb-0">Q <span>${questionList.length + 1}</span>.</h6>
+                                        <div class="rating-group">
+                                            <div class="rating">
+                                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-${id}' data-idx='0' />
+                                                <label for='rating-opt-${id}'></label>
+
+                                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-${id}' data-idx='1' />
+                                                <label for='rating-opt-${id}'></label>
+
+                                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-${id}' data-idx='2' />
+                                                <label for='rating-opt-${id}'></label>
+
+                                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-${id}' data-idx='3' />
+                                                <label for='rating-opt-${id}'></label>
+
+                                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-${id}' data-idx='4' />
+                                                <label for='rating-opt-${id}'></label>
+                                            </div>
+                                        </div>
+                                    </div>`;
+
+                $("#questions").find('.question').last().after(questionDiv);
+            });
+
+            $(document).on('click', '.remove-question', function() {
+                const id = $(this).attr('id');
+                $(`.${id}`).remove();
+                resetQuestionNumbers();
+            });
+
+            const resetQuestionNumbers = () => {
+                $(".question-list").each(function(index, element) {
+                    $(element).find("label").text(`@lang('Question ${index + 1}')`);
+                });
+
+                $("#questions").find('.question').each(function(index, element) {
+                    $(element).find("h6").find('span').text(index + 1);
+                });
+            }
         </script>
     @endpush
 
