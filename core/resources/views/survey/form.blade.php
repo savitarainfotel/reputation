@@ -2,6 +2,7 @@
     <div class="row">
         <div class="col-lg-6 scrollable mh-n100" data-simplebar="">
             <form action="{{ request()->url() }}" method="post" class="ajax-form">
+                <x-text-input type="hidden" name="picture" id="picture" />
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="d-flex">

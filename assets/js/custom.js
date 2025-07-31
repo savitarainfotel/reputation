@@ -256,7 +256,10 @@ $("#select-with-logo").change(function () {
 			})
 			.then(blob => {
 				const reader = new FileReader();
-				reader.onload = () => $('.logo-preview').attr('src', reader.result);
+				reader.onload = () => {
+					$('.logo-preview').attr('src', reader.result);
+					$('#picture').val(reader.result);
+				};
 				reader.readAsDataURL(blob);
 				$('.logo-preview').removeClass("d-none");
 				$('.item-img').val('');
@@ -265,6 +268,7 @@ $("#select-with-logo").change(function () {
 			})
 			.catch(err => {
 				$('.logo-preview').attr('src', "");
+				$('#picture').val("");
 			});
 	}
 

@@ -243,8 +243,9 @@
                 backgroundColor : "#000000",
                 format: 'png',
                 size: {width: 250, height: 250}
-            }).then(function (resp) {
-                $('.logo-preview').attr('src', resp);
+            }).then(function (response) {
+                $('.logo-preview').attr('src', response);
+                $('#picture').val(response);
                 $('.logo-preview').removeClass("d-none");
                 $('#cropImagePop').modal('hide');
                 $('.item-img').val('');
@@ -274,6 +275,7 @@
             $('.logo-buttons').addClass("d-none");
             $('.drag-label').show();
             $('.logo-preview').attr('src', "");
+            $('#picture').val("");
         });
     </script>
 @endpush
