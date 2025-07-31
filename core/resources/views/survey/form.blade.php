@@ -97,7 +97,7 @@
                         </div>
                         <div class="form-group mt-3 question-list">
                             <x-input-label class="fw-semibold fs-5" for="question-1" :value="__('Question 1')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
-                            <x-text-input id="question-1" :placeholder="__('How would you rate your overall experience with us?')" />
+                            <x-text-input name="questions[]" id="question-1" :placeholder="__('How would you rate your overall experience with us?')" />
                             <a href="javascript:;" id="add-question" class="text-end d-block mt-2"><i class="fas fa-plus me-2"></i> @lang('Add More Question') <i class="fas fa-info-circle ms-2"></i></a>
                         </div>
                         <div class="form-group">
@@ -131,23 +131,23 @@
             </div>
             <div class="col-12">
                 <div class="card question-wrapper p-4" id="questions">
-                    <div class="question">
+                    <div class="question add-question">
                         <h6 class="fs-4 fw-semibold mb-0">Q <span>1</span>.</h6>
                         <div class="rating-group">
                             <div class="rating">
-                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-5' data-idx='0' />
+                                <x-text-input type='radio' hidden name="rate[1]" id='rating-opt-5' data-idx='0' value="5" />
                                 <label for='rating-opt-5'></label>
 
-                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-4' data-idx='1' />
+                                <x-text-input type='radio' hidden name="rate[1]" id='rating-opt-4' data-idx='1' value="4" />
                                 <label for='rating-opt-4'></label>
 
-                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-3' data-idx='2' />
+                                <x-text-input type='radio' hidden name="rate[1]" id='rating-opt-3' data-idx='2' value="3" />
                                 <label for='rating-opt-3'></label>
 
-                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-2' data-idx='3' />
+                                <x-text-input type='radio' hidden name="rate[1]" id='rating-opt-2' data-idx='3' value="2" />
                                 <label for='rating-opt-2'></label>
 
-                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-1' data-idx='4' />
+                                <x-text-input type='radio' hidden name="rate[1]" id='rating-opt-1' data-idx='4' value="1" />
                                 <label for='rating-opt-1'></label>
                             </div>
                         </div>
@@ -250,54 +250,52 @@
 
             $("#selected-color").trigger('change');
 
-            $('.rating').each(function () {
-                let $lastChecked = null;
-
-                $(this).find('input[type="radio"]').on('click', function () {
-                    if ($(this).is($lastChecked)) {
-                        $(this).prop('checked', false);
-                        $lastChecked = null;
-                    } else {
-                        $lastChecked = $(this);
-                    }
-                });
-            });
+            initRatings();
 
             $(document).on('click', '#add-question', function(){
                 const questionList = $(".question-list");
                 const id = generateRandomString();
+                const questionNo = questionList.length + 1;
 
-                const questioninput = `<div class="form-group question-list remove-${id}">
-                                        <x-input-label class="fw-semibold fs-5" for="question-${id}" :value="__('Question ${questionList.length + 1}')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
-                                        <x-text-input id="question-${id}" :placeholder="__('How would you rate your overall experience with us?')" />
-                                        <a href="javascript:;" class="text-end d-block mt-2 remove-question" id="remove-${id}"><i class="fas fa-minus me-2"></i> @lang('Remove Question')</a>
+                const questioninput = `<div class="form-group question-list remove-question-${id}">
+                                        <x-input-label class="fw-semibold fs-5" for="question-${id}" :value="__('Question ${questionNo}')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
+                                        <x-text-input name="questions[]" id="question-${id}" :placeholder="__('How would you rate your overall experience with us?')" />
+                                        <a href="javascript:;" class="text-end d-block mt-2 remove-question" id="remove-question-${id}"><i class="fas fa-minus me-2"></i> @lang('Remove Question')</a>
                                     </div>`;
 
                 questionList.last().after(questioninput);
 
-                const questionDiv = `<div class="question remove-${id}">
-                                        <h6 class="fs-4 fw-semibold mb-0">Q <span>${questionList.length + 1}</span>.</h6>
+                const id1 = generateRandomString();
+                const id2 = generateRandomString();
+                const id3 = generateRandomString();
+                const id4 = generateRandomString();
+                const id5 = generateRandomString();
+
+                const questionDiv = `<div class="question remove-question-${id}">
+                                        <h6 class="fs-4 fw-semibold mb-0">Q <span>${questionNo}</span>.</h6>
                                         <div class="rating-group">
                                             <div class="rating">
-                                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-${id}' data-idx='0' />
-                                                <label for='rating-opt-${id}'></label>
+                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id1}' data-idx='0' value="5" />
+                                                <label for='rating-opt-${id1}'></label>
 
-                                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-${id}' data-idx='1' />
-                                                <label for='rating-opt-${id}'></label>
+                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id2}' data-idx='1' value="4" />
+                                                <label for='rating-opt-${id2}'></label>
 
-                                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-${id}' data-idx='2' />
-                                                <label for='rating-opt-${id}'></label>
+                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id3}' data-idx='2' value="3" />
+                                                <label for='rating-opt-${id3}'></label>
 
-                                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-${id}' data-idx='3' />
-                                                <label for='rating-opt-${id}'></label>
+                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id4}' data-idx='3' value="2" />
+                                                <label for='rating-opt-${id4}'></label>
 
-                                                <x-text-input type='radio' hidden name='rate[]' id='rating-opt-${id}' data-idx='4' />
-                                                <label for='rating-opt-${id}'></label>
+                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id5}' data-idx='4' value="1" />
+                                                <label for='rating-opt-${id5}'></label>
                                             </div>
                                         </div>
                                     </div>`;
 
                 $("#questions").find('.question').last().after(questionDiv);
+
+                initRatings();
             });
 
             $(document).on('click', '.remove-question', function() {
@@ -313,8 +311,13 @@
 
                 $("#questions").find('.question').each(function(index, element) {
                     $(element).find("h6").find('span').text(index + 1);
+                    $(element).find("input[type=radio]").attr('name', `rate[${index + 1}]`);
                 });
             }
+
+            $(document).on('input', '.question-list > input[name="questions[]"]', function() {
+                console.log($(this).closest('.question-list')[0])
+            });
         </script>
     @endpush
 

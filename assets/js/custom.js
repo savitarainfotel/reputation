@@ -227,3 +227,21 @@ const generateRandomString = (length = 10) => {
 
 	return result;
 }
+
+const initRatings = () => {
+	$('.rating').each(function () {
+		let $lastChecked = null;
+		const $inputs = $(this).find('input[type="radio"]');
+
+		$inputs.off('click');
+
+		$inputs.on('click', function () {
+			if ($(this).is($lastChecked)) {
+				$(this).prop('checked', false);
+				$lastChecked = null;
+			} else {
+				$lastChecked = $(this);
+			}
+		});
+	});
+}
