@@ -245,3 +245,81 @@ const initRatings = () => {
 		});
 	});
 }
+
+$("#select-with-logo").change(function () {
+	const logo = $(this).find(':selected').data('logo');
+
+	fetch(logo)
+		.then(res => {
+			if (res.ok) return res.blob();
+		})
+		.then(blob => {
+			const reader = new FileReader();
+			reader.onload = () => $('.logo-preview').attr('src', reader.result);
+			reader.readAsDataURL(blob);
+			$('.logo-preview').removeClass("d-none");
+			$('.item-img').val('');
+			$('.drag-label').hide();
+			$('.logo-buttons').removeClass("d-none");
+		})
+		.catch(err => {
+			$('.logo-preview').attr('src', "");
+		});
+});
+
+$(document).on('change', 'input[name="color"]', function() {
+	$("#selected-color").val(this.value).trigger('change');
+});
+
+$(document).on('change', "#selected-color", function() {
+	const selectedColor = this.value;
+	$(".change-bg-color").css('background-color', selectedColor);
+
+	const styleId = 'existing-style';
+	const $existingStyle = $(`#${styleId}`);
+
+	const cssRules = `
+	.rating label:hover::before,
+	.rating label:hover ~ *::before,
+	.rating input:checked ~ label::before {
+		color: ${selectedColor} !important;
+	}`;
+
+	if ($existingStyle.length) {
+		$existingStyle.html(cssRules);
+	} else {
+		$('<style>', {
+			id: styleId,
+			text: cssRules
+		}).appendTo('head');
+	}
+
+	const hasMatch  = $('input[name="color"]').filter(function () {
+		return selectedColor === this.value;
+	}).length > 0;
+
+	if(!hasMatch) {
+		$('input[name="color"]').prop('checked', false);
+	}
+});
+
+$(document).on('click', '.remove-question', function() {
+	const id = $(this).attr('id');
+	$(`.${id}`).remove();
+	resetQuestionNumbers();
+});
+
+$(document).on('input', '.question-list > input[name="questions[]"]', function() {
+	const className = $(this).closest('.question-list').find("a").attr('id');
+	const question  = $("#questions").find(`.${className}`).find("h6");
+	let html = question.html();
+
+	let spanMatch = html.match(/<span[^>]*>.*?<\/span>/);
+	let prefix = "";
+
+	if (spanMatch) {
+		prefix = html.substring(0, html.indexOf(spanMatch[0]) + spanMatch[0].length);
+	}
+
+	question.html(`${prefix}. ${$(this).val()}`);
+});
