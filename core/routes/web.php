@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\PlatformsController;
 use App\Http\Controllers\CompetitorsController;
+use App\Http\Controllers\InvitesController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\SurveyController;
 
@@ -57,6 +58,13 @@ Route::middleware('auth')->group(function () {
         Route::get('{property?}', 'index')->name('index');
         Route::match(['get', 'post'], 'add/{property}', 'addOrUpdate')->name('create');
         Route::get('report', 'report')->name('report');
+    });
+    
+    Route::controller(InvitesController::class)->name('invites.')->prefix('invites')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::match(['get', 'post'], '/store', 'store')->name('store');
+        Route::match(['get', 'post'], '/edit/{id}', 'edit')->name('edit');
+        Route::match(['get', 'post'], '/delete/{id}', 'delete')->name('delete');
     });
 });
 
