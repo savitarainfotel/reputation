@@ -61,19 +61,19 @@
                             <div class="row">
                                 <div class="d-flex mb-2 col-lg-3 align-items-center">
                                     <x-text-input type="radio" class="circle" name="color" id="color-1" value="#f87171" />
-                                    <label class="circle-label" for="color-1"><span style="border-radius: 50%; background-color: #f87171;"></span></label>
+                                    <label class="circle-label" for="color-1"><span style="background-color: #f87171;"></span></label>
 
                                     <x-text-input type="radio" class="circle" name="color" id="color-2" value="#60a5fa" />
-                                    <label class="circle-label" for="color-2"><span style="border-radius: 50%; background-color: #60a5fa;"></span></label>
+                                    <label class="circle-label" for="color-2"><span style="background-color: #60a5fa;"></span></label>
 
                                     <x-text-input type="radio" class="circle" name="color" id="color-3" value="#34d399" />
-                                    <label class="circle-label" for="color-3"><span style="border-radius: 50%; background-color: #34d399;"></span></label>
+                                    <label class="circle-label" for="color-3"><span style="background-color: #34d399;"></span></label>
 
                                     <x-text-input type="radio" class="circle" name="color" id="color-4" value="#fbbf24" />
-                                    <label class="circle-label" for="color-4"><span style="border-radius: 50%; background-color: #fbbf24;"></span></label>
+                                    <label class="circle-label" for="color-4"><span style="background-color: #fbbf24;"></span></label>
 
                                     <x-text-input type="radio" class="circle" name="color" id="color-5" value="#a78bfa" />
-                                    <label class="circle-label" for="color-5"><span style="border-radius: 50%; background-color: #a78bfa;"></span></label>
+                                    <label class="circle-label" for="color-5"><span style="background-color: #a78bfa;"></span></label>
                                 </div>
 
                                 <div class="col-lg-9">
@@ -111,47 +111,23 @@
                     <div class="question">
                         <h6 class="fs-4 fw-semibold">Q 1. How would you rate your overall experience staying at Budget Inn?*</h6>
                         <div class="rating-group">
-                            <fieldset class="rating">
-                                <div class="main-rating-container">
-                                <input type="radio" id="rating1-star5" name="service_rating1" value="5" />
-                                <label class="full" for="rating1-star5" title="Awesome - 5 stars"></label>
+                            <div class="rating">
+                                <x-text-input type='radio' hidden name='rate' id='rating_opt5' data-idx='0' />
+                                <label for='rating_opt5'></label>
 
-                                <input type="radio" id="rating1-star4" name="service_rating1" value="4" />
-                                <label class="full" for="rating1-star4" title="Pretty good - 4 stars"></label>
+                                <x-text-input type='radio' hidden name='rate' id='rating_opt4' data-idx='1' />
+                                <label for='rating_opt4'></label>
 
-                                <input type="radio" id="rating1-star3" name="service_rating1" value="3" />
-                                <label class="full" for="rating1-star3" title="Meh - 3 stars"></label>
+                                <x-text-input type='radio' hidden name='rate' id='rating_opt3' data-idx='2' />
+                                <label for='rating_opt3'></label>
 
-                                <input type="radio" id="rating1-star2" name="service_rating1" value="2" />
-                                <label class="full" for="rating1-star2" title="Kinda bad - 2 stars"></label>
+                                <x-text-input type='radio' hidden name='rate' id='rating_opt2' data-idx='3' />
+                                <label for='rating_opt2'></label>
 
-                                <input type="radio" id="rating1-star1" name="service_rating1" value="1" />
-                                <label class="full" for="rating1-star1" title="Sucks big time - 1 star"></label>
-                                </div>
-                            </fieldset>
+                                <x-text-input type='radio' hidden name='rate' id='rating_opt1' data-idx='4' />
+                                <label for='rating_opt1'></label>
+                            </div>
                         </div>
-
-                        <div class="rating-group">
-                            <fieldset class="rating">
-                                <div class="main-rating-container">
-                                <input type="radio" id="rating2-star5" name="service_rating2" value="5" />
-                                <label class="full" for="rating2-star5" title="Awesome - 5 stars"></label>
-
-                                <input type="radio" id="rating2-star4" name="service_rating2" value="4" />
-                                <label class="full" for="rating2-star4" title="Pretty good - 4 stars"></label>
-
-                                <input type="radio" id="rating2-star3" name="service_rating2" value="3" />
-                                <label class="full" for="rating2-star3" title="Meh - 3 stars"></label>
-
-                                <input type="radio" id="rating2-star2" name="service_rating2" value="2" />
-                                <label class="full" for="rating2-star2" title="Kinda bad - 2 stars"></label>
-
-                                <input type="radio" id="rating2-star1" name="service_rating2" value="1" />
-                                <label class="full" for="rating2-star1" title="Sucks big time - 1 star"></label>
-                                </div>
-                            </fieldset>
-                        </div>
-
                     </div>
                     <div class="mt-3">
                         <label class="form-label fw-semibold fs-5">@lang('Comment') <i class="fas fa-info-circle ms-2"></i></label>
@@ -188,6 +164,7 @@
             initMinicolors("#selected-color");
             $('.logo-preview').addClass("d-none");
             $('.logo-buttons').addClass("d-none");
+            $('.minicolors-swatch').addClass("d-none");
 
             $("#select-with-logo").change(function () {
                 const logo = $(this).find(':selected').data('logo');
@@ -220,6 +197,25 @@
                 const selectedColor = this.value;
                 $(".change-bg-color").css('background-color', selectedColor);
 
+                const styleId = 'existing-style';
+                const $existingStyle = $(`#${styleId}`);
+
+                const cssRules = `
+                .rating label:hover::before,
+                .rating label:hover ~ *::before,
+                .rating input:checked ~ label::before {
+                    color: ${selectedColor} !important;
+                }`;
+
+                if ($existingStyle.length) {
+                    $existingStyle.html(cssRules);
+                } else {
+                    $('<style>', {
+                        id: styleId,
+                        text: cssRules
+                    }).appendTo('head');
+                }
+
                 const hasMatch  = $('input[name="color"]').filter(function () {
                     return selectedColor === this.value;
                 }).length > 0;
@@ -231,15 +227,15 @@
 
             $("#selected-color").trigger('change');
 
-            $('.main-rating-container').each(function () {
+            $('.rating').each(function () {
                 let $lastChecked = null;
 
                 $(this).find('input[type="radio"]').on('click', function () {
                     if ($(this).is($lastChecked)) {
-                    $(this).prop('checked', false);
-                    $lastChecked = null;
+                        $(this).prop('checked', false);
+                        $lastChecked = null;
                     } else {
-                    $lastChecked = $(this);
+                        $lastChecked = $(this);
                     }
                 });
             });
