@@ -247,24 +247,26 @@ const initRatings = () => {
 }
 
 $("#select-with-logo").change(function () {
-	const logo = $(this).find(':selected').data('logo');
+	if($('.logo-preview').length) {
+		const logo = $(this).find(':selected').data('logo');
 
-	fetch(logo)
-		.then(res => {
-			if (res.ok) return res.blob();
-		})
-		.then(blob => {
-			const reader = new FileReader();
-			reader.onload = () => $('.logo-preview').attr('src', reader.result);
-			reader.readAsDataURL(blob);
-			$('.logo-preview').removeClass("d-none");
-			$('.item-img').val('');
-			$('.drag-label').hide();
-			$('.logo-buttons').removeClass("d-none");
-		})
-		.catch(err => {
-			$('.logo-preview').attr('src', "");
-		});
+		fetch(logo)
+			.then(res => {
+				if (res.ok) return res.blob();
+			})
+			.then(blob => {
+				const reader = new FileReader();
+				reader.onload = () => $('.logo-preview').attr('src', reader.result);
+				reader.readAsDataURL(blob);
+				$('.logo-preview').removeClass("d-none");
+				$('.item-img').val('');
+				$('.drag-label').hide();
+				$('.logo-buttons').removeClass("d-none");
+			})
+			.catch(err => {
+				$('.logo-preview').attr('src', "");
+			});
+	}
 });
 
 $(document).on('change', 'input[name="color"]', function() {
