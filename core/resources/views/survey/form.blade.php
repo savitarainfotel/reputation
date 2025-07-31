@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 scrollable mh-n100" data-simplebar="">
             <form action="{{ request()->url() }}" method="post" class="ajax-form">
                 <div class="row">
                     <div class="col-lg-12">
@@ -141,7 +141,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-lg-6 bg-blue px-0">
+        <div class="col-lg-6 scrollable mh-n100 bg-blue" data-simplebar="">
             <div class="col-lg-12 p-5 bg-bluelight change-bg-color">
                 @if ($survey->exists)
                     <div class="col-12 text-end mb-2">
@@ -191,7 +191,7 @@
             </div>
             <div class="text-center mt-4">
                 <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" />
-                <p class="mb-0 fs-4 fw-medium">@lang('Powered by') </p>
+                <p class="mb-0 fs-4 fw-medium text-dark">@lang('Powered by') </p>
                 <a href="{{ route('home') }}" class="fs-4 fw-medium">{{ env('APP_NAME') }}</a>
             </div>
         </div>
