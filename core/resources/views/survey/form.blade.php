@@ -306,17 +306,29 @@
 
             const resetQuestionNumbers = () => {
                 $(".question-list").each(function(index, element) {
-                    $(element).find("label").text(`@lang('Question ${index + 1}')`);
-                });
+                    const questionNo = index + 1;
+                    const className = $(element).find("a").attr('id');
+                    const question  = $("#questions").find(`.${className}`);
 
-                $("#questions").find('.question').each(function(index, element) {
-                    $(element).find("h6").find('span').text(index + 1);
-                    $(element).find("input[type=radio]").attr('name', `rate[${index + 1}]`);
+                    $(element).find("label").text(`@lang('Question ${questionNo}')`);
+                    $(question).find("h6").find('span').text(questionNo);
+                    $(question).find("input[type=radio]").attr('name', `rate[${questionNo}]`);
                 });
             }
 
             $(document).on('input', '.question-list > input[name="questions[]"]', function() {
-                console.log($(this).closest('.question-list')[0])
+                const className = $(this).closest('.question-list').find("a").attr('id');
+                const question  = $("#questions").find(`.${className}`).find("h6");
+                let html = question.html();
+
+                let spanMatch = html.match(/<span[^>]*>.*?<\/span>/);
+                let prefix = "";
+
+                if (spanMatch) {
+                    prefix = html.substring(0, html.indexOf(spanMatch[0]) + spanMatch[0].length);
+                }
+
+                question.html(`${prefix}. ${$(this).val()}`);
             });
         </script>
     @endpush
