@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="row">
-        <div class="col-lg-6 scrollable mh-n100" data-simplebar="">
+        <div class="col-lg-5 scrollable mh-n100 vh-100" data-simplebar="">
             <form action="{{ request()->url() }}" method="post" class="ajax-form">
                 <x-text-input type="hidden" name="picture" id="picture" />
                 <div class="row">
@@ -95,8 +95,8 @@
                             <div>
                                 <x-input-label class="fw-semibold fs-5" for="rating-scale" :value="__('Rating Scale')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
                                 <select class="form-control form-select" id="rating-scale" required name="rating_scale">
-                                    <option value="10">@lang('NPS (0-10)')</option>
-                                    <option value="5" selected>@lang('Star (1 - 5)')</option>
+                                    <option value="{{ App\Constants\Status::NPS }}">@lang('NPS (0-10)')</option>
+                                    <option value="{{ App\Constants\Status::STAR }}" selected>@lang('Star (1 - 5)')</option>
                                 </select>
                             </div>
                             <div class="mt-3 question-list">
@@ -142,7 +142,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-lg-6 scrollable mh-n100 bg-blue" data-simplebar="">
+        <div class="col-lg-7 scrollable mh-n100 bg-blue vh-100" data-simplebar="">
             <div class="col-lg-12 p-5 bg-bluelight change-bg-color">
                 @if ($survey->exists)
                     <div class="col-12 text-end mb-2">
