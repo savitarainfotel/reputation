@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Lib\FileManager;
 use App\Models\GeneralSetting;
 use App\Models\RatingSetting;
+use Illuminate\Support\Facades\Route;
 
 if (!function_exists('generate_datatables')) {
     function generate_datatables(&$data) {
