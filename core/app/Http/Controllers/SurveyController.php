@@ -21,10 +21,10 @@ class SurveyController extends Controller
     public function index(Request $request, Property $property): View|JsonResponse|RedirectResponse
     {
         if ($request->ajax()) {
-            $data['surveys'] = $property->surveys;
+            $data['property'] = $property;
             $view = view('survey.surveys', $data)->render();
 
-            return response()->json(['html' => $view, 'href' => route('survey.create', $property)]);
+            return response()->json(['html' => $view]);
         } else {
             $data['properties'] = Property::where('client_id', authUser()->id)->get();
             return view('survey.list', $data);

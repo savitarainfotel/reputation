@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class SurveyQuestion extends Model
+class SurveyQuestion extends BaseModel
 {
     protected $fillable = [
         'question',

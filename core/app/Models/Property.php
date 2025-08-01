@@ -43,4 +43,9 @@ class Property extends BaseModel
     {
         return $this->hasMany(Competitor::class, 'property_id');
     }
+
+    public function surveys()
+    {
+        return $this->hasMany(Survey::class, 'property_id');
+    }
 }
