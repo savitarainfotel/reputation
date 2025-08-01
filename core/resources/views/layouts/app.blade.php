@@ -1,3 +1,4 @@
+@use('App\Constants\Status')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
