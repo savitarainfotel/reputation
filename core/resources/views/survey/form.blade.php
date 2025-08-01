@@ -95,8 +95,8 @@
                             <div>
                                 <x-input-label class="fw-semibold fs-5" for="rating-scale" :value="__('Rating Scale')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
                                 <select class="form-control form-select" id="rating-scale" required name="rating_scale">
-                                    <option value="{{ App\Constants\Status::NPS }}">@lang('NPS (0-10)')</option>
-                                    <option value="{{ App\Constants\Status::STAR }}" selected>@lang('Star (1 - 5)')</option>
+                                    <option value="{{ Status::NPS }}">@lang('NPS (0-10)')</option>
+                                    <option value="{{ Status::STAR }}" selected>@lang('Star (1 - 5)')</option>
                                 </select>
                             </div>
                             <div class="mt-3 question-list">
