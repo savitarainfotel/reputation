@@ -187,3 +187,158 @@ const initSelectWithLogo = (element) => {
 
 	$element.select2(options);
 };
+
+const initMinicolors = (element) => {
+	$(element).minicolors({
+		control: $(element).attr("data-control") || "hue",
+		defaultValue: $(element).attr("data-defaultValue") || "",
+		format: $(element).attr("data-format") || "hex",
+		keywords: $(element).attr("data-keywords") || "",
+		inline: $(element).attr("data-inline") === "true",
+		letterCase: $(element).attr("data-letterCase") || "lowercase",
+		opacity: $(element).attr("data-opacity"),
+		position: $(element).attr("data-position") || "bottom left",
+		swatches: $(element).attr("data-swatches") ? $(element).attr("data-swatches").split("|") : [],
+		change: function (value, opacity) {
+			if (!value) return;
+			if (opacity) value += ", " + opacity;
+		},
+		theme: "bootstrap",
+	});
+};
+
+$('.custom-collapse').on('show.bs.collapse', function () {
+	const toggleBtn = $('[data-bs-target="#' + this.id + '"]');
+	toggleBtn.find('i').removeClass('fa-chevron-right').addClass('fa-chevron-down');
+});
+
+$('.custom-collapse').on('hide.bs.collapse', function () {
+	const toggleBtn = $('[data-bs-target="#' + this.id + '"]');
+	toggleBtn.find('i').removeClass('fa-chevron-down').addClass('fa-chevron-right');
+});
+
+const generateRandomString = (length = 10) => {
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	let result = '';
+
+	for (let i = 0; i < length; i++) {
+		result += chars.charAt(Math.floor(Math.random() * chars.length));
+	}
+
+	return result;
+}
+
+const initRatings = () => {
+	$('.rating').each(function () {
+		let $lastChecked = null;
+		const $inputs = $(this).find('input[type="radio"]');
+
+		$inputs.off('click');
+
+		$inputs.on('click', function () {
+			if ($(this).is($lastChecked)) {
+				$(this).prop('checked', false);
+				$lastChecked = null;
+			} else {
+				$lastChecked = $(this);
+			}
+		});
+	});
+}
+
+$("#select-with-logo").change(function () {
+	if($('.logo-preview').length) {
+		const logo = $(this).find(':selected').data('logo');
+
+		fetch(logo)
+			.then(res => {
+				if (res.ok) return res.blob();
+			})
+			.then(blob => {
+				const reader = new FileReader();
+				reader.onload = () => {
+					$('.logo-preview').attr('src', reader.result);
+					$('#picture').val(reader.result);
+				};
+				reader.readAsDataURL(blob);
+				$('.logo-preview').removeClass("d-none");
+				$('.item-img').val('');
+				$('.drag-label').hide();
+				$('.logo-buttons').removeClass("d-none");
+			})
+			.catch(err => {
+				$('.logo-preview').attr('src', "");
+				$('#picture').val("");
+			});
+	}
+
+	if($('#review-platform').length) {
+		let options = '';
+		const platforms = $(this).find(':selected').data('platforms');
+
+		if(platforms && platforms.length) {
+			platforms.forEach(platform => {
+				options += `<option value="${platform.id}">${platform.name}</option>`;
+			});
+		}
+
+		$('#review-platform').html(options);
+	}
+});
+
+$(document).on('change', 'input[name="color"]', function() {
+	$("#selected-color").val(this.value).trigger('change');
+});
+
+$(document).on('change', "#selected-color", function() {
+	const selectedColor = this.value;
+	$(".change-bg-color").css('background-color', selectedColor);
+
+	const styleId = 'existing-style';
+	const $existingStyle = $(`#${styleId}`);
+
+	const cssRules = `
+	.rating label:hover::before,
+	.rating label:hover ~ *::before,
+	.rating input:checked ~ label::before {
+		color: ${selectedColor} !important;
+	}`;
+
+	if ($existingStyle.length) {
+		$existingStyle.html(cssRules);
+	} else {
+		$('<style>', {
+			id: styleId,
+			text: cssRules
+		}).appendTo('head');
+	}
+
+	const hasMatch  = $('input[name="color"]').filter(function () {
+		return selectedColor === this.value;
+	}).length > 0;
+
+	if(!hasMatch) {
+		$('input[name="color"]').prop('checked', false);
+	}
+});
+
+$(document).on('click', '.remove-question', function() {
+	const id = $(this).attr('id');
+	$(`.${id}`).remove();
+	resetQuestionNumbers();
+});
+
+$(document).on('input', '.question-list > input[name="questions[]"]', function() {
+	const className = $(this).closest('.question-list').find("a").attr('id');
+	const question  = $("#questions").find(`.${className}`).find("h6");
+	let html = question.html();
+
+	let spanMatch = html.match(/<span[^>]*>.*?<\/span>/);
+	let prefix = "";
+
+	if (spanMatch) {
+		prefix = html.substring(0, html.indexOf(spanMatch[0]) + spanMatch[0].length);
+	}
+
+	question.html(`${prefix}. ${$(this).val()}`);
+});

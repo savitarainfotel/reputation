@@ -7,6 +7,7 @@ use App\Http\Controllers\PropertiesController;
 use App\Http\Controllers\PlatformsController;
 use App\Http\Controllers\CompetitorsController;
 use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\SurveyController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -50,6 +51,12 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(ReviewsController::class)->name('reviews.')->prefix('reviews')->group(function () {
         Route::get('{property?}', 'index')->name('index');
+    });
+
+    Route::controller(SurveyController::class)->name('survey.')->prefix('survey')->group(function () {
+        Route::match(['get', 'post'], 'add/{survey?}', 'addOrUpdate')->name('create');
+        Route::get('{property?}', 'index')->name('index');
+        Route::get('report', 'report')->name('report');
     });
 });
 

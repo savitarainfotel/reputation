@@ -38905,6 +38905,11 @@ body table.dataTable>tbody>tr.selected>* {
 	height: 100px;
 }
 
+.round-200 {
+	width: 200px;
+	height: 200px;
+}
+
 .round-110 {
 	width: 110px;
 	height: 110px;
@@ -48165,4 +48170,102 @@ ul.first-level .sidebar-item:hover {
     top: 105px;
     z-index: 2;
     border-radius: 50%;
+}
+
+.bg-bluelight {
+	border-radius: 0 0 100px 100px;
+}
+
+.h-20vh {
+	height: 20vh;
+}
+
+.bg-blue {
+	background-color: #f3f3f3 !important;
+
+}
+
+.question-wrapper {
+	margin: -55px 55px 0 55px;
+}
+
+.circle, input[type=radio] {
+	display: none;
+}
+
+.circle, input[type=radio]:checked + label span {
+	border: 2px solid #000000;
+	transform: scale(1.25);
+}
+
+.circle-label {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.circle-label span {
+	display: block;
+	height: 25px;
+	width: 25px;
+	border-radius: 50%;
+}
+
+.form-control-border {
+	border: 1px solid #152C5680 !important;
+}
+
+.rating {
+  display: inline-block;
+  font-size: 0;
+  position: relative;
+  text-transform: capitalize;
+  color: #808080;
+}
+
+.rating label {
+  display: inline-block;
+  float: right;
+  padding: 0;
+  font-size: 50px;
+  cursor: pointer;
+}
+.rating label::before {
+  content: "☆";
+  display: inline-block;
+  transition: 0.2s;
+}
+.rating label span {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  height: 20px;
+  font-size: 1rem;
+  white-space: nowrap;
+  transition: 0.15s ease-out;
+  pointer-events: none;
+  letter-spacing: -2px;
+  transform: translateY(-50%);
+}
+.rating label:hover span {
+  opacity: 1;
+  transform: none;
+  letter-spacing: 0;
+}
+.rating label:hover::before {
+  opacity: 0.6;
+  filter: drop-shadow(0 0 4px);
+}
+.rating label:hover ~ *::before {
+  opacity: 0.6;
+  filter: drop-shadow(0 0 4px);
+}
+.rating input:checked ~ label::before {
+  content: "★";
+  filter: drop-shadow(0 0 4px);
 }
