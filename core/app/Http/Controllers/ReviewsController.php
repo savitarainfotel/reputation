@@ -29,7 +29,7 @@ class ReviewsController extends Controller
             }
 
             $data['reviews'] = Review::with('rating_platform.platform', 'property')->get();
-
+           
             return view('reviews.list', $data);
         }
     }

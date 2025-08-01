@@ -109,7 +109,7 @@
             <div class="row">
                 @foreach ($reviews as $review)
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="card border h-95 cursor-pointer">
+                        <div class="card border h-95 cursor-pointer review-card" data-index="{{ $review->id }}" onclick="showReview({{ $review->id }})">
                             <div class="card-header d-flex align-items-center justify-content-between bg-transparent">
                                 <div class="d-flex align-items-center">
                                     {!! $review->property->getImage('rounded me-2', 50, 50) !!}
@@ -146,8 +146,8 @@
         @endphp
         <div class="col-lg-6 scrollable mh-n205" data-simplebar="">
             <div class="row ms-1">
-                
-                <div class="card border">
+                 @foreach ($reviews as $review)
+                <div class="card border review-detail-item " data-index="{{ $review->id }}">
                     <div class="card-header d-flex align-items-center justify-content-between bg-transparent">
                         <div class="d-flex align-items-center">
                             {!! $review->property->getImage('rounded me-2', 50, 50) !!}
@@ -170,6 +170,7 @@
                         <p class="fw-bold fs-4 text-dark">{{ $review->title }}</p>
                     </div>
                 </div>
+                @endforeach
                 {{-- <div class="text-end">
                     <a href="#" class="btn border text-primary fw-bold fs-4 mt-2 d-inline-flex align-items-center"><img src="{{ asset('assets/images/svg/reply.svg') }}" alt="reply" srcset="" class="me-2">Generate Reply</a>
                 </div> --}}
@@ -278,7 +279,21 @@
     </div>
 
     @push('style')
-        <link rel="stylesheet" href="{{ asset('assets/libs/select2/dist/css/select2.min.css') }}" />
+    <style>
+        .review-card.active{
+            border-width: 3px !important;
+            border-style: solid !important;
+            border-image: linear-gradient(
+                180deg,
+                rgba(24, 119, 242, 1) 0%,
+                rgba(21, 44, 86, 1) 100%
+                ) !important;
+            border-radius: 7px !important;
+            border-image-slice: 1 !important;       
+        }
+    </style>
+    
+    <link rel="stylesheet" href="{{ asset('assets/libs/select2/dist/css/select2.min.css') }}" />
     @endpush
     @push('script')
         <script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js') }}"></script>
@@ -310,8 +325,32 @@
             // $("#select-with-logo").trigger('change');
         </script>
         <script>
+            function showReview(index) {
+                // Remove active class from all review cards
+                document.querySelectorAll(".review-card").forEach(card => {
+                    card.classList.remove("active");
+                });
+
+                // Add active to clicked card
+                const clickedCard = document.querySelector(`.review-card[data-index="${index}"]`);
+                clickedCard.classList.add("active");
+
+                // Hide all review detail sections
+                document.querySelectorAll(".review-detail-item").forEach(detail => {
+                    detail.classList.add("d-none");
+                    detail.classList.remove("active");
+                });
+
+                // Show selected review detail
+                const selectedDetail = document.querySelector(`.review-detail-item[data-index="${index}"]`);
+                selectedDetail.classList.remove("d-none");
+                selectedDetail.classList.add("active");
+            }
+        </script>
+       
+
    
-</script>
+
 
     @endpush
 </x-app-layout>
