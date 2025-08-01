@@ -31,4 +31,7 @@ jobs:
           php artisan route:cache
           php artisan view:cache
           composer install --no-dev --optimize-autoloader
+          exit
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -T root@194.164.148.41 << 'EOF'
+          sudo systemctl restart laravel-queue
           EOF

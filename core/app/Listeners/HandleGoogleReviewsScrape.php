@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use App\Events\GoogleReviewsScrape;
 use App\Models\Review;
 use Illuminate\Support\Facades\DB;
+use App\Events\ImageDownloadOfReview;
 
 class HandleGoogleReviewsScrape implements ShouldQueue
 {
@@ -45,6 +46,10 @@ class HandleGoogleReviewsScrape implements ShouldQueue
                         $newReview->created_by         = $event->property->created_by;
                         $newReview->updated_by         = $event->property->updated_by;
                         $newReview->save();
+
+                        if($newReview->reviewer_avatar) {
+                            event(new ImageDownloadOfReview($newReview));
+                        }
                     }
 
                     $event->property->reviews = count($response['reviews']);

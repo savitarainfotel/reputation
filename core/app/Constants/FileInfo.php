@@ -17,8 +17,12 @@ class FileInfo
     */
 
     public function fileInfo(){
-		    $data['property-images'] = [
+        $data['property-images'] = [
             'path'       => 'assets/images/property-images/'
+        ];
+
+        $data['review-images'] = [
+            'path'       => 'assets/images/review-images/'
         ];
 
         return $data;
