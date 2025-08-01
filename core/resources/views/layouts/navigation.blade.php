@@ -12,7 +12,7 @@
             </a>
         </div>
 
-        <nav class="sidebar-nav scroll-sidebar" data-simplebar>
+        <nav class="sidebar-nav scroll-sidebar" >
             <ul id="sidebarnav">
                 <li class="sidebar-item">
                     <a class="sidebar-link " href="javascript:void(0)" aria-expanded="false">

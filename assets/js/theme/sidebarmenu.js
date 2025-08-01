@@ -33,8 +33,10 @@ if ((at = "vertical")) {
   document
     .querySelectorAll("ul#sidebarnav ul li a.active")
     .forEach(function (link) {
-      link.closest("ul").classList.add("in");
-      link.closest("ul").parentElement.classList.add("selected");
+        link.addEventListener('click', function () {
+        link.closest("ul").classList.add("in");
+        link.closest("ul").parentElement.classList.add("selected");
+      });
     });
 
   document.querySelectorAll("#sidebarnav li").forEach(function (li) {
