@@ -23,13 +23,8 @@ class ReviewsController extends Controller
             // return response()->json(['html' => $view, 'progress' => $data['competitors']->count() / gs('max-competitors') * 100, 'count' => $data['competitors']->count(), 'href' => route('competitors.create', $property)]);
         } else {
             $data['properties'] = Property::where('client_id', authUser()->id)->get();
-
-            if(!$data['properties']->count()) {
-                return redirect()->route("properties.create");
-            }
-
             $data['reviews'] = Review::with('rating_platform.platform', 'property')->get();
-           
+
             return view('reviews.list', $data);
         }
     }
