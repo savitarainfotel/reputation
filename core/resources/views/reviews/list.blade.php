@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="col-md-12 border-bottom pb-3">       
+    <div class="col-md-12 border-bottom py-2">       
         <div class="row">
             <div class="d-flex justify-content-between align-items-center flex-wrap">
                 <div class="d-flex align-items-center flex-wrap gap-2">
@@ -109,7 +109,7 @@
             <div class="row">
                 @foreach ($reviews as $review)
                     <div class="col-xl-6 col-lg-6 col-md-6 col-12">
-                        <div class="card border h-95 cursor-pointer review-card" data-index="{{ $review->id }}" onclick="showReview({{ $review->id }})">
+                        <div class="card border h-95 cursor-pointer review-card {{ $loop->first ? 'active' : '' }}" data-index="{{ $review->id }}" onclick="showReview({{ $review->id }})">
                             <div class="card-header d-flex align-items-center justify-content-between bg-transparent">
                                 <div class="d-flex align-items-center">
                                     {!! $review->property->getImage('rounded me-2', 50, 50) !!}
@@ -147,7 +147,7 @@
         <div class="col-lg-6 scrollable mh-n205" data-simplebar="">
             <div class="row ms-1">
                  @foreach ($reviews as $review)
-                <div class="card border review-detail-item " data-index="{{ $review->id }}">
+                <div class="card border review-detail-item {{ $loop->first ? 'active' : 'd-none' }}" data-index="{{ $review->id }}">
                     <div class="card-header d-flex align-items-center justify-content-between bg-transparent">
                         <div class="d-flex align-items-center">
                             {!! $review->property->getImage('rounded me-2', 50, 50) !!}
@@ -345,7 +345,15 @@
                 const selectedDetail = document.querySelector(`.review-detail-item[data-index="${index}"]`);
                 selectedDetail.classList.remove("d-none");
                 selectedDetail.classList.add("active");
+                
             }
+            window.addEventListener('DOMContentLoaded', function () {
+                const firstCard = document.querySelector(".review-card");
+                if (firstCard) {
+                    const index = firstCard.getAttribute("data-index");
+                    showReview(index);
+                }
+            });
         </script>
        
 
