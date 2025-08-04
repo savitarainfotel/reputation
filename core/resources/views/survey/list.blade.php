@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="row">
-        <h5>@lang('Survey')</h5>
+        <h5 class="my-4">@lang('Survey')</h5>
         <div class="col-lg-12">
             <div class="d-flex align-item-center jusifi-content-between">
                 <div class="dropdown w-30">
