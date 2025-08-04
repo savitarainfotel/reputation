@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="row ">
-        <div class="col-lg-5 scrollable mh-n100 vh-100 pt-4" data-simplebar="">
+        <div class="col-lg-5 scrollable mh-n95 vh-100 pt-4" data-simplebar="">
             <form action="{{ request()->url() }}" method="post" class="ajax-form">
                 <x-text-input type="hidden" name="picture" id="picture" />
                 <div class="row">
@@ -122,15 +122,13 @@
                                 <x-input-label class="fw-semibold fs-5" for="review-platform" :value="__('Review Platform')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
                                 <select class="form-control form-select" id="review-platform" required name="review_platform_id" required></select>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 mt-3">
-                                    <x-input-label class="fw-semibold fs-5" for="min_rating" :value="__('Ask for a public review if the rating is ≥')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
-                                    <x-text-input type="number" name="min_rating" id="min_rating" value="4" required max="5" min="0" />
-                                </div>
-                                <div class="col-md-6 mt-3">
-                                    <x-input-label class="fw-semibold fs-5" for="average_review" :value="__('Ask for contact details if the rating is <')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
-                                    <x-text-input type="number" name="average_review" id="average_review" value="4" required max="5" min="0" />
-                                </div>
+                            <div class="mt-3">
+                                <x-input-label class="fw-semibold fs-5" for="min_rating" :value="__('Ask for a public review if the rating is ≥')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
+                                <select class="form-control form-select select2" name="min_rating" id="min-rating" required></select>
+                            </div>
+                            <div class="mt-3">
+                                <x-input-label class="fw-semibold fs-5" for="average_review" :value="__('Ask for contact details if the rating is <')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
+                                <select class="form-control form-select select2" name="average_review" id="average-review" required></select>
                             </div>
                         </div>
                     </div>
@@ -144,7 +142,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-lg-7 scrollable mh-n100 bg-blue vh-100" data-simplebar="">
+        <div class="col-lg-7 scrollable mh-n95 bg-blue vh-100" data-simplebar="">
             <div class="col-lg-12 p-5 bg-bluelight change-bg-color">
                 @if ($survey->exists)
                     <div class="col-12 text-end mb-2">
@@ -325,6 +323,15 @@
                         initRatings();
                     });
                 }
+
+                let options = ``;
+
+                for (let value = 1; value <= ratingScale; value++) {
+                    options += `<option value="${value}" ${(ratingScale === 5 && value === 4) || (ratingScale === 10 && value === 8) ? 'selected' : ''}>${value}</option>`;
+                }
+
+                $("#min-rating").html(options);
+                $("#average-review").html(options);
             });
 
             $("#rating-scale").trigger('change');
