@@ -1,4 +1,3 @@
-@use('App\Constants\Status')
 <x-app-layout>
     <div class="row">
         <div class="col-lg-5 scrollable mh-n100 vh-100" data-simplebar="">
@@ -17,7 +16,7 @@
                                 @foreach ($properties as $property)
                                     <option value="{{ $property->encId }}" 
                                         data-logo="{{ $property->getImageLink() }}" 
-                                        data-platforms="{{ $property->platforms->map(fn($p) => ['id' => $p->platform->encId, 'name' => $p->platform->platform]) }}">
+                                        data-platforms="{{ $property->platforms->map(fn($p) => ['id' => $p->encId, 'name' => $p->platform->platform]) }}">
                                         {{ __($property->name) }}
                                     </option>
                                 @endforeach
@@ -96,8 +95,8 @@
                             <div>
                                 <x-input-label class="fw-semibold fs-5" for="rating-scale" :value="__('Rating Scale')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
                                 <select class="form-control form-select" id="rating-scale" required name="rating_scale">
-                                    <option value="{{ Status::NPS }}">@lang('NPS (0-10)')</option>
-                                    <option value="{{ Status::STAR }}" selected>@lang('Star (1 - 5)')</option>
+                                    <option value="{{ $status::NPS }}">@lang('NPS (0-10)')</option>
+                                    <option value="{{ $status::STAR }}" selected>@lang('Star (1 - 5)')</option>
                                 </select>
                             </div>
                             <div class="mt-3 question-list">
@@ -123,13 +122,15 @@
                                 <x-input-label class="fw-semibold fs-5" for="review-platform" :value="__('Review Platform')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
                                 <select class="form-control form-select" id="review-platform" required name="review_platform_id" required></select>
                             </div>
-                            <div class="mt-3">
-                                <x-input-label class="fw-semibold fs-5" for="review-platform" :value="__('Ask for a public review if the rating is ≥')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
-                                <x-text-input type="number" name="min_rating" id="min_rating" value="4" required max="5" min="0" />
-                            </div>
-                            <div class="mt-3">
-                                <x-input-label class="fw-semibold fs-5" for="review-platform" :value="__('Ask for contact details if the rating is <')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
-                                <x-text-input type="number" name="average_review" id="average_review" value="4" required max="5" min="0" />
+                            <div class="row">
+                                <div class="col-md-6 mt-3">
+                                    <x-input-label class="fw-semibold fs-5" for="min_rating" :value="__('Ask for a public review if the rating is ≥')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
+                                    <x-text-input type="number" name="min_rating" id="min_rating" value="4" required max="5" min="0" />
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <x-input-label class="fw-semibold fs-5" for="average_review" :value="__('Ask for contact details if the rating is <')" /> <i class="fas fa-info-circle ms-2 fa-lg"></i>
+                                    <x-text-input type="number" name="average_review" id="average_review" value="4" required max="5" min="0" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -300,7 +301,7 @@
             }
 
             const addQuestion = (id, questionNo) => {
-                const ratingScale = $("#rating-scale").val() === `{{ Status::NPS }}` ? 10 : 5;
+                const ratingScale = $("#rating-scale").val() === `{{ $status::NPS }}` ? 10 : 5;
                 const questionDiv = `<div class="question remove-question-${id}">
                                         <h6 class="fs-4 fw-semibold mb-0">Q <span>${questionNo}</span>.</h6>
                                         <div class="rating-group">
@@ -313,7 +314,7 @@
             }
 
             $(document).on('change', "#rating-scale", function() {
-                const ratingScale  = $(this).val() === `{{ Status::NPS }}` ? 10 : 5;
+                const ratingScale  = $(this).val() === `{{ $status::NPS }}` ? 10 : 5;
                 const ratingGroups = $('.rating-group');
 
                 if(ratingGroups.length) {

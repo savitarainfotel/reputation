@@ -7,7 +7,7 @@
                         <div class="fw-bold text-primary fs-4">{{ $survey->title }}</div>
                     </div>
                     <div class="form-check form-switch status-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="status-{{ $survey->encId }}" {{ $survey->is_delete == Status::YES ? 'checked' : '' }} />
+                        <input class="form-check-input" type="checkbox" role="switch" id="status-{{ $survey->encId }}" {{ $survey->is_delete == $status::YES ? 'checked' : '' }} />
                         <label class="form-check-label" for="status-{{ $survey->encId }}">@lang('Active')</label>
                     </div>
                 </div>
