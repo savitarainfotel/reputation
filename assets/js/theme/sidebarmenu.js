@@ -30,8 +30,7 @@ if ((at = "vertical")) {
     elements.classList.add("active");
   }
 
-  document
-    .querySelectorAll("ul#sidebarnav ul li a.active")
+  document.querySelectorAll("ul#sidebarnav ul li a.active")
     .forEach(function (link) {
         link.addEventListener('click', function () {
         link.closest("ul").classList.add("in");
@@ -48,8 +47,10 @@ if ((at = "vertical")) {
       }
     }
   });
+  
   document.querySelectorAll("#sidebarnav a").forEach(function (link) {
     link.addEventListener("click", function (e) {
+      e.stopPropagation();
       const isActive = this.classList.contains("active");
       const parentUl = this.closest("ul");
       if (!isActive) {
@@ -77,6 +78,20 @@ if ((at = "vertical")) {
         }
       }
     });
+  });
+ 
+
+  document.addEventListener("click", function (e) {
+    const sidebar = document.querySelector("#sidebarnav");
+    if (!sidebar.contains(e.target)) {
+      // Remove 'active' and 'in' from all sidebar links and submenus
+      sidebar.querySelectorAll("a").forEach(function (link) {
+        link.classList.remove("active");
+      });
+      sidebar.querySelectorAll("ul").forEach(function (submenu) {
+        submenu.classList.remove("in");
+      });
+    }
   });
 }
 if ((at = "horizontal")) {

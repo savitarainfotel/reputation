@@ -34,7 +34,7 @@
 
                     </div> --}}
                 <div class="with-vertical">
-                    <nav class="navbar navbar-expand-lg p-0 flex-nowrap">
+                    <nav class="navbar  p-0 flex-nowrap">
                         <ul class="navbar-nav">
                             <li class="nav-item ms-2">
                                 <a class="nav-link sidebartoggler" id="headerCollapse" href="javascript:void(0)">
@@ -42,7 +42,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="text-white ms-5 ps-lg-5 fs-5">Your free trial ended on 6/25/2025. You can
+                        <div class="text-white mx-auto fs-5 d-md-block d-none">Your free trial ended on 6/25/2025. You can
                             upgrade <span class="text-primary">Here<span></div>
                         <div class="d-block d-lg-none py-4">
                             <a href="{{ route('dashboard') }}" class="text-nowrap logo-img">
@@ -52,9 +52,10 @@
                                     class="light-logo" alt="Logo-light" />
                             </a>
                         </div>
-                    </nav>
+                    </nav>                    
                 </div>
             </header>
+            <div class="text-white mx-auto fs-5 bg-secondary d-md-none d-block text-center">Your free trial ended on 6/25/2025. You can upgrade <span class="text-primary">Here<span></div>
             <!--  Header End -->
             <div class="body-wrapper">
                 <div class="container-fluid">
