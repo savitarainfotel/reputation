@@ -37,13 +37,13 @@ class Review extends BaseModel
      *
      * @return string
      */
-    public function getReviewerAvatarAttribute($reviewerAvatar): string|null
+    public function getReviewerPictureAttribute(): string|null
     {
-        if (!$reviewerAvatar) {
+        if (!$this->reviewer_avatar) {
             return null;
         }
 
-        $path = getFilePath('review-images') . $reviewerAvatar;
+        $path = getFilePath('review-images') . $this->reviewer_avatar;
 
         if (Storage::disk('public')->exists($path)) {
             return Storage::disk('public')->url($path);

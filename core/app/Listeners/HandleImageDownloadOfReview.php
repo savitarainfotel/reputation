@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Models\Review;
 
 class HandleImageDownloadOfReview implements ShouldQueue
 {
@@ -18,23 +19,29 @@ class HandleImageDownloadOfReview implements ShouldQueue
      */
     public function handle(ImageDownloadOfReview $event): void
     {
-        if($event->review && $event->review->reviewer_avatar) {
-            $response = Http::get($event->review->reviewer_avatar);
+        if($event->reviewIds) {
+            $reviews = Review::whereIn('id', $event->reviewIds);
 
-            if ($response->successful()) {
-                $extension = match ($response->header('Content-Type')) {
-                    'image/jpeg' => 'jpg',
-                    'image/png' => 'png',
-                    'image/webp' => 'webp',
-                    default => 'jpg',
-                };
+            if($reviews->count()) {
+                foreach ($reviews->get() as $review) {
+                    $response = Http::get($review->reviewer_avatar);
 
-                $image = (string) Str::ulid()->toRfc4122() . '.' . $extension;
+                    if ($response->successful()) {
+                        $extension = match ($response->header('Content-Type')) {
+                            'image/jpeg' => 'jpg',
+                            'image/png' => 'png',
+                            'image/webp' => 'webp',
+                            default => 'jpg',
+                        };
 
-                Storage::disk('public')->put(getFilePath('review-images') . $image, $response->body());
+                        $image = (string) Str::ulid()->toRfc4122() . '.' . $extension;
 
-                $event->review->reviewer_avatar = $image;
-                $event->review->save();
+                        Storage::disk('public')->put(getFilePath('review-images') . $image, $response->body());
+
+                        $review->reviewer_avatar = $image;
+                        $review->save();
+                    }
+                }
             }
         }
     }

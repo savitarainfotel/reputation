@@ -28,6 +28,8 @@ class HandleGoogleReviewsScrape implements ShouldQueue
                 DB::beginTransaction();
 
                 try {
+                    $reviewIds = [];
+
                     foreach ($response['reviews'] as $review) {
                         $newReview                     = new Review();
                         $newReview->rating_platform_id = $event->ratingSetting->id;
@@ -47,8 +49,8 @@ class HandleGoogleReviewsScrape implements ShouldQueue
                         $newReview->updated_by         = $event->property->updated_by;
                         $newReview->save();
 
-                        if($newReview->reviewer_avatar) {
-                            event(new ImageDownloadOfReview($newReview));
+                        if (!empty($review["reviewer_avatar"])) {
+                            $reviewIds[] = $newReview->id;
                         }
                     }
 
@@ -56,6 +58,10 @@ class HandleGoogleReviewsScrape implements ShouldQueue
                     $event->property->save();
 
                     DB::commit();
+
+                    if($reviewIds) {
+                        event(new ImageDownloadOfReview($reviewIds));
+                    }
                 } catch (\Throwable $th) {
                     DB::rollBack();
                 }

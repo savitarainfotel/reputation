@@ -2,14 +2,12 @@
 
 namespace App\Events;
 
-use App\Models\Review;
-
 class ImageDownloadOfReview
 {
-    public $review;
+    public $reviewIds;
 
-    public function __construct(Review $review)
+    public function __construct(Array $reviewIds)
     {
-        $this->review = $review;
+        $this->reviewIds = $reviewIds;
     }
 }

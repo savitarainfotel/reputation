@@ -141,8 +141,8 @@ if ( ! function_exists('getBackgroundForAlphabet')) {
 
 if ( ! function_exists('getUserImageOrAlpha')) {
     function getUserImageOrAlpha($review) {
-        return !empty($review->reviewer_avatar) ? 
-                    '<img src="'.$review->reviewer_avatar.'" alt="" class="stepper-circle me-2" />' : 
+        return !empty($review->reviewer_picture) ? 
+                    '<img src="'.$review->reviewer_picture.'" alt="" class="stepper-circle me-2" />' : 
                     '<strong class="stepper-circle me-2 text-white fs-4" style="background: '.getBackgroundForAlphabet($review->reviewer).'">'.strtoupper(substr($review->reviewer, 0, 1)).'</strong>';
     }
 }

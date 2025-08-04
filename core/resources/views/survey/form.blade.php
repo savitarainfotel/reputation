@@ -1,3 +1,4 @@
+@use('App\Constants\Status')
 <x-app-layout>
     <div class="row">
         <div class="col-lg-5 scrollable mh-n100 vh-100" data-simplebar="">
