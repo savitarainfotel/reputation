@@ -1,6 +1,5 @@
 <x-app-layout>
     <x-add-property-top-nav />
-
     <form action="{{ route('properties.create') }}" method="post" class="ajax-form">
         <div class="row">
             <div class="col-md-6 offset-md-3 col-12">
@@ -46,6 +45,5 @@
             </div>
         </div>
     </form>
-
     <x-google-autocomplete />
 </x-app-layout>

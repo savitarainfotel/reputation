@@ -13,6 +13,7 @@ use App\Events\GoogleReviewsScrape;
 use App\Models\Platform;
 use App\Models\RatingSetting;
 use App\Constants\Status;
+use Yajra\DataTables\DataTables;
 
 class PropertiesController extends Controller
 {
@@ -127,6 +128,39 @@ class PropertiesController extends Controller
 
             return response()->json($message);
         }
+    }
+    public function overview(Request $request): View
+    {
+        $data['properties'] = Property::where('client_id', authUser()->id)->get();
+        return view('properties.overview', $data);
+    }
+
+    public function getData()
+    {
+        $sampleInvites = collect([
+            (object)[ 'platform' => 'google', 'name' => 'Alice Johnson', 'email' => 'alice@example.com', 'phone' => '9876543210' ],
+            (object)[ 'platform' => 'agoda', 'name' => 'Bob Smith', 'email' => 'bob@example.com', 'phone' => '9123456780' ],
+            (object)[ 'platform' => 'expedia', 'name' => 'Charlie Brown', 'email' => 'charlie@example.com', 'phone' => '9988776655' ],
+            (object)[ 'booking' => 'expedia', 'name' => 'Charlie Brown', 'email' => 'charlie@example.com', 'phone' => '9988776655' ],
+        ]);
+
+    
+        $data = DataTables::of($sampleInvites)
+            ->addColumn('action', function ($invite) {
+                $return = '<div class="d-flex justify-content-end">';
+                $return .= '<button class="btn btn-outline-primary btn-sm me-1 general-modal-button" data-action="'.route('invites.edit', $invite->id).'" >
+                                    <i class="fas fa-edit"></i>
+                                </button>';
+                $return .= '<button class="btn btn-outline-danger btn-sm confirmationBtn" data-action="'.route('invites.delete', $invite->id).'" data-question="'.__('Are you sure to delete this record?').'">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>';
+                $return .= '</div>';
+                return $return;
+            })
+            ->toArray();
+            // general-modal-button" data-action="{{ route('invites.edit', 1) }}
+        return generate_datatables($data);        
+
     }
 
     /**

@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
             Route::get('add-platforms/{property}', 'addPlatforms')->name('add.platforms');
             Route::match(['get', 'post'], 'infos/{property}', 'infos')->name('infos');
             Route::match(['get', 'post'], 'signature/{property}', 'addSignature')->name('add.signature');
+            Route::match(['get', 'post'], 'overview', 'overview')->name('overview');
         });
 
         Route::controller(PlatformsController::class)->name('platforms.')->prefix('platforms')->group(function () {
