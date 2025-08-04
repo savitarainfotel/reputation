@@ -229,7 +229,7 @@ const generateRandomString = (length = 10) => {
 }
 
 const initRatings = () => {
-	$('.rating').each(function () {
+	$('.rating-radio').each(function () {
 		let $lastChecked = null;
 		const $inputs = $(this).find('input[type="radio"]');
 
@@ -302,6 +302,16 @@ $(document).on('change', "#selected-color", function() {
 	.rating label:hover ~ *::before,
 	.rating input:checked ~ label::before {
 		color: ${selectedColor} !important;
+	}
+	label.rating-circle:hover {
+		border-color: ${selectedColor};
+		filter: drop-shadow(0 0 4px);
+	}
+	input[type="radio"]:checked + label.rating-circle {
+		background-color: ${selectedColor};
+		color: #ffffff;
+		border-color: ${selectedColor};
+		box-shadow: 0 0 10px ${selectedColor};
 	}`;
 
 	if ($existingStyle.length) {

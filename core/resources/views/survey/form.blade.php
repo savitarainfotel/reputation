@@ -236,37 +236,7 @@
 
                 questionList.last().after(questioninput);
 
-                const id1 = generateRandomString();
-                const id2 = generateRandomString();
-                const id3 = generateRandomString();
-                const id4 = generateRandomString();
-                const id5 = generateRandomString();
-
-                const questionDiv = `<div class="question remove-question-${id}">
-                                        <h6 class="fs-4 fw-semibold mb-0">Q <span>${questionNo}</span>.</h6>
-                                        <div class="rating-group">
-                                            <div class="rating">
-                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id1}' data-idx='0' value="5" />
-                                                <label for='rating-opt-${id1}'></label>
-
-                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id2}' data-idx='1' value="4" />
-                                                <label for='rating-opt-${id2}'></label>
-
-                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id3}' data-idx='2' value="3" />
-                                                <label for='rating-opt-${id3}'></label>
-
-                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id4}' data-idx='3' value="2" />
-                                                <label for='rating-opt-${id4}'></label>
-
-                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id5}' data-idx='4' value="1" />
-                                                <label for='rating-opt-${id5}'></label>
-                                            </div>
-                                        </div>
-                                    </div>`;
-
-                $("#questions").find('.question').last().after(questionDiv);
-
-                initRatings();
+                addQuestion(id, questionNo);
             });
 
             const resetQuestionNumbers = () => {
@@ -287,6 +257,77 @@
             });
 
             $(".change-title-text").trigger('input');
+
+            const addQuestion = (id, questionNo) => {
+                let questionDiv = '';
+                const id1 = generateRandomString();
+                const id2 = generateRandomString();
+                const id3 = generateRandomString();
+                const id4 = generateRandomString();
+                const id5 = generateRandomString();
+
+                if($("#rating-scale").val() === `{{ Status::NPS }}`) {
+                    const id6 = generateRandomString();
+                    const id7 = generateRandomString();
+                    const id8 = generateRandomString();
+                    const id9 = generateRandomString();
+                    const id10 = generateRandomString();
+
+                    questionDiv += `<div class="question remove-question-${id}">
+                                        <h6 class="fs-4 fw-semibold mb-0">Q <span>${questionNo}</span>.</h6>
+                                        <div class="rating-group">
+                                            <div class="rating-radio rating-circles my-4">
+                                                <x-text-input type='radio' hidden name="rate[${questionNo}]" id='rating-opt-${id1}' data-idx='1' value="1" />
+                                                <label for="rating-opt-${id1}" class="rating-circle">1</label>
+                                                <x-text-input type='radio' hidden name="rate[${questionNo}]" id='rating-opt-${id2}' data-idx='2' value="2" />
+                                                <label for="rating-opt-${id2}" class="rating-circle">2</label>
+                                                <x-text-input type='radio' hidden name="rate[${questionNo}]" id='rating-opt-${id3}' data-idx='3' value="3" />
+                                                <label for="rating-opt-${id3}" class="rating-circle">3</label>
+                                                <x-text-input type='radio' hidden name="rate[${questionNo}]" id='rating-opt-${id4}' data-idx='4' value="4" />
+                                                <label for="rating-opt-${id4}" class="rating-circle">4</label>
+                                                <x-text-input type='radio' hidden name="rate[${questionNo}]" id='rating-opt-${id5}' data-idx='5' value="5" />
+                                                <label for="rating-opt-${id5}" class="rating-circle">5</label>
+                                                <x-text-input type='radio' hidden name="rate[${questionNo}]" id='rating-opt-${id6}' data-idx='6' value="6" />
+                                                <label for="rating-opt-${id6}" class="rating-circle">6</label>
+                                                <x-text-input type='radio' hidden name="rate[${questionNo}]" id='rating-opt-${id7}' data-idx='7' value="7" />
+                                                <label for="rating-opt-${id7}" class="rating-circle">7</label>
+                                                <x-text-input type='radio' hidden name="rate[${questionNo}]" id='rating-opt-${id8}' data-idx='8' value="8" />
+                                                <label for="rating-opt-${id8}" class="rating-circle">8</label>
+                                                <x-text-input type='radio' hidden name="rate[${questionNo}]" id='rating-opt-${id9}' data-idx='9' value="9" />
+                                                <label for="rating-opt-${id9}" class="rating-circle">9</label>
+                                                <x-text-input type='radio' hidden name="rate[${questionNo}]" id='rating-opt-${id10}' data-idx='10' value="10" />
+                                                <label for="rating-opt-${id10}" class="rating-circle">10</label>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                } else {
+                    questionDiv += `<div class="question remove-question-${id}">
+                                        <h6 class="fs-4 fw-semibold mb-0">Q <span>${questionNo}</span>.</h6>
+                                        <div class="rating-group">
+                                            <div class="rating rating-radio">
+                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id1}' data-idx='0' value="5" />
+                                                <label for='rating-opt-${id1}'></label>
+
+                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id2}' data-idx='1' value="4" />
+                                                <label for='rating-opt-${id2}'></label>
+
+                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id3}' data-idx='2' value="3" />
+                                                <label for='rating-opt-${id3}'></label>
+
+                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id4}' data-idx='3' value="2" />
+                                                <label for='rating-opt-${id4}'></label>
+
+                                                <x-text-input type='radio' hidden name='rate[${questionNo}]' id='rating-opt-${id5}' data-idx='4' value="1" />
+                                                <label for='rating-opt-${id5}'></label>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                }
+
+                $("#questions").find('.question').last().after(questionDiv);
+
+                initRatings();
+            }
         </script>
     @endpush
 
