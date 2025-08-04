@@ -1,7 +1,7 @@
 @use('App\Constants\Status')
 <x-app-layout>
-    <div class="row">
-        <div class="col-lg-5 scrollable mh-n100 vh-100" data-simplebar="">
+    <div class="row ">
+        <div class="col-lg-5 scrollable mh-n100 vh-100 pt-4" data-simplebar="">
             <form action="{{ request()->url() }}" method="post" class="ajax-form">
                 <x-text-input type="hidden" name="picture" id="picture" />
                 <div class="row">

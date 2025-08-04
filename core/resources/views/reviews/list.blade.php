@@ -177,8 +177,8 @@
                 <div class="card border mt-3">
                     <div class="card-header d-flex align-items-center justify-content-between bg-transparent">
                         <div class="d-flex align-items-center">
+                            <h5 class="card-title mb-0 fs-4 fw-bold">Reply</h5>
                             <img src="{{ asset('assets/images/svg/thumbstar.svg') }}" alt="review" class="rounded me-2">
-                            <h5 class="card-title mb-0 fs-4 fw-bold">Generated Reply</h5>
                         </div>
                         <div class="d-flex">
                             <span class="p-1 border rounded me-2"><img src="{{ asset('assets/images/svg/file.svg') }}"
