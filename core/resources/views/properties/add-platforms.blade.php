@@ -63,8 +63,8 @@
             </div>
             <div class="row mt-3">
                 <div class="col-12">
-                    <a href="{{ route('properties.infos', $property) }}" class="btn btn-secondary float-end py-8 mt-2 rounded-2 ms-3">
-                        {{ __('Continue') }}
+                    <a href="{{ route($property->is_setup_completed ? 'properties.index' : 'properties.infos', $property) }}" class="btn btn-secondary float-end py-8 mt-2 rounded-2 ms-3">
+                        {{ __($property->is_setup_completed ? 'Confirm' : 'Continue') }}
                     </a>
                 </div>
             </div>

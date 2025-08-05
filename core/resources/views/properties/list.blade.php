@@ -10,12 +10,12 @@
                 <div class="col-md-3">
                     <div class="card">
                         <div class="position-relative px-2 pt-2">
-                            <a href="javascript:void(0)">
+                            <a href="{{ route('properties.add.platforms', $property) }}">
                                 {!! $property->getImage('card-img-top', '200') !!}
                             </a>
                         </div>
                         <div class="card-body p-4">
-                            <a class="d-block fs-3 text-dark fw-semibold link-primary mb-2" href="javascript:void(0)">{{ $property->name }} <i class="fa fa-info-circle text-dark fs-5"></i></a>
+                            <a class="d-block fs-3 text-dark fw-semibold link-primary mb-2" href="{{ route('properties.add.platforms', $property) }}">{{ $property->name }} <i class="fa fa-info-circle text-dark fs-5"></i></a>
                             <p class="text-justify border-bottom pb-3">
                                 @lang('Last data collection on ') {{ \Carbon\Carbon::parse($property->updated_at)->format('M d, Y') }}
                             </p>

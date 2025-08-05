@@ -118,6 +118,7 @@ class PropertiesController extends Controller
                 'signature' => ['required','string','max:250']
             ]);
 
+            $property->is_setup_completed = Status::YES;
             $property->signature = $request->signature;
             $saved = $property->save();
 
