@@ -48,4 +48,9 @@ class Property extends BaseModel
     {
         return $this->hasMany(Survey::class, 'property_id');
     }
+
+    public function reviewList()
+    {
+        return $this->hasMany(Review::class, 'property_id');
+    }
 }

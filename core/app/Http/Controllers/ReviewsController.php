@@ -17,10 +17,12 @@ class ReviewsController extends Controller
     public function index(Request $request, Property $property): View|JsonResponse|RedirectResponse
     {
         if ($request->ajax()) {
-            // $data['competitors'] = $property->competitors;
-            // $view = view('competitors.competitors', $data)->render();
+            $data['reviews']  = $property->reviewList()->paginate(10);
+            $data['property'] = $property;
 
-            // return response()->json(['html' => $view, 'progress' => $data['competitors']->count() / gs('max-competitors') * 100, 'count' => $data['competitors']->count(), 'href' => route('competitors.create', $property)]);
+            $view = view('reviews.reviews', $data)->render();
+
+            return response()->json(['html' => $view]);
         } else {
             $data['properties'] = Property::where('client_id', authUser()->id)->get();
             $data['reviews'] = Review::with('rating_platform.platform', 'property')->get();

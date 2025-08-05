@@ -11,11 +11,11 @@ use App\Http\Controllers\SurveyController;
 use App\Http\Middleware\RedirectIfNoPropertyAvailable;
 
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('reviews.index');
 })->name('home');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('reviews.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
