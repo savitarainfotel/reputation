@@ -38468,7 +38468,7 @@ html[data-card="border"] .card {
 }
 
 .auth-card {
-	max-width: 460px;
+	max-width: 550px;
 	width: 100%;
 }
 
@@ -39026,8 +39026,7 @@ body table.dataTable>tbody>tr.selected>* {
 	position: absolute;
 	height: 100%;
 	width: 100%;
-	opacity: 0.3;
-	background: radial-gradient(#d2f1df, #d3d7fa, #bad8f4) 0 0/400% 400%;
+	background: #EBFEF5;
 	animation: 15s ease 0s infinite normal none running gradient;
 }
 

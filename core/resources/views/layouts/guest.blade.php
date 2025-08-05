@@ -19,7 +19,26 @@
         <div class="preloader">
             <img src="{{ asset('assets/images/logo.svg') }}" alt="loader" class="lds-ripple img-fluid" />
         </div>
-        {{ $slot }}
+        <div id="main-wrapper" class="auth-customizer-none">
+            <div class="position-relative overflow-hidden radial-gradient min-vh-100 w-100 d-flex align-items-center justify-content-center">
+                <div class="d-flex align-items-center justify-content-center w-100">
+                    <div class="row justify-content-center w-100">
+                        <div class="col-md-8 col-lg-6 col-xxl-3 auth-card">
+                            <div class="card mb-0">
+                                <div class="card-body">
+                                    <a href="{{ route('home') }}" class="text-nowrap logo-img d-block px-4 py-9 w-100 text-center">
+                                        <img src="{{ asset('assets/images/logo.png') }}" class="dark-logo" alt="Logo-Dark" />
+                                        <img src="{{ asset('assets/images/logo.png') }}" class="light-logo" alt="Logo-light" />
+                                        <div class="mt-3 text-dark">@lang('The Best Reputation Management Software')</div>
+                                    </a>
+                                    {{ $slot }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="dark-transparent sidebartoggler"></div>
         <!-- Import Js Files -->
         <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
