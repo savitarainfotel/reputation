@@ -109,35 +109,25 @@
         </div>
     </div>
     <div class="row widget-app-columns mt-4">
-        <div class="col-lg-6 scrollable mh-n205 border-end" data-simplebar="" id="reviews-list"></div>
-        <div class="col-lg-6 scrollable mh-n205" data-simplebar=""></div>
+        <div class="col-lg-6 scrollable mh-n130 border-end" data-simplebar="" id="reviews-list"></div>
+        <div class="col-lg-6 scrollable mh-n130" data-simplebar=""></div>
     </div>
 
     @push('style')
         <link rel="stylesheet" href="{{ asset('assets/libs/select2/dist/css/select2.min.css') }}" />
-        <style>
-            .review-card.active{
-                border-width: 3px !important;
-                border-style: solid !important;
-                border-image: linear-gradient(
-                    180deg,
-                    rgba(24, 119, 242, 1) 0%,
-                    rgba(21, 44, 86, 1) 100%
-                    ) !important;
-                border-radius: 7px !important;
-                border-image-slice: 1 !important;       
-            }
-        </style>
     @endpush
+
     @push('script')
         <script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js') }}"></script>
         <script src="{{ asset('assets/libs/select2/dist/js/select2.min.js') }}"></script>
         <script>
+            "use strict";
+
             const getReviews = href => {
                 if(href) {
                     const form = createForm(href, "GET", {});
                     $('#reviews-list').html('');
-    
+
                     submitForm(form).done(function(response){
                         $('#reviews-list').html(response.html);
 
@@ -163,6 +153,11 @@
             $(document).on('click', '.pagination > .page-item', function(e) {
                 e.preventDefault();
                 getReviews($(this).find('a').attr('href'));
+            });
+
+            $(document).on('click', ".review-card", function() {
+                $(".review-card.active").removeClass("active");
+                $(this).addClass("active");
             });
         </script>
     @endpush

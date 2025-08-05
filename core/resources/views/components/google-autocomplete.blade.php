@@ -1,6 +1,8 @@
 @push('script')
     <script src="https://maps.googleapis.com/maps/api/js?key={{ gs('maps-api') }}&libraries=places" defer></script>
     <script>
+        "use strict";
+
         let map;
         let marker;
 

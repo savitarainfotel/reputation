@@ -197,6 +197,8 @@
         <script src="{{ asset('assets/libs/@claviska/jquery-minicolors/jquery.minicolors.min.js') }}"></script>
 
         <script>
+            "use strict";
+
             initSelectWithLogo("#select-with-logo");
             initMinicolors("#selected-color");
             $('.logo-preview').addClass("d-none");

@@ -47840,6 +47840,10 @@ body .connect-sorting-content {
 	max-height: calc(100vh - 100px);
 }
 
+.mh-n130 {
+	max-height: calc(100vh - 130px);
+}
+
 .mh-n205 {
 	max-height: calc(100vh - 205px);
 }
@@ -48309,4 +48313,11 @@ label.rating-circle:hover {
 }
 input[type="radio"]:checked + label.rating-circle {
 	color: #ffffff;
+}
+.review-card.active{
+	border-width: 3px !important;
+	border-style: solid !important;
+	border-image: linear-gradient(180deg, rgba(24, 119, 242, 1) 0%, rgba(21, 44, 86, 1) 100%) !important;
+	border-image-slice: 1 !important;
+    clip-path: inset(0 round 7px) !important;
 }

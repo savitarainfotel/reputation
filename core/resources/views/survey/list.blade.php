@@ -29,6 +29,8 @@
         <script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js') }}"></script>
         <script src="{{ asset('assets/libs/select2/dist/js/select2.min.js') }}"></script>
         <script>
+            "use strict";
+
             initSelectWithLogo("#select-with-logo");
 
             $("#select-with-logo").change(function() {

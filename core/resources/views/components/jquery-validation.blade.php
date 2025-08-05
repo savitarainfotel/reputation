@@ -2,6 +2,8 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
 
 <script>
+    "use strict";
+
     const addValidationMethods = () => {
         $.validator.addMethod('accept', function(value, element, param) {
             // Split the param string by comma to get the list of acceptable extensions
