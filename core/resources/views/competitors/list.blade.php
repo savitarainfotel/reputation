@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="col-12 text-end">
-            <a href="javascript:;" class="btn btn-info mb-3" id="add-competitor-link"><i class="far fa-plus"></i> @lang('Add New Competitor')</a>
+            <a href="javascript:;" class="btn btn-secondary mb-3" id="add-competitor-link"><i class="far fa-plus"></i> @lang('Add New Competitor')</a>
         </div>
     </div>
 

@@ -64,7 +64,7 @@
             <div class="col-12">
                 <img src="{{ asset('assets/images/blank-reviews.png') }}" alt="Blank Reviews" class="img-fluid mb-3 message-body" />
                 <h4 class="mb-4">@lang('To add survey click button below')</h4>
-                <a href="{{ route('survey.create') }}" class="btn btn-info">
+                <a href="{{ route('survey.create') }}" class="btn btn-secondary">
                     <i class="far fa-plus"></i> @lang('Create New Survey')
                 </a>
             </div>

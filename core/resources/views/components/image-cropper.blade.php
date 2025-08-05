@@ -42,7 +42,7 @@
             text-transform: capitalize;
         }
         .bg-blue {
-            background-color: #1877f2;
+            background-color: #05C78B;
             color: #fff !important;
         }
         .filepreviewprofile {
@@ -58,7 +58,7 @@
         .modal-header-bg {
             width: 100%;
             height: 12px;
-            background: linear-gradient(269.44deg, #1877f2 2.3%, #00AE86 99.19%);
+            background: linear-gradient(269.44deg, #05C78B 2.3%, #00AE86 99.19%);
         }
         .cropImageModal .modal-dialog{
             max-width: 750px;
@@ -119,7 +119,7 @@
             appearance: none;
             width: 18px;
             height: 18px;
-            background: #1877f2;
+            background: #05C78B;
             cursor: pointer;
             box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.25);
         }
@@ -127,14 +127,14 @@
         .cr-slider::-moz-range-thumb {
             width: 18px;
             height: 18px;
-            background: #1877f2;
+            background: #05C78B;
             cursor: pointer;
             box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.25);
         }
         .cr-slider::-ms-thumb {
             width: 18px;
             height: 18px;
-            background: #1877f2;
+            background: #05C78B;
             cursor: pointer;
             box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.25);
         }
@@ -171,9 +171,9 @@
         }
         .drag-label{
             border-radius: 10px;
-            border: 2px dashed #1877f2;
+            border: 2px dashed #05C78B;
             background: #ebeffc;
-            color: #1877f2;
+            color: #05C78B;
         }
     </style>
 @endpush

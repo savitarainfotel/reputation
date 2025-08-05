@@ -81,7 +81,7 @@
                                     </div>
 
                                     <div class="col-lg-9">
-                                        <x-text-input type="text" id="selected-color" name="selected_color" data-position="bottom right" value="#1877F2" readonly required />
+                                        <x-text-input type="text" id="selected-color" name="selected_color" data-position="bottom right" value="#05C78B" readonly required />
                                     </div>
                                 </div>
                             </div>
