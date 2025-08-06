@@ -7,8 +7,8 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" />
-        <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon.png') }}" />
+        <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/png" />
+        <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon.png') }}" type="image/png" />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net" />
@@ -20,7 +20,15 @@
     <body>
         <!-- Preloader -->
         <div class="preloader">
-            <img src="{{ asset('assets/images/logo.svg') }}" alt="loader" class="lds-ripple img-fluid" />
+            <div class="preloader-bg"></div>
+            <div class="preloader-box">
+                <div class="loader-container">
+                    <div class="loader-ring"></div>
+                    <div class="loader-center">
+                        <img src="{{ asset('assets/images/favicon.png') }}" alt="Logo" />
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="main-wrapper" class="auth-customizer-none">
             <div class="position-relative overflow-hidden radial-gradient min-vh-100 w-100 d-flex align-items-center justify-content-center">

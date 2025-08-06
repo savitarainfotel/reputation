@@ -65,7 +65,7 @@
         data = data ?? (method === 'post' ? new FormData(form) : $(form).serialize());
         const submitBtn = $(form).find('[type="submit"]').length ? $(form).find('[type="submit"]') : $(form).find('[type="button"]');
         const btnHtml = submitBtn.html();
-        const loadScreen = $('#preloader');
+        const loadScreen = $('.preloader');
 
         let allIsOk = true;
 

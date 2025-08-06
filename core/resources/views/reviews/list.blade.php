@@ -217,7 +217,7 @@
                 if(href) {
                     const form = createForm(href, "POST", {});
 
-                    submitForm(form).done(function(response){
+                    submitForm(form, true).done(function(response){
                         $('#review-detail').html(response.html);
 
                         const el = document.getElementById('review-detail');
