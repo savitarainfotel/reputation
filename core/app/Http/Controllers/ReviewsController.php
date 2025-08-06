@@ -102,4 +102,19 @@ class ReviewsController extends Controller
             return response()->json(['message' => 'The request timed out. Please try again later.'], 400);
         }
     }
+
+    /**
+     * Mark Answered or Unanswered the review.
+     */
+    public function markAnsweredUnanswered(Request $request, Review $review): View|JsonResponse
+    {
+        if (!$request->ajax()) {
+            return abort(404);
+        }
+
+        $review->is_answered = !$review->is_answered;
+        $review->save();
+
+        return $this->detail($request, $review);
+    }
 }

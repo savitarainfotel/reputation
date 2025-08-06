@@ -51,4 +51,9 @@ class Review extends BaseModel
 
         return null;
     }
+
+    public function getAnsweredTextAttribute()
+    {
+        return $this->is_answered == Status::YES ? __('Mark as unnswered') : __('Mark as answered');
+    }
 }

@@ -45,71 +45,83 @@
                 <i class="fas fa-info-circle ms-2 fa-lg"></i>
             </div>
             <div class="d-flex">
-                <a href="javascript:;" data-target-element="#generated-reply" class="copy-text-of-textarea p-1 border rounded me-2"><img src="{{ asset('assets/images/copy.png') }}" height="25" width="25" alt="file" srcset=""></a>
-                <select class="template-with-flag-icons">
-                    @forelse ($languages as $language)
-                        <option value="{{ $language->language }}" data-flag="{{ $language->country_code }}">{{ $language->language }}</option>
-                    @empty
-                    @endforelse
-                </select>
+                @if ($review->is_answered == $status::NO)
+                    <a href="javascript:;" data-target-element="#generated-reply" class="copy-text-of-textarea p-1 border rounded me-2"><img src="{{ asset('assets/images/copy.png') }}" height="25" width="25" alt="file" srcset=""></a>
+                    <select class="template-with-flag-icons">
+                        @forelse ($languages as $language)
+                            <option value="{{ $language->language }}" data-flag="{{ $language->country_code }}">{{ $language->language }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                @else
+                    <span class="text-primary"><i class="fa fa-check"></i> <span>@lang('Marked as answered')</span></span>
+                @endif
             </div>
         </div>
         <div class="card-body collapse show pt-0">
-            <textarea name="generated-reply" id="generated-reply" class="w-100 no-border hide-overflow" class="fw-bold text-dark mb-0" placeholder="@lang('Type your reply manually here or use the \'Generate Reply\' button for an AI generated reply.')"></textarea>
+            <textarea name="generated-reply" id="generated-reply" class="w-100 no-border hide-overflow" class="fw-bold text-dark mb-0" placeholder="@lang('Type your reply manually here or use the \'Generate Reply\' button for an AI generated reply.')" {{ $review->is_answered == $status::YES ? 'readonly=""' : ''}}></textarea>
         </div>
     </div>
-    <div class="card border mt-3">
-        <div class="card-header d-flex align-items-center justify-content-between bg-transparent">
-            <div class="d-flex align-items-center">
-                <img src="{{ asset('assets/images/svg/translation.svg'.$status::ASSET_VERSION) }}" alt="review" class="rounded me-2">
-                <h5 class="card-title mb-0 fs-4 fw-bold">@lang('Translation')</h5>
-                <i class="fas fa-info-circle ms-2 fa-lg"></i>
+    @if ($review->is_answered == $status::NO)
+        <div class="card border mt-3">
+            <div class="card-header d-flex align-items-center justify-content-between bg-transparent">
+                <div class="d-flex align-items-center">
+                    <img src="{{ asset('assets/images/svg/translation.svg'.$status::ASSET_VERSION) }}" alt="review" class="rounded me-2">
+                    <h5 class="card-title mb-0 fs-4 fw-bold">@lang('Translation')</h5>
+                    <i class="fas fa-info-circle ms-2 fa-lg"></i>
+                </div>
+                <div class="d-flex">
+                    <a href="javascript:;" data-target-element="#translated-reply" class="copy-text-of-textarea p-1 border rounded me-2"><img src="{{ asset('assets/images/copy.png') }}" height="25" width="25" alt="file" srcset=""></a>
+                    <select class="template-with-flag-icons">
+                        @forelse ($languages as $language)
+                            <option value="{{ $language->language }}" data-flag="{{ $language->country_code }}">{{ $language->language }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </div>
             </div>
-            <div class="d-flex">
-                <a href="javascript:;" data-target-element="#translated-reply" class="copy-text-of-textarea p-1 border rounded me-2"><img src="{{ asset('assets/images/copy.png') }}" height="25" width="25" alt="file" srcset=""></a>
-                <select class="template-with-flag-icons">
-                    @forelse ($languages as $language)
-                        <option value="{{ $language->language }}" data-flag="{{ $language->country_code }}">{{ $language->language }}</option>
-                    @empty
-                    @endforelse
-                </select>
+            <div class="card-body collapse show pt-0">
+                <textarea name="translated-reply" id="translated-reply" class="w-100 no-border hide-overflow" class="fw-bold text-dark mb-0" placeholder="@lang('Type your reply manually here or use the \'Generate Reply\' button for an AI generated reply.')"></textarea>
             </div>
         </div>
-        <div class="card-body collapse show pt-0">
-            <textarea name="translated-reply" id="translated-reply" class="w-100 no-border hide-overflow" class="fw-bold text-dark mb-0" placeholder="@lang('Type your reply manually here or use the \'Generate Reply\' button for an AI generated reply.')"></textarea>
-        </div>
-    </div>
+    @endif
     <div class="d-flex justify-content-between align-items-center flex-wrap g-3">
         <div class="d-flex flex-wrap g-3">
-            <a href="javascript:;" data-target-element="#generated-reply" data-redirect="{!! $review->url !!}" class="copy-text-of-textarea btn btn-secondary border text-primary d-inline-flex align-items-center">@lang('Copy & Open')</a>
-            <a href="javascript:;" class="btn btn-outline-secondary border text-primary d-inline-flex align-items-center ms-2 ">@lang('Mark as Answered')</a>
-            <nav class="position-lg-absolute  bottom-0 end-0">
-                <ul class="pagination align-items-center justify-content-end mb-2 ">
-                    <li class="page-item p-1">
-                        <a class="page-link border-0 rounded text-dark fs-6 round-32 d-flex align-items-center justify-content-center" href="javascript:void(0)">
-                            <i class="ti ti-arrow-left"></i>
-                        </a>
-                    </li>
-                    <span class="fw-bold border-bottom border-3 border-info">1/3 @lang('Generated Replys')</span>
-                    <li class="page-item p-1">
-                        <a class="page-link border-0 rounded text-dark fs-6 round-32 d-flex align-items-center justify-content-center" href="javascript:void(0)">
-                            <i class="ti ti-arrow-right"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            @if ($review->is_answered == $status::NO)
+                <a href="javascript:;" data-target-element="#generated-reply" data-redirect="{!! $review->url !!}" class="copy-text-of-textarea btn btn-secondary border text-primary d-inline-flex align-items-center">@lang('Copy & Open')</a>
+            @endif
+            <a href="{{ route('reviews.mark-answered-unanswered', $review) }}" class="btn btn-outline-secondary border text-primary d-inline-flex align-items-center ms-2 generate-reply">{{ $review->answeredText }}</a>
+            @if ($review->is_answered == $status::NO)
+                <nav class="position-lg-absolute  bottom-0 end-0">
+                    <ul class="pagination align-items-center justify-content-end mb-2 ">
+                        <li class="page-item p-1">
+                            <a class="page-link border-0 rounded text-dark fs-6 round-32 d-flex align-items-center justify-content-center" href="javascript:void(0)">
+                                <i class="ti ti-arrow-left"></i>
+                            </a>
+                        </li>
+                        <span class="fw-bold border-bottom border-3 border-info">1/3 @lang('Generated Replys')</span>
+                        <li class="page-item p-1">
+                            <a class="page-link border-0 rounded text-dark fs-6 round-32 d-flex align-items-center justify-content-center" href="javascript:void(0)">
+                                <i class="ti ti-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            @endif
         </div>
         <div class="float-end">
-            <a href="{{ route('reviews.generate-reply', $review) }}" class="btn border text-primary fw-bold fs-4 me-2 d-inline-flex align-items-center generate-reply">
+            <a href="{{ route('reviews.generate-reply', $review) }}" class="btn border text-primary fw-bold fs-4 me-2 d-inline-flex align-items-center {{ $review->is_answered == $status::YES ? 'disabled' : 'generate-reply' }}">
                 <img src="{{ asset('assets/images/svg/geminy.svg') }}" alt="" class="me-1" />
                 @lang('Generate Reply')
             </a>
-            <a href="javascript:;" class="btn btn-secondary me-2">
-                <i class="fab fa-telegram-plane text-white me-2 fa-lg"></i>
-                <span class="rounded-circlre" width="32"  height="32">
-                    <img src="{{ gs('admin-url') }}uploads/platforms-logos/{{ $review->rating_platform->platform->logo }}" alt="" height="18" width="18">
-                </span>
-            </a>
+            @if ($review->is_answered == $status::NO)
+                <a href="javascript:;" class="btn btn-secondary me-2">
+                    <i class="fab fa-telegram-plane text-white me-2 fa-lg"></i>
+                    <span class="rounded-circlre" width="32"  height="32">
+                        <img src="{{ gs('admin-url') }}uploads/platforms-logos/{{ $review->rating_platform->platform->logo }}" alt="" height="18" width="18">
+                    </span>
+                </a>
+            @endif
         </div>
     </div>
 </div>
