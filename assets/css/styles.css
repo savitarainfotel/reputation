@@ -28551,6 +28551,10 @@ fieldset:disabled .btn {
 	height: 100vh !important;
 }
 
+.vh-75 {
+	height: 75vh !important;
+}
+
 .min-vh-100 {
 	min-height: 100vh !important;
 }
@@ -48319,4 +48323,11 @@ input[type="radio"]:checked + label.rating-circle {
 	border-image: linear-gradient(180deg, rgba(24, 119, 242, 1) 0%, rgba(21, 44, 86, 1) 100%) !important;
 	border-image-slice: 1 !important;
     clip-path: inset(0 round 7px) !important;
+}
+.no-border {
+	border: none;
+}
+.no-border:focus {
+	outline: 0;
+	border: none;
 }

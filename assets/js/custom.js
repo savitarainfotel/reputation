@@ -173,7 +173,6 @@ const logoFormat = (logo) => {
 const initSelectWithLogo = (element) => {
 	const $element = $(element);
 	const options = {
-		minimumResultsForSearch: Infinity,
 		templateResult: logoFormat,
 		templateSelection: logoFormat,
 		escapeMarkup: function (es) {
@@ -352,3 +351,64 @@ $(document).on('input', '.question-list > input[name="questions[]"]', function()
 
 	question.html(`${prefix}. ${$(this).val()}`);
 });
+
+const iconFormat = (ficon) => {
+	if (!ficon.id) {
+		return ficon.text;
+	}
+
+	return `<i class='flag-icon flag-icon-${$(ficon.element).data("flag")}'></i>${ficon.text}`;
+}
+
+const initSelectWithFlag = (element) => {
+	const $element = $(element);
+	const options = {
+		templateResult: iconFormat,
+		templateSelection: iconFormat,
+		escapeMarkup: function (es) {
+			return es;
+		},
+	};
+
+	if ($element.closest('#general-modal').length > 0) {
+		options.dropdownParent = $('#general-modal');
+	}
+
+	$element.select2(options);
+}
+
+function typeWriterEffect(text, element) {
+	const speed = 20;
+	let index = 0;
+	const $el = $(element);
+
+	if (!$el.length) return;
+
+	$el.val('');
+
+	if ($el.data('type-writer-timeout')) {
+		clearTimeout($el.data('type-writer-timeout'));
+	}
+
+	function updateRows(currentText) {
+		const approxCharsPerRow = 50;
+		const rowsNeeded = Math.ceil(currentText.length / approxCharsPerRow);
+		$el.attr('rows', (rowsNeeded || 1) + 2);
+	}
+
+	function type() {
+		if (index < text.length) {
+			let currentVal = $el.val();
+			let newVal = currentVal + text.charAt(index);
+			$el.val(newVal);
+			updateRows(newVal);
+			index++;
+			const timeout = setTimeout(type, speed);
+			$el.data('type-writer-timeout', timeout);
+		} else {
+			$el.removeData('type-writer-timeout');
+		}
+	}
+
+	type();
+}

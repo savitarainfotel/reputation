@@ -110,7 +110,14 @@
     </div>
     <div class="row widget-app-columns mt-4">
         <div class="col-lg-6 scrollable mh-n130 border-end" data-simplebar="" id="reviews-list"></div>
-        <div class="col-lg-6 scrollable mh-n130" data-simplebar=""></div>
+        <div class="col-lg-6 scrollable mh-n130" data-simplebar="" id="review-detail">
+            <div class="d-flex align-items-center vh-75 justify-content-center">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 139 91" fill="none"><circle cx="70.8337" cy="48.8396" r="41.4646" fill="#3662E3" fill-opacity="0.1"></circle><path d="M131.491 1H54.6299C51.1645 1 48.3525 3.81201 48.3525 7.27731V39.9705C48.3525 43.4358 51.1645 46.2478 54.6299 46.2478H84.1985L89.4817 51.5309L94.7933 46.2478H131.491C134.957 46.2478 137.769 43.4358 137.769 39.9705V7.27731C137.769 3.81201 134.957 1 131.491 1Z" fill="white" stroke="#3662E3" stroke-opacity="0.4" stroke-width="0.5" stroke-miterlimit="10"></path><path d="M65.2707 20.2017C68.6104 18.7954 70.1776 14.948 68.7712 11.6083C67.3648 8.26868 63.5174 6.70146 60.1778 8.10784C56.8382 9.51421 55.2709 13.3616 56.6773 16.7012C58.0837 20.0409 61.9311 21.6081 65.2707 20.2017Z" fill="#3662E3" fill-opacity="0.2"></path><path d="M61.6196 23.6387H55.8252V25.2009H61.6196V23.6387Z" fill="#D7E0F9"></path><path d="M71.7317 23.6387H63.04V25.2009H71.7317V23.6387Z" fill="#D7E0F9"></path><path d="M68.323 28.2422H55.8252V29.8044H68.323V28.2422Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M102.663 28.2422H73.4072V29.8044H102.663V28.2422Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M130.3 28.2422H107.775V29.8044H130.3V28.2422Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M83.8033 33.1836H55.8252V34.7458H83.8033V33.1836Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M130.301 33.1836H116.326V34.7458H130.301V33.1836Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M113.06 33.1836H88.5469V34.7458H113.06V33.1836Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M91.5292 38.125H55.8252V39.6872H91.5292V38.125Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M80.6443 55.4512H7.22463C3.89563 55.4512 1.23242 58.1144 1.23242 61.4434V76.1515C1.23242 79.4805 3.89563 82.1437 7.22463 82.1437H80.5838C83.9128 82.1437 86.576 79.4805 86.576 76.1515V61.4434C86.6365 58.1144 83.9733 55.4512 80.6443 55.4512Z" fill="white" stroke="#3662E3" stroke-opacity="0.4" stroke-width="0.5" stroke-miterlimit="10"></path><path d="M29.4985 64.2285L30.6485 67.6786H34.2801L31.3143 69.8576L32.4643 73.3076L29.4985 71.1892L26.5931 73.3076L27.6826 69.8576L24.7168 67.7391H28.3484L29.4985 64.2285Z" fill="#9EB3F0"></path><path d="M41.059 64.2285L42.209 67.6786H45.8407L42.9354 69.8576L44.0854 73.3076L41.1195 71.1892L38.2142 73.3076L39.3037 69.8576L36.3379 67.7391H39.9695L41.059 64.2285Z" fill="#9EB3F0"></path><path d="M52.6196 64.2285L53.7696 67.6786H57.4618L54.4959 69.8576L55.6459 73.3076L52.6801 71.1892L49.7748 73.3076L50.8643 69.8576L47.8984 67.7391H51.5301L52.6196 64.2285Z" fill="#9EB3F0"></path><path d="M64.2416 64.2285L65.3917 67.6786H69.0233L66.118 69.8576L67.268 73.3076L64.3022 71.1892L61.3363 73.3076L62.4864 69.8576L59.5205 67.7391H63.1521L64.2416 64.2285Z" fill="#9EB3F0"></path><path d="M75.8032 64.2285L76.9532 67.6786H80.6454L77.6795 69.8576L78.8295 73.3076L75.8637 71.1892L72.9584 73.3076L74.0479 69.8576L71.082 67.7391H74.7137L75.8032 64.2285Z" fill="#D7E0F9"></path><path d="M19.7692 68.4883C20.246 65.5854 18.2793 62.8456 15.3765 62.3688C12.4736 61.8919 9.73381 63.8586 9.25697 66.7615C8.78012 69.6643 10.7468 72.4041 13.6497 72.881C16.5525 73.3578 19.2923 71.3912 19.7692 68.4883Z" fill="#DAE0FF"></path><path d="M12.7914 74.0938H8.07031V75.3648H12.7914V74.0938Z" fill="#D7E0F9"></path><path d="M21.0231 74.0938H13.9414V75.3648H21.0231V74.0938Z" fill="#D7E0F9"></path></svg>
+                    <h6 class="mt-3"><strong>@lang('Your replies will be displayed here')</strong></h6>
+                </div>
+            </div>
+        </div>
     </div>
 
     @push('style')
@@ -126,7 +133,23 @@
             const getReviews = href => {
                 if(href) {
                     const form = createForm(href, "GET", {});
-                    $('#reviews-list').html('');
+                    $('#reviews-list').html(`<div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                                                <div class="card border cursor-pointer review-card">
+                                                    <div class="card-header">
+                                                        <div class="text-center">
+                                                            <h5 class="card-title mb-0 fs-3 fw-bold">
+                                                                @lang('No reviews available')
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>`);
+                    $('#review-detail').html(`<div class="d-flex align-items-center vh-75 justify-content-center">
+                                                <div>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 139 91" fill="none"><circle cx="70.8337" cy="48.8396" r="41.4646" fill="#3662E3" fill-opacity="0.1"></circle><path d="M131.491 1H54.6299C51.1645 1 48.3525 3.81201 48.3525 7.27731V39.9705C48.3525 43.4358 51.1645 46.2478 54.6299 46.2478H84.1985L89.4817 51.5309L94.7933 46.2478H131.491C134.957 46.2478 137.769 43.4358 137.769 39.9705V7.27731C137.769 3.81201 134.957 1 131.491 1Z" fill="white" stroke="#3662E3" stroke-opacity="0.4" stroke-width="0.5" stroke-miterlimit="10"></path><path d="M65.2707 20.2017C68.6104 18.7954 70.1776 14.948 68.7712 11.6083C67.3648 8.26868 63.5174 6.70146 60.1778 8.10784C56.8382 9.51421 55.2709 13.3616 56.6773 16.7012C58.0837 20.0409 61.9311 21.6081 65.2707 20.2017Z" fill="#3662E3" fill-opacity="0.2"></path><path d="M61.6196 23.6387H55.8252V25.2009H61.6196V23.6387Z" fill="#D7E0F9"></path><path d="M71.7317 23.6387H63.04V25.2009H71.7317V23.6387Z" fill="#D7E0F9"></path><path d="M68.323 28.2422H55.8252V29.8044H68.323V28.2422Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M102.663 28.2422H73.4072V29.8044H102.663V28.2422Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M130.3 28.2422H107.775V29.8044H130.3V28.2422Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M83.8033 33.1836H55.8252V34.7458H83.8033V33.1836Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M130.301 33.1836H116.326V34.7458H130.301V33.1836Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M113.06 33.1836H88.5469V34.7458H113.06V33.1836Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M91.5292 38.125H55.8252V39.6872H91.5292V38.125Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M80.6443 55.4512H7.22463C3.89563 55.4512 1.23242 58.1144 1.23242 61.4434V76.1515C1.23242 79.4805 3.89563 82.1437 7.22463 82.1437H80.5838C83.9128 82.1437 86.576 79.4805 86.576 76.1515V61.4434C86.6365 58.1144 83.9733 55.4512 80.6443 55.4512Z" fill="white" stroke="#3662E3" stroke-opacity="0.4" stroke-width="0.5" stroke-miterlimit="10"></path><path d="M29.4985 64.2285L30.6485 67.6786H34.2801L31.3143 69.8576L32.4643 73.3076L29.4985 71.1892L26.5931 73.3076L27.6826 69.8576L24.7168 67.7391H28.3484L29.4985 64.2285Z" fill="#9EB3F0"></path><path d="M41.059 64.2285L42.209 67.6786H45.8407L42.9354 69.8576L44.0854 73.3076L41.1195 71.1892L38.2142 73.3076L39.3037 69.8576L36.3379 67.7391H39.9695L41.059 64.2285Z" fill="#9EB3F0"></path><path d="M52.6196 64.2285L53.7696 67.6786H57.4618L54.4959 69.8576L55.6459 73.3076L52.6801 71.1892L49.7748 73.3076L50.8643 69.8576L47.8984 67.7391H51.5301L52.6196 64.2285Z" fill="#9EB3F0"></path><path d="M64.2416 64.2285L65.3917 67.6786H69.0233L66.118 69.8576L67.268 73.3076L64.3022 71.1892L61.3363 73.3076L62.4864 69.8576L59.5205 67.7391H63.1521L64.2416 64.2285Z" fill="#9EB3F0"></path><path d="M75.8032 64.2285L76.9532 67.6786H80.6454L77.6795 69.8576L78.8295 73.3076L75.8637 71.1892L72.9584 73.3076L74.0479 69.8576L71.082 67.7391H74.7137L75.8032 64.2285Z" fill="#D7E0F9"></path><path d="M19.7692 68.4883C20.246 65.5854 18.2793 62.8456 15.3765 62.3688C12.4736 61.8919 9.73381 63.8586 9.25697 66.7615C8.78012 69.6643 10.7468 72.4041 13.6497 72.881C16.5525 73.3578 19.2923 71.3912 19.7692 68.4883Z" fill="#DAE0FF"></path><path d="M12.7914 74.0938H8.07031V75.3648H12.7914V74.0938Z" fill="#D7E0F9"></path><path d="M21.0231 74.0938H13.9414V75.3648H21.0231V74.0938Z" fill="#D7E0F9"></path></svg>
+                                                    <h6 class="mt-3"><strong>@lang('Your replies will be displayed here')</strong></h6>
+                                                </div>
+                                            </div>`);
 
                     submitForm(form).done(function(response){
                         $('#reviews-list').html(response.html);
@@ -138,6 +161,8 @@
                         }
 
                         new SimpleBar(el);
+
+                        $('#reviews-list').find(".review-card").first().trigger('click');
                     });
                 }
             }
@@ -158,6 +183,54 @@
             $(document).on('click', ".review-card", function() {
                 $(".review-card.active").removeClass("active");
                 $(this).addClass("active");
+                const action = $(this).data("action");
+
+                if(action) {
+                    const form = createForm(action, "GET", {});
+                    $('#review-detail').html(`<div class="d-flex align-items-center vh-75 justify-content-center">
+                                                <div>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 139 91" fill="none"><circle cx="70.8337" cy="48.8396" r="41.4646" fill="#3662E3" fill-opacity="0.1"></circle><path d="M131.491 1H54.6299C51.1645 1 48.3525 3.81201 48.3525 7.27731V39.9705C48.3525 43.4358 51.1645 46.2478 54.6299 46.2478H84.1985L89.4817 51.5309L94.7933 46.2478H131.491C134.957 46.2478 137.769 43.4358 137.769 39.9705V7.27731C137.769 3.81201 134.957 1 131.491 1Z" fill="white" stroke="#3662E3" stroke-opacity="0.4" stroke-width="0.5" stroke-miterlimit="10"></path><path d="M65.2707 20.2017C68.6104 18.7954 70.1776 14.948 68.7712 11.6083C67.3648 8.26868 63.5174 6.70146 60.1778 8.10784C56.8382 9.51421 55.2709 13.3616 56.6773 16.7012C58.0837 20.0409 61.9311 21.6081 65.2707 20.2017Z" fill="#3662E3" fill-opacity="0.2"></path><path d="M61.6196 23.6387H55.8252V25.2009H61.6196V23.6387Z" fill="#D7E0F9"></path><path d="M71.7317 23.6387H63.04V25.2009H71.7317V23.6387Z" fill="#D7E0F9"></path><path d="M68.323 28.2422H55.8252V29.8044H68.323V28.2422Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M102.663 28.2422H73.4072V29.8044H102.663V28.2422Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M130.3 28.2422H107.775V29.8044H130.3V28.2422Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M83.8033 33.1836H55.8252V34.7458H83.8033V33.1836Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M130.301 33.1836H116.326V34.7458H130.301V33.1836Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M113.06 33.1836H88.5469V34.7458H113.06V33.1836Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M91.5292 38.125H55.8252V39.6872H91.5292V38.125Z" fill="#3662E3" fill-opacity="0.15"></path><path d="M80.6443 55.4512H7.22463C3.89563 55.4512 1.23242 58.1144 1.23242 61.4434V76.1515C1.23242 79.4805 3.89563 82.1437 7.22463 82.1437H80.5838C83.9128 82.1437 86.576 79.4805 86.576 76.1515V61.4434C86.6365 58.1144 83.9733 55.4512 80.6443 55.4512Z" fill="white" stroke="#3662E3" stroke-opacity="0.4" stroke-width="0.5" stroke-miterlimit="10"></path><path d="M29.4985 64.2285L30.6485 67.6786H34.2801L31.3143 69.8576L32.4643 73.3076L29.4985 71.1892L26.5931 73.3076L27.6826 69.8576L24.7168 67.7391H28.3484L29.4985 64.2285Z" fill="#9EB3F0"></path><path d="M41.059 64.2285L42.209 67.6786H45.8407L42.9354 69.8576L44.0854 73.3076L41.1195 71.1892L38.2142 73.3076L39.3037 69.8576L36.3379 67.7391H39.9695L41.059 64.2285Z" fill="#9EB3F0"></path><path d="M52.6196 64.2285L53.7696 67.6786H57.4618L54.4959 69.8576L55.6459 73.3076L52.6801 71.1892L49.7748 73.3076L50.8643 69.8576L47.8984 67.7391H51.5301L52.6196 64.2285Z" fill="#9EB3F0"></path><path d="M64.2416 64.2285L65.3917 67.6786H69.0233L66.118 69.8576L67.268 73.3076L64.3022 71.1892L61.3363 73.3076L62.4864 69.8576L59.5205 67.7391H63.1521L64.2416 64.2285Z" fill="#9EB3F0"></path><path d="M75.8032 64.2285L76.9532 67.6786H80.6454L77.6795 69.8576L78.8295 73.3076L75.8637 71.1892L72.9584 73.3076L74.0479 69.8576L71.082 67.7391H74.7137L75.8032 64.2285Z" fill="#D7E0F9"></path><path d="M19.7692 68.4883C20.246 65.5854 18.2793 62.8456 15.3765 62.3688C12.4736 61.8919 9.73381 63.8586 9.25697 66.7615C8.78012 69.6643 10.7468 72.4041 13.6497 72.881C16.5525 73.3578 19.2923 71.3912 19.7692 68.4883Z" fill="#DAE0FF"></path><path d="M12.7914 74.0938H8.07031V75.3648H12.7914V74.0938Z" fill="#D7E0F9"></path><path d="M21.0231 74.0938H13.9414V75.3648H21.0231V74.0938Z" fill="#D7E0F9"></path></svg>
+                                                    <h6 class="mt-3"><strong>@lang('Your replies will be displayed here')</strong></h6>
+                                                </div>
+                                            </div>`);
+
+                    submitForm(form).done(function(response){
+                        $('#review-detail').html(response.html);
+
+                        const el = document.getElementById('review-detail');
+
+                        if (SimpleBar.instances.has(el)) {
+                            SimpleBar.instances.get(el).unMount();
+                        }
+
+                        new SimpleBar(el);
+
+                        initSelectWithFlag(".template-with-flag-icons");
+                    });
+                }
+            });
+
+            $(document).on('click', '.generate-reply', function(e) {
+                e.preventDefault();
+                const href = $(this).attr('href');
+
+                if(href) {
+                    const form = createForm(href, "POST", {});
+
+                    submitForm(form).done(function(response){
+                        $('#review-detail').html(response.html);
+
+                        const el = document.getElementById('review-detail');
+
+                        if (SimpleBar.instances.has(el)) {
+                            SimpleBar.instances.get(el).unMount();
+                        }
+
+                        new SimpleBar(el);
+
+                        initSelectWithFlag(".template-with-flag-icons");
+                    });
+                }
             });
         </script>
     @endpush

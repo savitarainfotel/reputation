@@ -56,6 +56,8 @@ Route::middleware('auth')->group(function () {
     
         Route::controller(ReviewsController::class)->name('reviews.')->prefix('reviews')->group(function () {
             Route::get('{property?}', 'index')->name('index');
+            Route::get('detail/{review}', 'detail')->name('detail');
+            Route::post('generate-reply/{review}', 'generateReply')->name('generate-reply');
         });
     
         Route::controller(SurveyController::class)->name('survey.')->prefix('survey')->group(function () {
