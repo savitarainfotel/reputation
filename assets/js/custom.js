@@ -406,9 +406,25 @@ function typeWriterEffect(text, element) {
 			const timeout = setTimeout(type, speed);
 			$el.data('type-writer-timeout', timeout);
 		} else {
+			$('.copy-text-of-textarea').first().trigger('click');
 			$el.removeData('type-writer-timeout');
 		}
 	}
 
 	type();
 }
+
+$(document).on('click', '.copy-text-of-textarea', function(){
+	const target = $(this).data('target-element');
+	const redirect = $(this).data('redirect');
+
+	navigator.clipboard.writeText($(target).val())
+			 .then(() => {
+				notify('Reply been copied to clipboard!');
+
+				if(redirect) {
+					window.open(redirect, '_blank');
+				}
+			 })
+			 .catch(() => notify('Can not copy the text to clipboard. Plese make sure you have allowed your browser to copy the text!'));
+});

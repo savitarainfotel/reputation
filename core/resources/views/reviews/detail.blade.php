@@ -45,7 +45,7 @@
                 <i class="fas fa-info-circle ms-2 fa-lg"></i>
             </div>
             <div class="d-flex">
-                <a href="javascript:;" class="p-1 border rounded me-2"><img src="{{ asset('assets/images/copy.png') }}" height="25" width="25" alt="file" srcset=""></a>
+                <a href="javascript:;" data-target-element="#generated-reply" class="copy-text-of-textarea p-1 border rounded me-2"><img src="{{ asset('assets/images/copy.png') }}" height="25" width="25" alt="file" srcset=""></a>
                 <select class="template-with-flag-icons">
                     @forelse ($languages as $language)
                         <option value="{{ $language->language }}" data-flag="{{ $language->country_code }}">{{ $language->language }}</option>
@@ -55,7 +55,7 @@
             </div>
         </div>
         <div class="card-body collapse show pt-0">
-            <textarea name="generated_reply" id="generated-reply" class="w-100 no-border hide-overflow" class="fw-bold text-dark mb-0" placeholder="@lang('Type your reply manually here or use the \'Generate Reply\' button for an AI generated reply.')"></textarea>
+            <textarea name="generated-reply" id="generated-reply" class="w-100 no-border hide-overflow" class="fw-bold text-dark mb-0" placeholder="@lang('Type your reply manually here or use the \'Generate Reply\' button for an AI generated reply.')"></textarea>
         </div>
     </div>
     <div class="card border mt-3">
@@ -66,7 +66,7 @@
                 <i class="fas fa-info-circle ms-2 fa-lg"></i>
             </div>
             <div class="d-flex">
-                <a href="javascript:;" class="p-1 border rounded me-2"><img src="{{ asset('assets/images/copy.png') }}" height="25" width="25" alt="file" srcset=""></a>
+                <a href="javascript:;" data-target-element="#translated-reply" class="copy-text-of-textarea p-1 border rounded me-2"><img src="{{ asset('assets/images/copy.png') }}" height="25" width="25" alt="file" srcset=""></a>
                 <select class="template-with-flag-icons">
                     @forelse ($languages as $language)
                         <option value="{{ $language->language }}" data-flag="{{ $language->country_code }}">{{ $language->language }}</option>
@@ -81,8 +81,8 @@
     </div>
     <div class="d-flex justify-content-between align-items-center flex-wrap g-3">
         <div class="d-flex flex-wrap g-3">
-            <a href="javascript:;" class="btn btn-secondary border text-primary d-inline-flex align-items-center">Copy & Open</a>
-            <a href="javascript:;" class="btn btn-outline-secondary border text-primary d-inline-flex align-items-center ms-2 ">Mark as Answered</a>
+            <a href="javascript:;" data-target-element="#generated-reply" data-redirect="{!! $review->url !!}" class="copy-text-of-textarea btn btn-secondary border text-primary d-inline-flex align-items-center">@lang('Copy & Open')</a>
+            <a href="javascript:;" class="btn btn-outline-secondary border text-primary d-inline-flex align-items-center ms-2 ">@lang('Mark as Answered')</a>
             <nav class="position-lg-absolute  bottom-0 end-0">
                 <ul class="pagination align-items-center justify-content-end mb-2 ">
                     <li class="page-item p-1">
