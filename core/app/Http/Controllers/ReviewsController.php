@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\ConnectionException;
+use App\Constants\Status;
 
 class ReviewsController extends Controller
 {
@@ -113,6 +114,21 @@ class ReviewsController extends Controller
         }
 
         $review->is_answered = !$review->is_answered;
+        $review->save();
+
+        return $this->detail($request, $review);
+    }
+
+    /**
+     * Send reply or Unanswered review.
+     */
+    public function reply(Request $request, Review $review): View|JsonResponse
+    {
+        if (!$request->ajax()) {
+            return abort(404);
+        }
+
+        $review->is_answered = Status::YES;
         $review->save();
 
         return $this->detail($request, $review);

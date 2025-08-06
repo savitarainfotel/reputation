@@ -115,7 +115,12 @@
                 @lang('Generate Reply')
             </a>
             @if ($review->is_answered == $status::NO)
-                <a href="javascript:;" class="btn btn-secondary me-2">
+                @php
+                    $integration = $property->google();
+                    $integrated  = $integration && $integration->access_token;
+                @endphp
+
+                <a href="{{ $integrated ? route('reviews.reply', $review) : route('integrations.index') }}" data-target-element="#generated-reply" class="btn btn-secondary me-2 {{ $integrated ? 'send-reply' : '' }}">
                     <i class="fab fa-telegram-plane text-white me-2 fa-lg"></i>
                     <span class="rounded-circlre" width="32"  height="32">
                         <img src="{{ gs('admin-url') }}uploads/platforms-logos/{{ $review->rating_platform->platform->logo }}" alt="" height="18" width="18">

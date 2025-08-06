@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
             Route::get('detail/{review}', 'detail')->name('detail');
             Route::post('generate-reply/{review}', 'generateReply')->name('generate-reply');
             Route::post('mark-answered-unanswered/{review}', 'markAnsweredUnanswered')->name('mark-answered-unanswered');
+            Route::post('reply/{review}', 'reply')->name('reply');
         });
     
         Route::controller(SurveyController::class)->name('survey.')->prefix('survey')->group(function () {

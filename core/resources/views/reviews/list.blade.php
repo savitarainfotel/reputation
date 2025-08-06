@@ -232,6 +232,33 @@
                     });
                 }
             });
+
+            $(document).on('click', '.send-reply', function(e){
+                e.preventDefault();
+                const target = $(this).data('target-element');
+                const reply = $(target).val();
+
+                if(reply) {
+                    const href = $(this).attr('href');
+                    const form = createForm(href, "POST", {reply: reply});
+
+                    submitForm(form, true).done(function(response){
+                        $('#review-detail').html(response.html);
+
+                        const el = document.getElementById('review-detail');
+
+                        if (SimpleBar.instances.has(el)) {
+                            SimpleBar.instances.get(el).unMount();
+                        }
+
+                        new SimpleBar(el);
+
+                        initSelectWithFlag(".template-with-flag-icons");
+                    });
+                } else {
+                    notify('Generate the reply first!');
+                }
+            });
         </script>
     @endpush
 </x-app-layout>
