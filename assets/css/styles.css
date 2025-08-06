@@ -45165,7 +45165,7 @@ body .apexcharts-tooltip-title {
 }
 
 .table-responsive .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-	color: #fff;
+	color: #fff !important;
 	background-color: var(--bs-primary);
 	border-color: var(--bs-primary);
 }

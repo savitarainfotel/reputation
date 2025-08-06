@@ -155,7 +155,9 @@ class InvitesController extends Controller
         }        
 
     }
-
+    public function sendEmail(){
+        return view('invites.sendEmail');  
+    }
     private function validateRequest(Request $request)
     {
         $request->validate([

@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::match(['get', 'post'], '/store', 'store')->name('store');
         Route::match(['get', 'post'], '/edit/{id}', 'edit')->name('edit');
         Route::match(['get', 'post'], '/delete/{id}', 'delete')->name('delete');
+         Route::get('sendEmail', 'sendEmail')->name('sendEmail');
     });
 });
 
