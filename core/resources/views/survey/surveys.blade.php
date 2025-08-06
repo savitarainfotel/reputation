@@ -16,7 +16,7 @@
                     <img src="{{ $survey->picture }}" alt="Logo" class="me-3 rounded-circle" width="40" height="40" />
                     <h4 class="mb-0 text-primary fs-4">{{ $property->name }}</h4>
                     <div class="ms-auto">
-                        <a class="me-2">
+                        <a href="{{route('survey.edit',$survey)}}" class="me-2">
                             <i class="fas fa-file-edit fs-5"></i>
                         </a>
                         <a class="">

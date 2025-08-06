@@ -49,6 +49,25 @@ class SurveyController extends Controller
         }
     }
 
+    public function edit(Request $request, Survey $survey): View|JsonResponse|RedirectResponse
+    {
+        if ($request->isMethod('get')) {
+            $data['properties'] = Property::where('client_id', authUser()->id)->get();
+            $data['survey']     = $survey;
+            // dd($survey);
+
+            return view('survey.filled-form', $data);
+        }
+
+        if ($request->isMethod('post')) {
+            if (!$request->ajax()) {
+                return abort(404);
+            }
+
+            return $this->processForm($request, $survey);
+        }
+    }
+
     /**
      * Process the resource in storage.
      */
