@@ -7,14 +7,6 @@
   --dark: #000000;
   --light: #FFFFFF;
 }
-@font-face {
-  font-family: Manrope-medium;
-  src: url(../font/Manrope-Medium.ttf);
-}
-@font-face {
-  font-family: Manrope-regular;
-  src: url(../font/Manrope-Regular.ttf);
-}
 
 /* Global css start */
 * {
@@ -23,7 +15,7 @@
   box-sizing: border-box;
 }
 body {
-  font-family: "Poppins", sans-serif;
+  /* font-family: "Poppins", sans-serif; */
   color: var(--dark);
   background-image: var(--light) !important;
   background-color: var(--light) !important;
@@ -34,7 +26,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Manrope-medium;
+ 
   font-weight: 500;
   line-height: 1.2;
 }

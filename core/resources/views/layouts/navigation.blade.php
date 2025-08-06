@@ -4,8 +4,8 @@
         <img src="{{ asset('assets/images/sidebar_background.png') }}" alt="" srcset="" class="position-absolute background-image">
         <div class="brand-logo d-flex align-items-center justify-content-center">
             <a href="{{ route('dashboard') }}" class="text-nowrap logo-img">
-                <img src="{{ asset('assets/images/logo.svg') }}" class="dark-logo" alt="Logo-Dark" height="50" />
-                <img src="{{ asset('assets/images/logo.svg') }}" class="light-logo" alt="Logo-light" height="50" />
+                <img src="{{ asset('assets/images/favicon.png') }}" class="dark-logo bg-white p-2 rounded" alt="Logo-Dark" height="50" />
+                <img src="{{ asset('assets/images/logo-white.png') }}" class="light-logo" alt="Logo-light" height="50" />
             </a>
             <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
                 <i class="ti ti-x"></i>
