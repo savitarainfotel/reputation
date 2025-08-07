@@ -147,7 +147,6 @@ class PropertiesController extends Controller
         $property->created_by   = $userId;
         $property->client_id    = $userId;
         $property->updated_by   = $userId;
-        $property->reviews      = 0;
         $property->signature    = "Best Regards,\n{$request->name}";
         $saved = $property->save();
 

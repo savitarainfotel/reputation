@@ -20,7 +20,7 @@ class ReviewsController extends Controller
     public function index(Request $request, Property $property): View|JsonResponse|RedirectResponse
     {
         if ($request->ajax()) {
-            $data['reviews']  = $property->reviewList()->paginate(10);
+            $data['reviews']  = $property->reviews()->paginate(10);
             $data['property'] = $property;
 
             $view = view('reviews.reviews', $data)->render();

@@ -61,9 +61,6 @@ class HandleGoogleReviewsScrape implements ShouldQueue
                             }
                         }
 
-                        $event->property->reviews = count($response['reviews']);
-                        $event->property->save();
-
                         DB::commit();
 
                         if($reviewIds) {
@@ -162,7 +159,7 @@ class HandleGoogleReviewsScrape implements ShouldQueue
                         }
                     }
 
-                    $ratingSetting->reviewList()->whereNull('platform_review_id')->update(['is_delete' => Status::YES]);
+                    $ratingSetting->reviews()->whereNull('platform_review_id')->update(['is_delete' => Status::YES]);
 
                     DB::commit();
 

@@ -49,8 +49,12 @@ class Property extends BaseModel
         return $this->hasMany(Survey::class, 'property_id');
     }
 
-    public function reviewList()
+    public function reviews()
     {
-        return $this->hasMany(Review::class, 'property_id');
+        return $this->hasMany(Review::class, 'property_id')->where('is_delete', Status::NO);
+    }
+
+    public function getReviewsCountAttribute(): int {
+        return $this->reviews->count();
     }
 }

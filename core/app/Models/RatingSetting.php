@@ -29,7 +29,7 @@ class RatingSetting extends BaseModel
         return $this->belongsTo(Property::class, 'property_id');
     }
 
-    public function reviewList()
+    public function reviews()
     {
         return $this->hasMany(Review::class, 'rating_platform_id');
     }

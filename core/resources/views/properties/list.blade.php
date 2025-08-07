@@ -21,7 +21,7 @@
                             </p>
                             <div class="d-flex justify-content-between text-dark">
                                 <div>
-                                    <strong class="fs-5">{{ $property->reviews }}</strong> <br>
+                                    <strong class="fs-5">{{ $property->reviewsCount }}</strong> <br>
                                     <span class="fs-4">@lang('Reviews')</span>
                                 </div>
                                 <div class="user-pair">

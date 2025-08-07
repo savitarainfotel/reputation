@@ -54,9 +54,6 @@ class HandleBookingReviewsScrape implements ShouldQueue
                         $newReview->save();
                     }
 
-                    $event->property->reviews += count($response['reviews']);
-                    $event->property->save();
-
                     DB::commit();
                 } catch (\Throwable $th) {
                     DB::rollBack();
