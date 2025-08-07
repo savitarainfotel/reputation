@@ -390,6 +390,13 @@ const initSelectWithFlag = (element) => {
 	$element.select2(options);
 }
 
+function updateRows($el) {
+	const lineHeight = parseFloat($el.css('line-height')) || 20;
+	const scrollHeight = $el[0].scrollHeight;
+	const rows = Math.ceil(scrollHeight / lineHeight);
+	$el.attr('rows', rows);
+}
+
 let $clearTimeout = null;
 
 function typeWriterEffect(text, element) {
@@ -410,11 +417,6 @@ function typeWriterEffect(text, element) {
         clearTimeout($clearTimeout);
     }
 
-    function updateRows(currentText) {
-        const rowCount = currentText.split('\n').length;
-        $el.attr('rows', rowCount + 1);
-    }
-
     function typeLine() {
         if (currentLineIndex >= lines.length) {
             $('.copy-text-of-textarea').first().trigger('click');
@@ -427,7 +429,7 @@ function typeWriterEffect(text, element) {
         if (currentCharIndex < currentLine.length) {
             typedText += currentLine.charAt(currentCharIndex);
             $el.val(typedText);
-            updateRows(typedText);
+            updateRows($el);
             currentCharIndex++;
 
             const timeout = setTimeout(typeLine, speed);
