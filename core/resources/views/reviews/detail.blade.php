@@ -92,7 +92,7 @@
             @endif
 
             @if ($review->is_reply_given == $status::NO)
-                <a href="{{ route('reviews.mark-answered-unanswered', $review) }}" class="btn btn-outline-secondary border text-primary d-inline-flex align-items-center ms-2 generate-reply">{{ $review->answeredText }}</a>
+                <a href="{{ route('reviews.mark-answered-unanswered', $review) }}" class="btn btn-outline-secondary border text-primary d-inline-flex align-items-center {{ $review->is_answered == $status::NO ? 'ms-2' : 'p-3' }} generate-reply">{{ $review->answeredText }}</a>
             @endif
 
             @if ($review->is_answered == $status::NO)
