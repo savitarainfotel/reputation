@@ -56,4 +56,11 @@ class Review extends BaseModel
     {
         return $this->is_answered == Status::YES ? __('Mark as unnswered') : __('Mark as answered');
     }
+
+    public function getLineCountAttribute()
+    {
+        $normalized = str_replace(["\r\n", "\r"], "\n", ($this->reply->comment ?? null));
+        $lines = explode("\n", $normalized);
+        return count($lines) + 1;
+    }
 }
