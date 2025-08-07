@@ -62,7 +62,7 @@
             <textarea name="generated-reply" id="generated-reply" class="w-100 no-border hide-overflow" class="fw-bold text-dark mb-0" placeholder="@lang('Type your reply manually here or use the \'Generate Reply\' button for an AI generated reply.')" {{ $review->is_answered == $status::YES ? 'readonly=""' : ''}}></textarea>
         </div>
     </div>
-    @if ($review->is_answered == $status::NO)
+    {{-- @if ($review->is_answered == $status::NO)
         <div class="card border mt-3">
             <div class="card-header d-flex align-items-center justify-content-between bg-transparent">
                 <div class="d-flex align-items-center">
@@ -84,7 +84,7 @@
                 <textarea name="translated-reply" id="translated-reply" class="w-100 no-border hide-overflow" class="fw-bold text-dark mb-0" placeholder="@lang('Type your reply manually here or use the \'Generate Reply\' button for an AI generated reply.')"></textarea>
             </div>
         </div>
-    @endif
+    @endif --}}
     <div class="d-flex justify-content-between align-items-center flex-wrap g-3">
         <div class="d-flex flex-wrap g-3">
             @if ($review->is_answered == $status::NO)

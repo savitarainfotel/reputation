@@ -10,6 +10,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\ConnectionException;
+use Google_Client;
+use Google_Service_MyBusinessAccountManagement;
 use App\Constants\Status;
 
 class ReviewsController extends Controller
@@ -100,7 +102,7 @@ class ReviewsController extends Controller
 
             return $this->detail($request, $review);
         } catch (ConnectionException $e) {
-            return response()->json(['message' => 'The request timed out. Please try again later.'], 400);
+            return response()->json(['message' => __('The request timed out. Please try again later.')]);
         }
     }
 
@@ -128,9 +130,81 @@ class ReviewsController extends Controller
             return abort(404);
         }
 
-        $review->is_answered = Status::YES;
-        $review->save();
+        $request->validate([
+            'reply' => ['required']
+        ]);
 
-        return $this->detail($request, $review);
+        $ratingSetting = $review->rating_platform;
+
+        $accessToken = $ratingSetting->access_token;
+        $client = google_Client($ratingSetting);
+        $client->setAccessToken($accessToken);
+
+        if ($client->isAccessTokenExpired()) {
+            if ($client->getRefreshToken()) {
+                try {
+                    $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+                    $ratingSetting->access_token = $client->getAccessToken();
+                    $ratingSetting->save();
+                } catch (Exception $e) {
+                    $ratingSetting->access_token = null;
+                    $ratingSetting->save();
+                    return response()->json(['message' => __("Error refreshing token: Please log in again.")]);
+                }
+            } else {
+                $ratingSetting->access_token = null;
+                $ratingSetting->save();
+                return response()->json(['message' => __("No refresh token available. Please log in again.")]);
+            }
+        }
+
+        $service_account = new Google_Service_MyBusinessAccountManagement($client);
+        $accountsResponse = $service_account->accounts->listAccounts();
+        $accounts = $accountsResponse->getAccounts();
+
+        if (!empty($accounts)) {
+            $accountName = $accounts[0]->getName();
+            $reviewLocationName = $ratingSetting->google_location;
+
+            try {
+                $headers = [
+                    'Authorization' => 'Bearer ' . $client->getAccessToken()['access_token'],
+                    'Accept'        => 'application/json',
+                ];
+
+                $url = "https://mybusiness.googleapis.com/v4/{$accountName}/{$reviewLocationName}/reviews/{$review->platform_review_id}";
+
+                $existingReview = Http::withHeaders($headers)->get($url)->json();
+
+                if(!$existingReview) {
+                    return response()->json(['message' => __('Review not found!')]);
+                } else {
+                    try {
+                        $putData = [
+                            'comment' => $request->reply
+                        ];
+
+                        $response = Http::withHeaders($headers)->put("{$url}/reply", $putData);
+
+                        if ($response->successful()) {
+                            $putData['updateTime'] = $review->reply->updateTime;
+                            $review->reply         = $putData;
+                            $review->is_answered   = Status::YES;
+                            $review->save();
+
+                            return $this->detail($request, $review);
+                        } else {
+                            return response()->json(['message' => __('Reply not sent!')]);
+                        }
+                    } catch (ConnectionException $e) {
+                        return response()->json(['message' => __('The request timed out. Please try again later.')]);
+                    }
+                }
+            } catch (ConnectionException $e) {
+                return response()->json(['message' => __('The request timed out. Please try again later.')]);
+            }
+        } else {
+            return response()->json(['message' => __('No Google Business Profile accounts found!')]);
+        }
     }
 }
