@@ -29,7 +29,7 @@ class Review extends BaseModel
 
     public function getStarImagesAttribute()
     {
-        return collect()->times(floor($this->normalized_rating), fn() => '<img src="' . asset('assets/images/svg/star.svg') . '" alt="star" class="me-1" />')->implode('');
+        return collect()->times(floor($this->normalized_rating), fn() => '<img src="' . asset('assets/images/svg/star.svg'.Status::ASSET_VERSION) . '" alt="star" class="me-1" />')->implode('');
     }
 
     /**

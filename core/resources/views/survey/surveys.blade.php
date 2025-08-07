@@ -41,7 +41,7 @@
                     <div class="col-md-4">
                         <div class="border p-2 rounded h-100">
                             <div class="text-primary fw-bold mb-2">@lang('Survey Type')</div>
-                            <img src="{{ asset('assets/images/svg/star.svg') }}" width="28" alt="Star" />
+                            <img src="{{ asset('assets/images/svg/star.svg'.$status::ASSET_VERSION) }}" width="28" alt="Star" />
                         </div>
                     </div>
                 </div>
