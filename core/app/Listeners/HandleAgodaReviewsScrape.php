@@ -42,6 +42,7 @@ class HandleAgodaReviewsScrape implements ShouldQueue
                         $newReview->language           = $review["language"] ?? null;
                         $newReview->likes              = $review["likes"] ?? null;
                         $newReview->reply              = $review["reply"] ?? null;
+                        $newReview->is_answered        = !empty($review["reply"]);
                         $newReview->created_by         = $event->property->created_by;
                         $newReview->updated_by         = $event->property->updated_by;
                         $newReview->save();

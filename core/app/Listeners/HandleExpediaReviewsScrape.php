@@ -45,6 +45,7 @@ class HandleExpediaReviewsScrape implements ShouldQueue
                             $newReview->reply              = $review["reply"] ?? null;
                             $newReview->sentiment          = $review["sentiment"] ?? null;
                             $newReview->stay_text          = $review["stay_text"] ?? null;
+                            $newReview->is_answered        = !empty($review["reply"]);
                             $newReview->created_by         = $event->property->created_by;
                             $newReview->updated_by         = $event->property->updated_by;
                             $newReview->save();

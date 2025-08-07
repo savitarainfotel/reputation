@@ -49,6 +49,7 @@ class HandleBookingReviewsScrape implements ShouldQueue
                         $newReview->reply              = $review["reply"] ?? null;
                         $newReview->pros               = $review["pros"] ?? null;
                         $newReview->cons               = $review["cons"] ?? null;
+                        $newReview->is_answered        = !empty($review["reply"]);
                         $newReview->created_by         = $event->ratingSetting->created_by;
                         $newReview->updated_by         = $event->ratingSetting->updated_by;
                         $newReview->save();
