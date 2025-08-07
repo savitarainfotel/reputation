@@ -58,6 +58,7 @@
         <script src="{{ asset('assets/js/theme/app.init.js') }}"></script>
         <script src="{{ asset('assets/js/theme/theme.js') }}"></script>
         <script src="{{ asset('assets/js/theme/app.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/block-ui/jquery.blockUI.js') }}"></script>
         <script src="{{ asset('assets/js/custom.js').$status::ASSET_VERSION }}"></script>
 
         <!-- solar icons -->
