@@ -113,63 +113,77 @@ class HandleGoogleReviewsScrape implements ShouldQueue
         if (!empty($accounts)) {
             $accountName = $accounts[0]->getName();
             $reviewLocationName = $ratingSetting->google_location;
-            $response = $httpClient->get("https://mybusiness.googleapis.com/v4/{$accountName}/{$reviewLocationName}/reviews");
-            $reviews = json_decode($response->getBody(), true);
 
-            if (!empty($reviews)) {
-                DB::beginTransaction();
+            $pageToken = null;
 
-                try {
-                    $reviewIds = [];
-                    $ratingsMap = [
-                        'ONE'   => 1,
-                        'TWO'   => 2,
-                        'THREE' => 3,
-                        'FOUR'  => 4,
-                        'FIVE'  => 5
-                    ];
+            do {
+                $url = "https://mybusiness.googleapis.com/v4/{$accountName}/{$reviewLocationName}/reviews";
 
-                    foreach ($reviews['reviews'] as $review) {
-                        $reviewId = $review["reviewId"] ?? null;
-
-                        $newReview                     = $reviewId ? Review::where('platform_review_id', $reviewId)->first() : null;
-                        $newReview                     = $newReview ?? new Review();
-                        $newReview->platform_review_id = $reviewId;
-                        $newReview->rating_platform_id = $ratingSetting->id;
-                        $newReview->property_id        = $ratingSetting->property_id;
-                        $newReview->title              = $review["comment"] ?? null;
-                        $newReview->url                = $review["url"] ?? null;                            // pending
-                        $newReview->reviewer           = !empty($review["reviewer"]) ? ($review["reviewer"]['displayName'] ?? null) : null;
-                        $newReview->reviewer_avatar    = !empty($review["reviewer"]) ? ($review["reviewer"]['profilePhotoUrl'] ?? null) : null;
-                        $newReview->reviewer_id        = $review["reviewer_id"] ?? null;                    // pending
-                        $newReview->reviewer_url       = $review["reviewer_url"] ?? null;                   // pending
-                        $newReview->datetime           = $review["createTime"] ?? null;
-                        $newReview->rating             = $ratingsMap[$review['starRating']] ?? 0;
-                        $newReview->language           = $review["language"] ?? 'en';
-                        $newReview->likes              = $review["likes"] ?? null;
-                        $newReview->reply              = $review["reviewReply"] ?? null;
-                        $newReview->created_by         = $property->created_by;
-                        $newReview->updated_by         = $property->updated_by;
-                        $newReview->created_at         = Carbon::parse($review["createTime"]) ?? now();
-                        $newReview->updated_at         = Carbon::parse($review["updateTime"]) ?? now();
-                        $newReview->save();
-
-                        if (!empty($review['reviewer']) && !empty($review['reviewer']['profilePhotoUrl'])) {
-                            $reviewIds[] = $newReview->id;
-                        }
-                    }
-
-                    $ratingSetting->reviews()->whereNull('platform_review_id')->update(['is_delete' => Status::YES]);
-
-                    DB::commit();
-
-                    if($reviewIds) {
-                        event(new ImageDownloadOfReview($reviewIds));
-                    }
-                } catch (\Throwable $th) {
-                    DB::rollBack();
+                if ($pageToken) {
+                    $url .= "?pageToken=" . $pageToken;
                 }
-            }
+
+                $response = $httpClient->get($url);
+                $reviews = json_decode($response->getBody(), true);
+    
+                if (!empty($reviews)) {
+                    DB::beginTransaction();
+    
+                    try {
+                        $reviewIds = [];
+                        $ratingsMap = [
+                            'ONE'   => 1,
+                            'TWO'   => 2,
+                            'THREE' => 3,
+                            'FOUR'  => 4,
+                            'FIVE'  => 5
+                        ];
+    
+                        foreach ($reviews['reviews'] as $review) {
+                            $reviewId = $review["reviewId"] ?? null;
+    
+                            $newReview                     = $reviewId ? Review::where('platform_review_id', $reviewId)->first() : null;
+                            $newReview                     = $newReview ?? new Review();
+                            $newReview->platform_review_id = $reviewId;
+                            $newReview->rating_platform_id = $ratingSetting->id;
+                            $newReview->property_id        = $ratingSetting->property_id;
+                            $newReview->title              = $review["comment"] ?? null;
+                            $newReview->url                = $review["url"] ?? null;                            // pending
+                            $newReview->reviewer           = !empty($review["reviewer"]) ? ($review["reviewer"]['displayName'] ?? null) : null;
+                            $newReview->reviewer_avatar    = !empty($review["reviewer"]) ? ($review["reviewer"]['profilePhotoUrl'] ?? null) : null;
+                            $newReview->reviewer_id        = $review["reviewer_id"] ?? null;                    // pending
+                            $newReview->reviewer_url       = $review["reviewer_url"] ?? null;                   // pending
+                            $newReview->datetime           = $review["createTime"] ?? null;
+                            $newReview->rating             = $ratingsMap[$review['starRating']] ?? 0;
+                            $newReview->language           = $review["language"] ?? 'en';
+                            $newReview->likes              = $review["likes"] ?? null;
+                            $newReview->reply              = $review["reviewReply"] ?? null;
+                            $newReview->created_by         = $property->created_by;
+                            $newReview->updated_by         = $property->updated_by;
+                            $newReview->created_at         = Carbon::parse($review["createTime"]) ?? now();
+                            $newReview->updated_at         = Carbon::parse($review["updateTime"]) ?? now();
+                            $newReview->save();
+    
+                            if (!empty($review['reviewer']) && !empty($review['reviewer']['profilePhotoUrl'])) {
+                                $reviewIds[] = $newReview->id;
+                            }
+                        }
+    
+                        $ratingSetting->reviews()->whereNull('platform_review_id')->update(['is_delete' => Status::YES]);
+    
+                        DB::commit();
+    
+                        if($reviewIds) {
+                            event(new ImageDownloadOfReview($reviewIds));
+                        }
+                    } catch (\Throwable $th) {
+                        DB::rollBack();
+                    }
+                }
+
+                $pageToken = $reviews['nextPageToken'] ?? null;
+
+            } while ($pageToken);
         }
     }
 }
