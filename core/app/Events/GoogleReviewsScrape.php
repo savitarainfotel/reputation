@@ -12,10 +12,12 @@ class GoogleReviewsScrape
 
     public $property;
     public $ratingSetting;
+    public $shouldScrapped;
 
-    public function __construct(Property $property, RatingSetting $ratingSetting)
+    public function __construct(Property $property, RatingSetting $ratingSetting, Bool $shouldScrapped = true)
     {
         $this->property = $property;
         $this->ratingSetting = $ratingSetting;
+        $this->shouldScrapped = $shouldScrapped;
     }
 }

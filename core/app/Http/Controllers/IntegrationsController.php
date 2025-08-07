@@ -11,6 +11,7 @@ use Google_Client;
 use Google_Service_MyBusinessAccountManagement;
 use Google_Service_MyBusinessBusinessInformation;
 use Illuminate\Support\Facades\Http;
+use App\Events\GoogleReviewsScrape;
 
 class IntegrationsController extends Controller
 {
@@ -52,7 +53,7 @@ class IntegrationsController extends Controller
                 $message = $accessToken['error_description'];
             } else {
                 $client->setAccessToken($accessToken);
-    
+
                 $accountService = new Google_Service_MyBusinessAccountManagement($client);
                 $accounts = $accountService->accounts->listAccounts()->getAccounts();
 
@@ -77,8 +78,13 @@ class IntegrationsController extends Controller
                     if ($selectedLocation) {
                         $ratingSetting->google_location = $selectedLocation->getName();
                         $ratingSetting->access_token = $accessToken;
+                        $saved = $ratingSetting->save();
 
-                        $message = $ratingSetting->save() ? __('Google connected!') : __('Failed to connect google.');
+                        if($saved) {
+                            event(new GoogleReviewsScrape($ratingSetting->property, $ratingSetting, false));
+                        }
+
+                        $message = $saved ? __('Google connected!') : __('Failed to connect google.');
                     } else {
                         $message = __("Google account not assigned to {$ratingSetting->name}");
                     }

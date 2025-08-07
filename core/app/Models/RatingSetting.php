@@ -23,4 +23,14 @@ class RatingSetting extends BaseModel
         $url = Storage::disk('public')->url(getFilePath('property-images') . $this->picture);
         return '<img src="' . $url . '" height="' . $height . '" class="' . $class . '" />';
     }
+
+    public function property()
+    {
+        return $this->belongsTo(Property::class, 'property_id');
+    }
+
+    public function reviewList()
+    {
+        return $this->hasMany(Review::class, 'rating_platform_id');
+    }
 }
