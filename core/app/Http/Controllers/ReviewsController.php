@@ -10,12 +10,12 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\ConnectionException;
-use Google_Client;
-use Google_Service_MyBusinessAccountManagement;
-use App\Constants\Status;
+use App\Traits\Replyable;
 
 class ReviewsController extends Controller
 {
+    use Replyable;
+
     /**
      * Display the reviews list.
      */
@@ -124,7 +124,7 @@ class ReviewsController extends Controller
     /**
      * Send reply or Unanswered review.
      */
-    public function reply(Request $request, Review $review): View|JsonResponse
+    public function reply(Request $request, Review $review): JsonResponse
     {
         if (!$request->ajax()) {
             return abort(404);
@@ -134,77 +134,10 @@ class ReviewsController extends Controller
             'reply' => ['required']
         ]);
 
-        $ratingSetting = $review->rating_platform;
-
-        $accessToken = $ratingSetting->access_token;
-        $client = google_Client($ratingSetting);
-        $client->setAccessToken($accessToken);
-
-        if ($client->isAccessTokenExpired()) {
-            if ($client->getRefreshToken()) {
-                try {
-                    $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-                    $ratingSetting->access_token = $client->getAccessToken();
-                    $ratingSetting->save();
-                } catch (Exception $e) {
-                    $ratingSetting->access_token = null;
-                    $ratingSetting->save();
-                    return response()->json(['message' => __("Error refreshing token: Please log in again.")]);
-                }
-            } else {
-                $ratingSetting->access_token = null;
-                $ratingSetting->save();
-                return response()->json(['message' => __("No refresh token available. Please log in again.")]);
-            }
-        }
-
-        $service_account = new Google_Service_MyBusinessAccountManagement($client);
-        $accountsResponse = $service_account->accounts->listAccounts();
-        $accounts = $accountsResponse->getAccounts();
-
-        if (!empty($accounts)) {
-            $accountName = $accounts[0]->getName();
-            $reviewLocationName = $ratingSetting->google_location;
-
-            try {
-                $headers = [
-                    'Authorization' => 'Bearer ' . $client->getAccessToken()['access_token'],
-                    'Accept'        => 'application/json',
-                ];
-
-                $url = "https://mybusiness.googleapis.com/v4/{$accountName}/{$reviewLocationName}/reviews/{$review->platform_review_id}";
-
-                $existingReview = Http::withHeaders($headers)->get($url)->json();
-
-                if(!$existingReview) {
-                    return response()->json(['message' => __('Review not found!')]);
-                } else {
-                    try {
-                        $putData = [
-                            'comment' => $request->reply
-                        ];
-
-                        $response = Http::withHeaders($headers)->put("{$url}/reply", $putData);
-
-                        if ($response->successful()) {
-                            $putData['updateTime'] = $review->reply->updateTime;
-                            $review->reply         = $putData;
-                            $review->is_answered   = Status::YES;
-                            $review->save();
-
-                            return $this->detail($request, $review);
-                        } else {
-                            return response()->json(['message' => __('Reply not sent!')]);
-                        }
-                    } catch (ConnectionException $e) {
-                        return response()->json(['message' => __('The request timed out. Please try again later.')]);
-                    }
-                }
-            } catch (ConnectionException $e) {
-                return response()->json(['message' => __('The request timed out. Please try again later.')]);
-            }
+        if($review->property->google()) {
+            return $this->google($request, $review);
         } else {
-            return response()->json(['message' => __('No Google Business Profile accounts found!')]);
+            return response()->json(['message' => __("Invalid Listings Integration.")]);
         }
     }
 }
