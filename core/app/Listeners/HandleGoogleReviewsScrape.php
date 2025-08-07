@@ -160,6 +160,7 @@ class HandleGoogleReviewsScrape implements ShouldQueue
                             $newReview->likes              = $review["likes"] ?? null;
                             $newReview->reply              = $review["reviewReply"] ?? null;
                             $newReview->is_answered        = !empty($review["reviewReply"]);
+                            $newReview->is_reply_given     = !empty($review["reviewReply"]);
                             $newReview->created_by         = $property->created_by;
                             $newReview->updated_by         = $property->updated_by;
                             $newReview->created_at         = Carbon::parse($review["createTime"]) ?? now();

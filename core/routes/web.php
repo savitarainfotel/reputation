@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
             Route::post('generate-reply/{review}', 'generateReply')->name('generate-reply');
             Route::post('mark-answered-unanswered/{review}', 'markAnsweredUnanswered')->name('mark-answered-unanswered');
             Route::post('reply/{review}', 'reply')->name('reply');
+            Route::post('unpublish-reply/{review}', 'unpublishReply')->name('unpublish-reply');
         });
     
         Route::controller(SurveyController::class)->name('survey.')->prefix('survey')->group(function () {

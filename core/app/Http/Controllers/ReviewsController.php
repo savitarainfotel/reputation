@@ -124,7 +124,7 @@ class ReviewsController extends Controller
     /**
      * Send reply or Unanswered review.
      */
-    public function reply(Request $request, Review $review): JsonResponse
+    public function reply(Request $request, Review $review): View|JsonResponse
     {
         if (!$request->ajax()) {
             return abort(404);
@@ -136,6 +136,22 @@ class ReviewsController extends Controller
 
         if($review->property->google()) {
             return $this->google($request, $review);
+        } else {
+            return response()->json(['message' => __("Invalid Listings Integration.")]);
+        }
+    }
+
+    /**
+     * Send reply or Unanswered review.
+     */
+    public function unpublishReply(Request $request, Review $review): View|JsonResponse
+    {
+        if (!$request->ajax()) {
+            return abort(404);
+        }
+
+        if($review->property->google()) {
+            return $this->unpublishGoogleReply($request, $review);
         } else {
             return response()->json(['message' => __("Invalid Listings Integration.")]);
         }

@@ -58,8 +58,8 @@
                 @endif
             </div>
         </div>
-        <div class="card-body collapse show pt-0">
-            <textarea name="generated-reply" id="generated-reply" class="w-100 no-border hide-overflow" class="fw-bold text-dark mb-0" placeholder="@lang('Type your reply manually here or use the \'Generate Reply\' button for an AI generated reply.')" {{ $review->is_answered == $status::YES ? 'readonly=""' : ''}}></textarea>
+        <div class="card-body pt-0">
+            <textarea name="generated-reply" id="generated-reply" class="w-100 no-border hide-overflow" class="fw-bold text-dark mb-0" placeholder="@lang('Type your reply manually here or use the \'Generate Reply\' button for an AI generated reply.')" {{ $review->is_answered == $status::YES ? 'readonly=""' : ''}}>{{ $review->is_reply_given == $status::YES ? $review->reply->comment : request()->reply }}</textarea>
         </div>
     </div>
     {{-- @if ($review->is_answered == $status::NO)
@@ -90,7 +90,11 @@
             @if ($review->is_answered == $status::NO)
                 <a href="javascript:;" data-target-element="#generated-reply" data-redirect="{!! $review->url !!}" class="copy-text-of-textarea btn btn-secondary border text-primary d-inline-flex align-items-center">@lang('Copy & Open')</a>
             @endif
-            <a href="{{ route('reviews.mark-answered-unanswered', $review) }}" class="btn btn-outline-secondary border text-primary d-inline-flex align-items-center ms-2 generate-reply">{{ $review->answeredText }}</a>
+
+            @if ($review->is_reply_given == $status::NO)
+                <a href="{{ route('reviews.mark-answered-unanswered', $review) }}" class="btn btn-outline-secondary border text-primary d-inline-flex align-items-center ms-2 generate-reply">{{ $review->answeredText }}</a>
+            @endif
+
             @if ($review->is_answered == $status::NO)
                 <nav class="position-lg-absolute  bottom-0 end-0">
                     <ul class="pagination align-items-center justify-content-end mb-2 ">
@@ -110,10 +114,16 @@
             @endif
         </div>
         <div class="float-end">
-            <a href="{{ route('reviews.generate-reply', $review) }}" class="btn border text-primary fw-bold fs-4 me-2 d-inline-flex align-items-center {{ $review->is_answered == $status::YES ? 'disabled' : 'generate-reply' }}">
-                <img src="{{ asset('assets/images/svg/geminy.svg') }}" alt="" class="me-1" />
-                @lang('Generate Reply')
-            </a>
+            @if ($review->is_reply_given == $status::NO)
+                <a href="{{ route('reviews.generate-reply', $review) }}" class="btn border text-primary fw-bold fs-4 me-2 d-inline-flex align-items-center {{ $review->is_answered == $status::YES ? 'disabled' : 'generate-reply' }}">
+                    <img src="{{ asset('assets/images/svg/geminy.svg') }}" alt="" class="me-1" />
+                    @lang('Generate Reply')
+                </a>
+            @else
+                <a href="{{ route('reviews.unpublish-reply', $review) }}" data-target-element="#generated-reply" class="btn border text-primary fw-bold fs-4 me-2 d-inline-flex align-items-center send-reply">
+                    @lang('Unpublish')
+                </a>
+            @endif
             @if ($review->is_answered == $status::NO)
                 @php
                     $integration = $property->google();

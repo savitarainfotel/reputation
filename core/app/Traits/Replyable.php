@@ -9,6 +9,7 @@ use App\Models\Review;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 trait Replyable
 {
@@ -78,14 +79,73 @@ trait Replyable
                             $response = Http::withHeaders($headers)->put("{$url}/reply", $putData);
 
                             if ($response->successful()) {
-                                $putData['updateTime'] = $review->reply->updateTime;
-                                $review->reply         = $putData;
-                                $review->is_answered   = Status::YES;
+                                $putData['updateTime']  = $review->reply->updateTime ?? Carbon::now('UTC')->format('Y-m-d\TH:i:s.u\Z');
+                                $review->reply          = $putData;
+                                $review->is_reply_given = Status::YES;
+                                $review->is_answered    = Status::YES;
                                 $review->save();
+
+                                $request->request->remove('reply');
 
                                 return $this->detail($request, $review);
                             } else {
                                 return response()->json(['message' => __('Reply not sent!')]);
+                            }
+                        } catch (ConnectionException $e) {
+                            return response()->json(['message' => __('The request timed out. Please try again later.')]);
+                        }
+                    }
+                } catch (ConnectionException $e) {
+                    return response()->json(['message' => __('The request timed out. Please try again later.')]);
+                }
+            } else {
+                return response()->json(['message' => __('No Google Business Profile accounts found!')]);
+            }
+        } else {
+            return $accounts;
+        }
+    }
+
+    protected function unpublishGoogleReply(Request $request, Review $review): JsonResponse
+    {
+        $accounts = $this->getAccounts($request, $review);
+
+        if(is_array($accounts)) {
+            $client  = $accounts['client'];
+            $account = $accounts['accounts'];
+
+            if (!empty($account)) {
+                $ratingSetting = $review->rating_platform;
+                $accountName = $account[0]->getName();
+                $reviewLocationName = $ratingSetting->google_location;
+
+                try {
+                    $headers = [
+                        'Authorization' => 'Bearer ' . $client->getAccessToken()['access_token'],
+                        'Accept'        => 'application/json',
+                    ];
+
+                    $url = "https://mybusiness.googleapis.com/v4/{$accountName}/{$reviewLocationName}/reviews/{$review->platform_review_id}";
+
+                    $existingReview = Http::withHeaders($headers)->get($url)->json();
+
+                    if(!$existingReview) {
+                        return response()->json(['message' => __('Review not found!')]);
+                    } else {
+                        try {
+                            $response = Http::withHeaders($headers)->delete("{$url}/reply");
+
+                            if ($response->successful()) {
+                                $review->reply          = null;
+                                $review->is_reply_given = Status::NO;
+                                $review->is_answered    = Status::NO;
+                                $review->save();
+
+                                $request->request->remove('reply');
+
+                                return $this->detail($request, $review);
+                            } else {
+                                return response()->json(['message' => __('Reply not deleted!')]);
                             }
                         } catch (ConnectionException $e) {
                             return response()->json(['message' => __('The request timed out. Please try again later.')]);
