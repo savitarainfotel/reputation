@@ -98,7 +98,7 @@ class ReviewsController extends Controller
                 $reply = $response['choices'][0]['message']['content'];
             }
 
-            $request->merge(['reply' => $reply]);
+            $request->merge(['reply' => $reply, 'type' => true]);
 
             return $this->detail($request, $review);
         } catch (ConnectionException $e) {

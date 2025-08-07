@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="card-body pt-0">
-            <textarea name="generated-reply" id="generated-reply" class="w-100 no-border hide-overflow" class="fw-bold text-dark mb-0" placeholder="@lang('Type your reply manually here or use the \'Generate Reply\' button for an AI generated reply.')" {{ $review->is_answered == $status::YES ? 'readonly' : ''}} rows="{{ $review->lineCount }}">{{ $review->is_reply_given == $status::YES ? $review->reply->comment : request()->reply }}</textarea>
+            <textarea name="generated-reply" id="generated-reply" class="w-100 no-border hide-overflow" class="fw-bold text-dark mb-0" placeholder="@lang('Type your reply manually here or use the \'Generate Reply\' button for an AI generated reply.')" {{ $review->is_answered == $status::YES ? 'readonly' : ''}} rows="{{ request()->reply ? lineCounts(request()->reply) : $review->lineCount }}">{{ $review->is_reply_given == $status::YES ? $review->reply->comment : request()->reply }}</textarea>
         </div>
     </div>
     {{-- @if ($review->is_answered == $status::NO)
@@ -160,7 +160,7 @@
 <script>
     "use strict";
 
-    @if (request()->reply)
+    @if (request()->reply && request()->type)
         typeWriterEffect(`{!! request()->reply !!}`, '#generated-reply');
     @endif
 </script>

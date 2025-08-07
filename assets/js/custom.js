@@ -390,41 +390,59 @@ const initSelectWithFlag = (element) => {
 	$element.select2(options);
 }
 
+let $clearTimeout = null;
+
 function typeWriterEffect(text, element) {
-	const speed = 20;
-	let index = 0;
-	const $el = $(element);
+    const speed = 20;
+    const $el = $(element);
+    if (!$el.length) return;
 
-	if (!$el.length) return;
+    const normalized = (text ?? "").replace(/\r\n|\r/g, "\n");
+    const lines = normalized.split("\n");
+    let currentLineIndex = 0;
+    let currentCharIndex = 0;
+    let typedText = "";
 
-	$el.val('');
+    $el.val('');
+    $el.attr('rows', 1);
 
-	if ($el.data('type-writer-timeout')) {
-		clearTimeout($el.data('type-writer-timeout'));
-	}
+    if ($clearTimeout) {
+        clearTimeout($clearTimeout);
+    }
 
-	function updateRows(currentText) {
-		const approxCharsPerRow = 50;
-		const rowsNeeded = Math.ceil(currentText.length / approxCharsPerRow);
-		$el.attr('rows', (rowsNeeded || 1) + 2);
-	}
+    function updateRows(currentText) {
+        const rowCount = currentText.split('\n').length;
+        $el.attr('rows', rowCount + 1);
+    }
 
-	function type() {
-		if (index < text.length) {
-			let currentVal = $el.val();
-			let newVal = currentVal + text.charAt(index);
-			$el.val(newVal);
-			updateRows(newVal);
-			index++;
-			const timeout = setTimeout(type, speed);
-			$el.data('type-writer-timeout', timeout);
-		} else {
-			$('.copy-text-of-textarea').first().trigger('click');
-			$el.removeData('type-writer-timeout');
-		}
-	}
+    function typeLine() {
+        if (currentLineIndex >= lines.length) {
+            $('.copy-text-of-textarea').first().trigger('click');
+            $el.removeData('type-writer-timeout');
+            return;
+        }
 
-	type();
+        const currentLine = lines[currentLineIndex];
+
+        if (currentCharIndex < currentLine.length) {
+            typedText += currentLine.charAt(currentCharIndex);
+            $el.val(typedText);
+            updateRows(typedText);
+            currentCharIndex++;
+
+            const timeout = setTimeout(typeLine, speed);
+            $clearTimeout = timeout;
+        } else {
+            typedText += "\n";
+            currentCharIndex = 0;
+            currentLineIndex++;
+
+            const timeout = setTimeout(typeLine, speed);
+            $clearTimeout = timeout;
+        }
+    }
+
+    typeLine();
 }
 
 $(document).on('click', '.copy-text-of-textarea', function(){

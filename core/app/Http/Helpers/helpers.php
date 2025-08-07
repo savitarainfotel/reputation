@@ -146,3 +146,11 @@ if ( ! function_exists('getUserImageOrAlpha')) {
                     '<strong class="stepper-circle me-2 text-white fs-4" style="background: '.getBackgroundForAlphabet($review->reviewer).'">'.strtoupper(substr($review->reviewer, 0, 1)).'</strong>';
     }
 }
+
+if ( ! function_exists('lineCounts')) {
+    function lineCounts($text = null) {
+        $normalized = str_replace(["\r\n", "\r"], "\n", ($text ?? null));
+        $lines = explode("\n", $normalized);
+        return count($lines) + 1;
+    }
+}

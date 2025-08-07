@@ -59,8 +59,6 @@ class Review extends BaseModel
 
     public function getLineCountAttribute()
     {
-        $normalized = str_replace(["\r\n", "\r"], "\n", ($this->reply->comment ?? null));
-        $lines = explode("\n", $normalized);
-        return count($lines) + 1;
+        return lineCounts($this->reply->comments ?? null);
     }
 }
