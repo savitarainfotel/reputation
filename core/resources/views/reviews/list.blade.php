@@ -8,9 +8,11 @@
                         <i class="fas fa-filter me-2"></i> @lang('Filter Reviews')
                     </button>
 
-                    <select class="select-2 p-2 rounded border">
-                        <lable class="sort-label">@lang('Sort by'):</lable>
-                        <option value="@lang('Most recent')" selected>@lang('Most recent')</option>
+                    <lable class="sort-label">@lang('Sort by'):</lable>
+                    <select class="select-2 p-2 rounded border" id="sort_by" name="sort_by">
+                        <option value="{{ $status::MOST_RECENT_TXT }}" selected>@lang($status::MOST_RECENT_TXT)</option>
+                        <option value="{{ $status::RATING_LOWEST_TXT }}">@lang($status::RATING_LOWEST_TXT)</option>
+                        <option value="{{ $status::RATING_HIGHEST_TXT }}">@lang($status::RATING_HIGHEST_TXT)</option>
                     </select>
 
                     <button class="btn border text-secondary ms-2">
@@ -106,9 +108,9 @@
                 <div class="mb-3">
                     <x-input-label for="reviewType" :value="__('Review type')" />
                     <select class="form-select" id="reviewType" name="review_type">
-                        <option value="@lang($status::ALL_REVIEWS_TXT)">@lang($status::ALL_REVIEWS_TXT)</option>
-                        <option value="@lang($status::REVIEWS_WITH_TXT)">@lang($status::REVIEWS_WITH_TXT)</option>
-                        <option value="@lang($status::REVIEWS_WITHOUT_TXT)">@lang($status::REVIEWS_WITHOUT_TXT)</option>
+                        <option value="{{ $status::ALL_REVIEWS_TXT }}">@lang($status::ALL_REVIEWS_TXT)</option>
+                        <option value="{{ $status::REVIEWS_WITH_TXT }}">@lang($status::REVIEWS_WITH_TXT)</option>
+                        <option value="{{ $status::REVIEWS_WITHOUT_TXT }}">@lang($status::REVIEWS_WITHOUT_TXT)</option>
                     </select>
                 </div>
 
@@ -173,6 +175,7 @@
 
                     formData.minRating = parseInt($(handlesSlider).find('.noUi-handle-lower').attr('aria-valuenow'));
                     formData.maxRating = parseInt($(handlesSlider).find('.noUi-handle-upper').attr('aria-valuenow'));
+                    formData.sortBy    = $('#sort_by').val();
 
                     const form = createForm(href, "GET", formData);
 
@@ -216,8 +219,8 @@
 
             initSelectWithLogo("#select-with-logo");
 
-            $("#select-with-logo").change(function() {
-                getReviews(`{{ route('reviews.index') }}/${$(this).val()}`);
+            $("#select-with-logo, #sort_by").change(function() {
+                getReviews(`{{ route('reviews.index') }}/${$('#select-with-logo').val()}`);
             });
 
             $("#select-with-logo").trigger('change');

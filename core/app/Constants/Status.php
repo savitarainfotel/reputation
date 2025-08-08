@@ -17,6 +17,10 @@ class Status {
    const REVIEWS_WITH_TXT  = 'Reviews with text';
    const REVIEWS_WITHOUT_TXT  = 'Reviews without text (Rating only)';
 
+   const MOST_RECENT_TXT = 'Most recent';
+   const RATING_LOWEST_TXT  = 'Rating (lowest first)';
+   const RATING_HIGHEST_TXT  = 'Rating (highest first)';
+
    const NPS = 'NPS';
    const STAR = 'Star';
 
@@ -25,5 +29,5 @@ class Status {
       'https://www.googleapis.com/auth/plus.business.manage' // Legacy scope, still useful for broader access
    ];
 
-   const ASSET_VERSION = '?v=1.0.7';
+   const ASSET_VERSION = '?v=1.0.8';
 }

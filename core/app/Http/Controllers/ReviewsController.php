@@ -74,7 +74,19 @@ class ReviewsController extends Controller
                 $reviews->where('title', 'like', '%' . $request->search_text . '%');
             }
 
-            $data['reviews']  = $reviews->paginate(1);
+            if($request->sortBy == Status::MOST_RECENT_TXT) {
+                $reviews->orderBy('datetime', 'DESC');
+            }
+
+            if($request->sortBy == Status::RATING_LOWEST_TXT) {
+                $reviews->orderBy('rating', 'ASC');
+            }
+
+            if($request->sortBy == Status::RATING_HIGHEST_TXT) {
+                $reviews->orderBy('rating', 'DESC');
+            }
+
+            $data['reviews']  = $reviews->paginate(10);
             $data['property'] = $property;
 
             $view = view('reviews.reviews', $data)->render();
