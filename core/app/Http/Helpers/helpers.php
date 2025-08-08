@@ -154,3 +154,9 @@ if ( ! function_exists('lineCounts')) {
         return count($lines) + 1;
     }
 }
+
+if ( ! function_exists('calculateResponseRate')) {
+    function calculateResponseRate($reviews) {
+        return ceil((clone $reviews)->where('is_answered', Status::YES)->count() / (clone $reviews)->count() * 100);
+    }
+}

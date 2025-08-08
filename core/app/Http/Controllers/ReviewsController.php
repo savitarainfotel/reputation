@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\ConnectionException;
 use App\Traits\Replyable;
+use App\Constants\Status;
 
 class ReviewsController extends Controller
 {
@@ -22,12 +23,15 @@ class ReviewsController extends Controller
     public function index(Request $request, Property $property): View|JsonResponse|RedirectResponse
     {
         if ($request->ajax()) {
-            $data['reviews']  = $property->reviews()->paginate(10);
+            $reviews = $property->reviews();
+            $responseRate = calculateResponseRate($reviews);
+
+            $data['reviews']  = $reviews->paginate(10);
             $data['property'] = $property;
 
             $view = view('reviews.reviews', $data)->render();
 
-            return response()->json(['html' => $view]);
+            return response()->json(['html' => $view, 'responseRate' => $responseRate]);
         } else {
             $data['properties'] = Property::where('client_id', authUser()->id)->get();
             $data['reviews'] = Review::with('rating_platform.platform', 'property')->get();
@@ -48,10 +52,11 @@ class ReviewsController extends Controller
         $data['review']  = $review;
         $data['property'] = $review->property;
         $data['languages'] = json_decode(gs('languages')) ?? [];
+        $responseRate = calculateResponseRate($review->property->reviews());
 
         $view = view('reviews.detail', $data)->render();
 
-        return response()->json(['html' => $view, 'message' => $message]);
+        return response()->json(['html' => $view, 'message' => $message, 'responseRate' => $responseRate]);
     }
 
     /**

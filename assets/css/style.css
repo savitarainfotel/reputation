@@ -210,9 +210,9 @@ h6 {
 }
 
     .stepper {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 2rem 0;
-        margin: 2rem;
+        background: linear-gradient(135deg, #05C78B 0%, #000000 100%);
+        padding: 1rem 0;
+        margin: 1rem;
         overflow: auto;
     }
     
