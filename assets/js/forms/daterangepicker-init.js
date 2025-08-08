@@ -93,6 +93,7 @@ $(".dateranges").daterangepicker({
 // Always Show Calendar on Ranges
 /*******************************************/
 $(".shawCalRanges").daterangepicker({
+  autoUpdateInput: false,
   ranges: {
     Today: [moment(), moment()],
     Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
@@ -103,8 +104,10 @@ $(".shawCalRanges").daterangepicker({
       moment().subtract(1, "month").startOf("month"),
       moment().subtract(1, "month").endOf("month"),
     ],
+    autoApply: true,
   },
-  alwaysShowCalendars: true,
+}, function(start, end) {
+  $(".shawCalRanges").val(start.format("MM/DD/YYYY") + " - " + end.format("MM/DD/YYYY"));
 });
 
 /*******************************************/

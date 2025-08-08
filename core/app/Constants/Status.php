@@ -13,6 +13,10 @@ class Status {
    const ACTIVE_TXT  = 'Active';
    const INACTIVE_TXT = 'Inactive';
 
+   const ALL_REVIEWS_TXT = 'All Reviews';
+   const REVIEWS_WITH_TXT  = 'Reviews with text';
+   const REVIEWS_WITHOUT_TXT  = 'Reviews without text (Rating only)';
+
    const NPS = 'NPS';
    const STAR = 'Star';
 

@@ -7,81 +7,6 @@
                     <button class="btn border d-flex align-items-center" data-bs-toggle="offcanvas" data-bs-target="#filterSidebar">
                         <i class="fas fa-filter me-2"></i> @lang('Filter Reviews')
                     </button>
-                    <div class="offcanvas offcanvas-end" tabindex="-1" id="filterSidebar">
-                        <div class="offcanvas-header border-bottom">
-                            <h5 class="offcanvas-title">@lang('Filter reviews')</h5>
-                            <div>
-                                <a href="javascript:;" class="me-3 text-decoration-none text-primary">@lang('Clear all')</a>
-                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                            </div>
-                        </div>
-                        <div class="offcanvas-body">
-
-                            <div class="mb-3 d-flex justify-content-between align-items-center">
-                                <x-input-label class="mb-0" for="lastThreeMonths" :value="__('Last three months only')" />
-                                <div class="form-check form-switch m-0">
-                                    <x-text-input class="form-check-input" id="lastThreeMonths" name="last_three_months" type="checkbox" value="1" />
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <x-input-label class="mb-0" for="select-with-logo" :value="__('Property')" />
-                                <select class="form-control" id="select-with-logo" required name="property_id">
-                                    @foreach ($properties as $property)
-                                        <option value="{{ $property->encId }}" data-logo="{{ $property->getImageLink() }}">
-                                            {{ __($property->name) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <x-input-label class="mb-0" for="review-published" :value="__('Review published')" />
-                                <x-text-input id="review-published" name="review_published" type="text" :placeholder="__('YYYY-MM-DD ~ YYYY-MM-DD')" />
-                            </div>
-
-                            <div class="mb-3">
-                                <x-input-label class="mb-0" for="review-sources" :value="__('Review Sources')" />
-                                <select class="form-select" id="review-sources" name="review_sources">
-                                    <option>@lang('Choose below')</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <x-input-label class="mb-0" for="reply-status" :value="__('Reply status')" />
-                                <div class="form-check">
-                                    <x-text-input class="form-check-input" type="checkbox" id="notDone" name="reply_status" />
-                                    <label class="form-check-label" for="notDone">{{ __('Not Done') }}</label>
-                                </div>
-                                <div class="form-check">
-                                    <x-text-input class="form-check-input" type="checkbox" id="notPublished" name="reply_status" />
-                                    <label class="form-check-label" for="notPublished">{{ __('Not Published') }}</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <x-input-label for="ratingRange" :value="__('Rating')" />
-                                <input class="form-range" min="0" max="5" type="range" id="ratingRange" name="rating_range" />
-                                <div class="d-flex justify-content-between px-1 text-muted small">
-                                    <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <x-input-label for="reviewType" :value="__('Review type')" />
-                                <select class="form-select" id="reviewType" name="review_type">
-                                    <option>@lang('All Reviews')</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <x-input-label for="searchText" :value="__('Search text')" />
-                                <x-text-input type="search" id="searchText" name="search_text" :placeholder="__('Text to search for')" />
-                            </div>
-
-                            <button class="btn btn-secondary apply-btn">@lang('Apply')</button>
-                        </div>
-                    </div>
 
                     <select class="select-2 p-2 rounded border">
                         <lable class="sort-label">@lang('Sort by'):</lable>
@@ -120,25 +45,137 @@
         </div>
     </div>
 
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="filterSidebar">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title">@lang('Filter reviews')</h5>
+            <div>
+                <a href="javascript:;" class="me-3 text-decoration-none text-primary clear-all">@lang('Clear all')</a>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="offcanvas-body">
+            <form method="get" class="filter-reviews-form">
+                <div class="mb-3 d-flex justify-content-between align-items-center">
+                    <x-input-label class="mb-0" for="lastThreeMonths" :value="__('Last three months only')" />
+                    <div class="form-check form-switch m-0">
+                        <x-text-input class="form-check-input" id="lastThreeMonths" name="last_three_months" type="checkbox" value="1" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <x-input-label class="mb-0" for="select-with-logo" :value="__('Property')" />
+                    <select class="form-control" id="select-with-logo" required name="property_id">
+                        @foreach ($properties as $property)
+                            <option value="{{ $property->encId }}" data-logo="{{ $property->getImageLink() }}" data-platforms="{{ $property->platforms->map(fn($p) => ['id' => $p->encId, 'name' => $p->platform->platform]) }}">
+                                {{ __($property->name) }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <x-input-label class="mb-0" for="review-published" :value="__('Review published')" />
+                    <x-text-input class="shawCalRanges" id="review-published" name="review_published" type="text" :placeholder="__('MM/DD/YYYY ~ MM/DD/YYYY')" readonly="" />
+                </div>
+
+                <div class="mb-3">
+                    <x-input-label class="mb-0" for="review-platform" :value="__('Review Sources')" />
+                    <select class="form-select" id="review-platform" name="review_sources" data-first-option='<option value="" selected>@lang('Choose below')</option>'></select>
+                </div>
+
+                <div class="mb-3">
+                    <x-input-label class="mb-0" for="reply-status" :value="__('Reply status')" />
+                    <div class="form-check">
+                        <x-text-input class="form-check-input" type="checkbox" id="notDone" name="is_answered" value="{{ $status::YES }}" />
+                        <label class="form-check-label" for="notDone">{{ __('Not Done') }}</label>
+                    </div>
+                    <div class="form-check">
+                        <x-text-input class="form-check-input" type="checkbox" id="notPublished" name="is_reply_given" value="{{ $status::YES }}" />
+                        <label class="form-check-label" for="notPublished">{{ __('Not Published') }}</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <x-input-label for="ratingRange" :value="__('Rating')" />
+                    <div id="slider-handles" class="mt-3 mb-3"></div>
+                    <div class="d-flex justify-content-between px-1 text-muted small">
+                        <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <x-input-label for="reviewType" :value="__('Review type')" />
+                    <select class="form-select" id="reviewType" name="review_type">
+                        <option value="@lang($status::ALL_REVIEWS_TXT)">@lang($status::ALL_REVIEWS_TXT)</option>
+                        <option value="@lang($status::REVIEWS_WITH_TXT)">@lang($status::REVIEWS_WITH_TXT)</option>
+                        <option value="@lang($status::REVIEWS_WITHOUT_TXT)">@lang($status::REVIEWS_WITHOUT_TXT)</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <x-input-label for="searchText" :value="__('Search text')" />
+                    <x-text-input type="search" id="searchText" name="search_text" :placeholder="__('Text to search for')" />
+                </div>
+
+                <x-secondary-button class="w-30">@lang('Apply')</x-secondary-button>
+            </form>
+        </div>
+    </div>
+
     @push('style')
         <link rel="stylesheet" href="{{ asset('assets/libs/select2/dist/css/select2.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/libs/daterangepicker/daterangepicker.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/libs/nouislider-orxe/distribute/nouislider.min.css') }}" />
     @endpush
 
     @push('script')
         <script src="{{ asset('assets/libs/select2/dist/js/select2.full.min.js') }}"></script>
         <script src="{{ asset('assets/libs/select2/dist/js/select2.min.js') }}"></script>
+        <script src="{{ asset('assets/js/extra-libs/moment/moment.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/daterangepicker/daterangepicker.js') }}"></script>
+        <script src="{{ asset('assets/js/forms/daterangepicker-init.js') }}"></script>
+        <script src="{{ asset('assets/libs/wnumb/wNumb.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/nouislider-orxe/distribute/nouislider.min.js') }}"></script>
+
         <script>
             "use strict";
 
-            const getReviews = href => {
+            const handlesSlider = document.getElementById("slider-handles");
+
+            noUiSlider.create(handlesSlider, {
+                start: [0, 5],
+                step: 1,
+                range: {
+                    min: [0],
+                    max: [5],
+                },
+            });
+
+            $('.clear-all').click(function() {
+                handlesSlider.noUiSlider.set([0, 5]);
+                $('.filter-reviews-form')[0].reset();
+            });
+
+            const getReviews = (href) => {
+                $('.filter-reviews-form').attr('action', href);
                 const responseRate = $('.response-rate');
 
                 responseRate.find('.title').html(`0% @lang('Response Rate')`);
                 responseRate.find('.progress-bar').css('width', '0%');
 
                 if(href) {
-                    const form = createForm(href, "GET", {});
-                    
+                    const formData = $('.filter-reviews-form').serializeArray()
+                                        .filter(field => !['property_id'].includes(field.name))
+                                        .reduce((acc, field) => {
+                                            acc[field.name] = field.value;
+                                            return acc;
+                                        }, {});
+
+                    formData.minRating = parseInt($(handlesSlider).find('.noUi-handle-lower').attr('aria-valuenow'));
+                    formData.maxRating = parseInt($(handlesSlider).find('.noUi-handle-upper').attr('aria-valuenow'));
+
+                    const form = createForm(href, "GET", formData);
+
                     $('#reviews-list').html(`<div class="col-xl-12 col-lg-12 col-md-12 col-12">
                                                 <div class="card border cursor-pointer review-card">
                                                     <div class="card-header">
@@ -185,9 +222,14 @@
 
             $("#select-with-logo").trigger('change');
 
-            $(document).on('click', '.pagination > .page-item', function(e) {
+            $(document).on('click', '.reviews-pagination .page-item', function(e) {
                 e.preventDefault();
                 getReviews($(this).find('a').attr('href'));
+            });
+
+            $(document).on('submit', '.filter-reviews-form', function(e) {
+                e.preventDefault();
+                getReviews($(this).attr('action').split('?')[0]);
             });
 
             $(document).on('click', ".review-card", function() {

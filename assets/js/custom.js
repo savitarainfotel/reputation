@@ -285,7 +285,7 @@ $("#select-with-logo").change(function () {
 	}
 
 	if($('#review-platform').length) {
-		let options = '';
+		let options = $('#review-platform').data('first-option') ?? ``;
 		const platforms = $(this).find(':selected').data('platforms');
 
 		if(platforms && platforms.length) {

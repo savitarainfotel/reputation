@@ -11,11 +11,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\ConnectionException;
 use App\Traits\Replyable;
+use App\Traits\Hashidable;
 use App\Constants\Status;
+use Carbon\Carbon;
 
 class ReviewsController extends Controller
 {
-    use Replyable;
+    use Replyable, Hashidable;
 
     /**
      * Display the reviews list.
@@ -24,9 +26,55 @@ class ReviewsController extends Controller
     {
         if ($request->ajax()) {
             $reviews = $property->reviews();
+            
             $responseRate = calculateResponseRate($reviews);
 
-            $data['reviews']  = $reviews->paginate(10);
+            if($request->minRating) {
+                $reviews->where('rating', '>=', $request->minRating);
+            }
+
+            if($request->maxRating) {
+                $reviews->where('rating', '<=', $request->maxRating);
+            }
+
+            if($request->last_three_months) {
+                $startDate = now()->subMonths(3)->startOfDay();
+                $endDate = now()->endOfDay();
+
+                $reviews->whereBetween('datetime', [$startDate, $endDate]);
+            } else if($request->review_published) {
+                $reviewPublished = explode(' - ', $request->review_published);
+                $startDate = Carbon::parse(reset($reviewPublished));
+                $endDate = Carbon::parse(end($reviewPublished));
+
+                $reviews->whereBetween('datetime', [$startDate, $endDate]);
+            }
+
+            if($request->review_sources && $reviewPlatformId = $this->getDecodedId($request->review_sources)) {
+                $reviews->where('rating_platform_id', $reviewPlatformId);
+            }
+
+            if($request->is_answered) {
+                $reviews->where('is_answered', Status::NO);
+            }
+
+            if($request->is_reply_given) {
+                $reviews->where('is_reply_given', Status::NO);
+            }
+
+            if($request->review_type == Status::REVIEWS_WITH_TXT) {
+                $reviews->where('title', '<>', '')->whereNotNull('title');
+            }
+
+            if($request->review_type == Status::REVIEWS_WITHOUT_TXT) {
+                $reviews->where('title', '')->orWhereNull('title');
+            }
+
+            if($request->search_text) {
+                $reviews->where('title', 'like', '%' . $request->search_text . '%');
+            }
+
+            $data['reviews']  = $reviews->paginate(1);
             $data['property'] = $property;
 
             $view = view('reviews.reviews', $data)->render();

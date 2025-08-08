@@ -43,5 +43,7 @@
             </div>
         </div>
     @endforelse
-    {{ $reviews->links('pagination.design') }}
+    <div class="reviews-pagination">
+        {{ $reviews->links('pagination.design') }}
+    </div>
 </div>
