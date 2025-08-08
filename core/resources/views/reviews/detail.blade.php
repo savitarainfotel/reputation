@@ -87,12 +87,12 @@
     @endif --}}
     <div class="d-flex justify-content-between align-items-center flex-wrap g-3">
         <div class="d-flex flex-wrap g-3">
-            @if ($review->is_answered == $status::NO)
+            @if ($review->is_answered == $status::NO && $review->url)
                 <a href="javascript:;" data-target-element="#generated-reply" data-redirect="{!! $review->url !!}" class="copy-text-of-textarea btn btn-secondary border text-primary d-inline-flex align-items-center">@lang('Copy & Open')</a>
             @endif
 
             @if ($review->is_reply_given == $status::NO)
-                <a href="{{ route('reviews.mark-answered-unanswered', $review) }}" class="btn btn-outline-secondary border text-primary d-inline-flex align-items-center {{ $review->is_answered == $status::NO ? 'ms-2' : 'p-3' }} generate-reply">{{ $review->answeredText }}</a>
+                <a href="{{ route('reviews.mark-answered-unanswered', $review) }}" class="btn btn-outline-secondary border text-primary d-inline-flex align-items-center {{ $review->is_answered == $status::NO && $review->url ? 'ms-2' : 'p-3' }} generate-reply">{{ $review->answeredText }}</a>
             @endif
 
             @if ($review->is_answered == $status::NO)
