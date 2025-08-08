@@ -34,17 +34,17 @@ const notify = (text) => {
 		showOverlay: false,
 		centerY: false,
 		css: {
-			width: "250px",
+			width: "auto",
 			top: "20px",
 			left: "",
 			right: "20px",
 			border: "none",
-			padding: "15px 5px",
-			backgroundColor: "#000",
+			padding: "15px",
+			backgroundColor: "#000000",
 			"-webkit-border-radius": "10px",
 			"-moz-border-radius": "10px",
 			opacity: 0.9,
-			color: "#fff",
+			color: "#ffffff",
 		},
 	});
 }

@@ -19,30 +19,35 @@ trait Replyable
 
         $accessToken = $ratingSetting->access_token;
         $client = google_Client($ratingSetting);
-        $client->setAccessToken($accessToken);
+        
+        try {
+            $client->setAccessToken($accessToken);
 
-        if ($client->isAccessTokenExpired()) {
-            if ($client->getRefreshToken()) {
-                try {
-                    $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-                    $ratingSetting->access_token = $client->getAccessToken();
-                    $ratingSetting->save();
-                } catch (Exception $e) {
+            if ($client->isAccessTokenExpired()) {
+                if ($client->getRefreshToken()) {
+                    try {
+                        $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+                        $ratingSetting->access_token = $client->getAccessToken();
+                        $ratingSetting->save();
+                    } catch (Exception $e) {
+                        $ratingSetting->access_token = null;
+                        $ratingSetting->save();
+                        return response()->json(['message' => __("Error refreshing token: Please connected again.")]);
+                    }
+                } else {
                     $ratingSetting->access_token = null;
                     $ratingSetting->save();
-                    return response()->json(['message' => __("Error refreshing token: Please log in again.")]);
+                    return response()->json(['message' => __("No refresh token available. Please connected again.")]);
                 }
-            } else {
-                $ratingSetting->access_token = null;
-                $ratingSetting->save();
-                return response()->json(['message' => __("No refresh token available. Please log in again.")]);
             }
+
+            $service_account = new Google_Service_MyBusinessAccountManagement($client);
+            $accountsResponse = $service_account->accounts->listAccounts();
+
+            return ['accounts' => $accountsResponse->getAccounts(), 'client' => $client];
+        } catch (\Throwable $th) {
+            return response()->json(['message' => __("Your google account is disconnected. Please connected again.")]);
         }
-
-        $service_account = new Google_Service_MyBusinessAccountManagement($client);
-        $accountsResponse = $service_account->accounts->listAccounts();
-
-        return ['accounts' => $accountsResponse->getAccounts(), 'client' => $client];
     }
 
     protected function google(Request $request, Review $review): JsonResponse
@@ -87,9 +92,9 @@ trait Replyable
 
                                 $request->request->remove('reply');
 
-                                return $this->detail($request, $review);
+                                return $this->detail($request, $review, __('The reply published.'));
                             } else {
-                                return response()->json(['message' => __('Reply not sent!')]);
+                                return response()->json(['message' => __('The reply not published!')]);
                             }
                         } catch (ConnectionException $e) {
                             return response()->json(['message' => __('The request timed out. Please try again later.')]);
@@ -143,9 +148,9 @@ trait Replyable
 
                                 $request->request->remove('reply');
 
-                                return $this->detail($request, $review);
+                                return $this->detail($request, $review, __('The reply unpublish.'));
                             } else {
-                                return response()->json(['message' => __('Reply not deleted!')]);
+                                return response()->json(['message' => __('The reply not unpublish!')]);
                             }
                         } catch (ConnectionException $e) {
                             return response()->json(['message' => __('The request timed out. Please try again later.')]);

@@ -39,7 +39,7 @@ class ReviewsController extends Controller
     /**
      * Display the reviews list.
      */
-    public function detail(Request $request, Review $review): View|JsonResponse
+    public function detail(Request $request, Review $review, String $message = null): View|JsonResponse
     {
         if (!$request->ajax()) {
             return abort(404);
@@ -51,7 +51,7 @@ class ReviewsController extends Controller
 
         $view = view('reviews.detail', $data)->render();
 
-        return response()->json(['html' => $view]);
+        return response()->json(['html' => $view, 'message' => $message]);
     }
 
     /**
@@ -100,7 +100,7 @@ class ReviewsController extends Controller
 
             $request->merge(['reply' => $reply, 'type' => true]);
 
-            return $this->detail($request, $review);
+            return $this->detail($request, $review, __('The reply generated.'));
         } catch (ConnectionException $e) {
             return response()->json(['message' => __('The request timed out. Please try again later.')]);
         }
@@ -118,7 +118,7 @@ class ReviewsController extends Controller
         $review->is_answered = !$review->is_answered;
         $review->save();
 
-        return $this->detail($request, $review);
+        return $this->detail($request, $review, __('The reply status changed.'));
     }
 
     /**
